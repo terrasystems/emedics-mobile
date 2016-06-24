@@ -51,7 +51,7 @@ Emedics.config(function($stateProvider, $urlRouterProvider) {
   .state('tab.tasks', {
     url: '/tasks',
     views: {
-      'tab-tasks': {
+      'menuContent': {
         templateUrl: 'templates/tab-tasks.html',
         controller: 'tasksCtrl as vm'
       }
@@ -61,7 +61,7 @@ Emedics.config(function($stateProvider, $urlRouterProvider) {
   .state('tab.references', {
       url: '/references',
       views: {
-        'tab-references': {
+        'menuContent': {
           templateUrl: 'templates/tab-references.html',
           controller: 'referencesCtrl as vm'
         }
@@ -70,7 +70,7 @@ Emedics.config(function($stateProvider, $urlRouterProvider) {
     .state('tab.notifications', {
       url: '/notifications',
       views: {
-        'tab-notifications': {
+        'menuContent': {
           templateUrl: 'templates/tab-notifications.html',
           controller: 'notificationsCtrl as vm'
         }
@@ -80,7 +80,7 @@ Emedics.config(function($stateProvider, $urlRouterProvider) {
   .state('tab.catalog', {
     url: '/catalog',
     views: {
-      'tab-catalog': {
+      'menuContent': {
         templateUrl: 'templates/tab-catalog.html',
         controller: 'catalogCtrl as vm'
       }
@@ -89,7 +89,7 @@ Emedics.config(function($stateProvider, $urlRouterProvider) {
     .state('tab.drafts', {
       url: '/drafts',
       views: {
-        'tab-drafts': {
+        'menuContent': {
           templateUrl: 'templates/tab-catalog.html',
           controller: 'catalogCtrl as vm'
         }
@@ -98,7 +98,7 @@ Emedics.config(function($stateProvider, $urlRouterProvider) {
     .state('tab.patients', {
       url: '/patients',
       views: {
-        'tab-patients': {
+        'menuContent': {
           templateUrl: 'templates/tab-patients.html',
           controller: 'patientsCtrl as vm'
         }
@@ -107,7 +107,7 @@ Emedics.config(function($stateProvider, $urlRouterProvider) {
     .state('tab.stuff', {
       url: '/stuff',
       views: {
-        'tab-stuff': {
+        'menuContent': {
           templateUrl: 'templates/tab-stuff.html',
           controller: 'stuffCtrl as vm'
         }

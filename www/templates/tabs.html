@@ -1,52 +1,57 @@
+<div class="bar bar-header  bar-positive">
+    <button class="button icon ion-navicon" ng-click="toggleLeft();"></button>
+    <h1 class="title">eMedics</h1>
 
-        <ion-tabs class="tabs-positive tabs-icon-top">
+</div>
+<ion-side-menus>
 
+    <ion-pane ion-side-menu-content>
+        <ion-nav-bar class="bar-stable">
+            <ion-nav-back-button class="button-clear"><i class="icon ion-chevron-left"></i> Back</ion-nav-back-button>
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+    </ion-pane>
 
+    <ion-side-menu side="left">
+        <header class="bar bar-header bar-stable">
+            <h1 class="title">Left</h1>
+        </header>
+        <ion-content class="has-header">
+            <ion-list>
+                <ion-item nav-clear menu-close href="#/tab/tasks">
+                    Tasks
+                    <i style="float: right" class="ion-settings"></i>
 
-            <ion-tab title="Tasks" icon-on="ion-settings" icon-off="ion-settings" href="#/tab/tasks">
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/tab/references">
+                    References
+                <i style="float: right" class="ion-medkit"></i>
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/tab/notifications">
+                    Notifications
+                <i style="float: right" class="ion-email"></i>
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/tab/catalog">
+                    Catalog
+                <i style="float: right" class="ion-clipboard"></i>
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/tab/drafts">
+                    Drafts
+                <i style="float: right" class="ion-compose"></i>
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/tab/patients">
+                    Patients
+                <i style="float: right" class="ion-ios-person"></i>
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/tab/stuff">
+                    Stuff
+               <i style="float: right" class="ion-ios-people"></i>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>
 
-                <ion-nav-view name="tab-tasks">
-
-                </ion-nav-view>
-
-            </ion-tab>
-
-
-
-            <ion-tab title="References" icon-on="ion-medkit" icon-off="ion-medkit" href="#/tab/references">
-                <ion-nav-view name="tab-references">
-
-                </ion-nav-view>
-            </ion-tab>
-
-            <ion-tab title="Notifications" icon-on="ion-email" icon-off="ion-email" href="#/tab/notifications">
-
-                <ion-nav-view name="tab-notifications">
-
-                </ion-nav-view>
-
-            </ion-tab>
-
-            <ion-tab title="Catalog" icon-on="ion-clipboard" icon-off="ion-clipboard" href="#/tab/catalog">
-                <ion-nav-view name="tab-catalog">
-
-                </ion-nav-view>
-            </ion-tab>
-
-            <ion-tab title="Drafts" icon-on="ion-compose" icon-off="ion-compose" href="#/tab/drafts">
-                <ion-nav-view name="tab-drafts">
-
-                </ion-nav-view>
-            </ion-tab>
-            <ion-tab title="Patients" icon-on="ion-ios-person" icon-off="ion-ios-person" href="#/tab/patients">
-                <ion-nav-view name="tab-patients">
-
-                </ion-nav-view>
-            </ion-tab>
-            <ion-tab title="Stuff" icon-on="ion-ios-people" icon-off="ion-ios-people" href="#/tab/stuff">
-                <ion-nav-view name="tab-stuff">
-
-                </ion-nav-view>
-            </ion-tab>
-        </ion-tabs>
-
+<!--<div class="bar bar-footer bar-positive">-->
+    <!-- -->
+<!--</div>-->
