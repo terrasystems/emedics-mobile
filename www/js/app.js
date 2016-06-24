@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+var Emedics=angular.module('eMedics', ['ionic', 'eMedicsMobile']);
 
-.run(function($ionicPlatform) {
+Emedics.run(function($rootScope,$log,$ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,66 +20,100 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
+      var jState = JSON.stringify(toState);
+      var jParams = JSON.stringify(toParams);
+      $log.error('Cannot change state %s with params %s:\n%s', jState, jParams, error.stack || error);
+    });
+    $rootScope.$on('$stateNotFound', function (event, toState, fromState) {
+      $log.error('$stateNotFound', toState.to, ' from ', fromState.name);
+    });
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+Emedics.config(function($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-
-  // setup an abstract state for the tabs directive
     .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/tabs.html',
+      controller:'dashboardCtrl as vm'
   })
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.tasks', {
+    url: '/tasks',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+      'tab-tasks': {
+        templateUrl: 'templates/tab-tasks.html',
+        controller: 'tasksCtrl as vm'
       }
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
+  .state('tab.references', {
+      url: '/references',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
+        'tab-references': {
+          templateUrl: 'templates/tab-references.html',
+          controller: 'referencesCtrl as vm'
         }
       }
     })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
+    .state('tab.notifications', {
+      url: '/notifications',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+        'tab-notifications': {
+          templateUrl: 'templates/tab-notifications.html',
+          controller: 'notificationsCtrl as vm'
         }
       }
     })
 
-  .state('tab.account', {
-    url: '/account',
+  .state('tab.catalog', {
+    url: '/catalog',
     views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+      'tab-catalog': {
+        templateUrl: 'templates/tab-catalog.html',
+        controller: 'catalogCtrl as vm'
       }
     }
-  });
+  })
+    .state('tab.drafts', {
+      url: '/drafts',
+      views: {
+        'tab-drafts': {
+          templateUrl: 'templates/tab-catalog.html',
+          controller: 'catalogCtrl as vm'
+        }
+      }
+    })
+    .state('tab.patients', {
+      url: '/patients',
+      views: {
+        'tab-patients': {
+          templateUrl: 'templates/tab-patients.html',
+          controller: 'patientsCtrl as vm'
+        }
+      }
+    })
+    .state('tab.stuff', {
+      url: '/stuff',
+      views: {
+        'tab-stuff': {
+          templateUrl: 'templates/tab-stuff.html',
+          controller: 'stuffCtrl as vm'
+        }
+      }
+    });
 
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/tasks');
 
 });

@@ -1,24 +1,52 @@
-<!--
-Create tabs with an icon and label, using the tabs-positive style.
-Each tab's child <ion-nav-view> directive will have its own
-navigation history that also transitions its views in and out.
--->
-<ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
-  <!-- Dashboard Tab -->
-  <ion-tab title="Status" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/dash">
-    <ion-nav-view name="tab-dash"></ion-nav-view>
-  </ion-tab>
-
-  <!-- Chats Tab -->
-  <ion-tab title="Chats" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/tab/chats">
-    <ion-nav-view name="tab-chats"></ion-nav-view>
-  </ion-tab>
-
-  <!-- Account Tab -->
-  <ion-tab title="Account" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/account">
-    <ion-nav-view name="tab-account"></ion-nav-view>
-  </ion-tab>
+        <ion-tabs class="tabs-positive tabs-icon-top">
 
 
-</ion-tabs>
+
+            <ion-tab title="Tasks" icon-on="ion-settings" icon-off="ion-settings" href="#/tab/tasks">
+
+                <ion-nav-view name="tab-tasks">
+
+                </ion-nav-view>
+
+            </ion-tab>
+
+
+
+            <ion-tab title="References" icon-on="ion-medkit" icon-off="ion-medkit" href="#/tab/references">
+                <ion-nav-view name="tab-references">
+
+                </ion-nav-view>
+            </ion-tab>
+
+            <ion-tab title="Notifications" icon-on="ion-email" icon-off="ion-email" href="#/tab/notifications">
+
+                <ion-nav-view name="tab-notifications">
+
+                </ion-nav-view>
+
+            </ion-tab>
+
+            <ion-tab title="Catalog" icon-on="ion-clipboard" icon-off="ion-clipboard" href="#/tab/catalog">
+                <ion-nav-view name="tab-catalog">
+
+                </ion-nav-view>
+            </ion-tab>
+
+            <ion-tab title="Drafts" icon-on="ion-compose" icon-off="ion-compose" href="#/tab/drafts">
+                <ion-nav-view name="tab-drafts">
+
+                </ion-nav-view>
+            </ion-tab>
+            <ion-tab title="Patients" icon-on="ion-ios-person" icon-off="ion-ios-person" href="#/tab/patients">
+                <ion-nav-view name="tab-patients">
+
+                </ion-nav-view>
+            </ion-tab>
+            <ion-tab title="Stuff" icon-on="ion-ios-people" icon-off="ion-ios-people" href="#/tab/stuff">
+                <ion-nav-view name="tab-stuff">
+
+                </ion-nav-view>
+            </ion-tab>
+        </ion-tabs>
+
