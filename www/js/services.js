@@ -1,0 +1,168 @@
+'use strict';
+/*jshint -W117, -W097*/
+angular.module('modules.core')
+
+	.service('auth', function($rootScope, localStorageService){
+		return {
+			saveUserData: function (data) {
+				if (data.token) {
+					$rootScope.token = data.token;
+					localStorageService.set('token', data.token);
+				}
+				if (data.user) {
+					$rootScope.userData = data.user;
+					localStorageService.set('userData', data.user);
+				}
+			}
+		};
+	})
+
+	.service('http', function($http, $q, constants, alertService, $translate) {
+		function get (url, filter){
+			var deferred = $q.defer();
+			$http.get(constants.restUrl + url, filter).then(function (resp) {
+				resp.data.state.message = $translate.instant(resp.data.state.message);
+				if  (resp.data && resp.data.state) {
+					if  (resp.data.state.value===true) {
+						deferred.resolve(resp.data);
+					}
+					else {
+						deferred.reject(false);
+						alertService.add(2, resp.data.state.message);
+					}
+				}
+				else {
+					deferred.reject(false);
+					alertService.add(2, $translate.instant(MSG_NO_DATA));
+				}
+			}, function (error) {
+				deferred.reject(error);
+				if  (error.status == '401') {
+					alertService.add(2, $translate.instant(error.data.state.message));
+				}
+				else {
+					alertService.add(2, error.status + ' ' + error.statusText);
+				}
+			});
+			return deferred.promise;
+		}
+
+		function post (url, params) {
+			//console.log('post: '+ url);
+			var deferred = $q.defer();
+			$http.post(constants.restUrl + url, params).then(function (resp) {
+				resp.data.state.message = $translate.instant(resp.data.state.message);
+				if  (resp.data && resp.data.state) {
+					if  (resp.data.state.value===true) {
+						deferred.resolve(resp.data);
+					}
+					else {
+						deferred.reject(false);
+						alertService.add(2, resp.data.state.message);
+					}
+				}
+				else {
+					deferred.reject(false);
+					alertService.add(2, $translate.instant(MSG_NO_DATA));
+				}
+			}, function (error) {
+				deferred.reject(error);
+				if  (error.status == '401') {
+					alertService.add(2, $translate.instant(error.data.state.message));
+				}
+				else {
+					alertService.add(2, error.status + ' ' + error.statusText);
+				}
+			});
+			return deferred.promise;
+		}
+
+		//******
+		return {
+			get: get,
+			post: post
+		};
+	})
+
+
+// Интерцептор для перехвата ошибок
+	.service('responseErrorInterceptor', function ($rootScope, $q, $injector, blockUI) {
+		return {
+			'response': function (response) {
+				//console.log('int.responce: '+response);
+				return response;
+			},
+			'responseError': function (rejection) {
+				//console.log('int.rejection: ' + rejection);
+
+				blockUI.reset();
+
+				switch (rejection.status) {
+					case 401:
+					{
+						$injector.get('$state').go('main.public.login',{reload: true});
+						break;
+					}
+					case 404:
+					{
+						//$injector.get('$state').go('main.public.login',{reload: true});
+						break;
+					}
+					default:
+					{
+						//console.log(rejection);
+						break;
+					}
+				}
+				return $q.reject(rejection);
+			}
+		};
+	})
+
+
+	.service('checkUserAuth', function ($location, localStorageService, $rootScope) {
+		var checkUserAuth = function () {
+			var originalPath = $location.path();
+			$location.path('/login');
+			var authToken = localStorageService.get('token');
+			if ((authToken !== undefined) && (authToken !== null)) {
+				$rootScope.token = authToken;
+				$rootScope.userData = localStorageService.get('userData');
+				$location.path(originalPath);
+				return;
+			}
+		};
+		return checkUserAuth;
+	})
+
+
+//Сервис интерцептора запроса, вставляет токен в хедер
+	.service('requestInterceptor', function ($rootScope, $q) {
+		return {
+			'request': function (config) {
+				if ($rootScope.token) {
+					var authToken = $rootScope.token;
+					config.headers['X-Auth-Token'] = authToken;
+				}
+				return config || $q.when(config);
+			}
+		};
+	})
+
+//инициализация параметров для $http запроса
+	.service('initParamsPOST', function () {
+		var paramsPOST = {
+			"page": {
+				"start": 0,
+				"count": 20,
+				"size": 0
+			},
+			"criteria": {
+				"search": '',
+				"list": []
+			}
+		};
+		return {
+			'params' :  paramsPOST
+		};
+	});

@@ -1,4 +1,4 @@
-var Emedics=angular.module('eMedics', ['ionic', 'eMedicsMobile','formlyIonic']);
+var Emedics=angular.module('eMedics', ['ionic','formlyIonic', 'eMedicsMobile','modules.core', 'LocalStorageModule']);
 
 Emedics.run(function($state,$rootScope,$log,$ionicPlatform) {
   $ionicPlatform.ready(function() {

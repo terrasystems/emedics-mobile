@@ -1,5 +1,5 @@
 {
-  "name": "HelloIonic",
+  "name": "eMedics-mobile",
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.3.1"
@@ -7,6 +7,8 @@
   "dependencies": {
     "api-check": "^7.5.5",
     "angular-formly": "^8.2.1",
-    "angular-formly-templates-ionic": "^1.2.2"
+    "angular-formly-templates-ionic": "^1.2.2",
+    "pouchdb": "^5.4.4",
+    "angular-local-storage": "^0.2.7"
   }
 }
