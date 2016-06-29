@@ -1,6 +1,34 @@
 'use strict';
 /*jshint -W117, -W097*/
-angular.module('modules.core')
+
+angular.module('core.medics')
+
+
+
+	//.service('alertService', function ($rootScope, toastr) {
+	//	var alertService = {};
+	//	alertService.add = function (type, titleText, msg, msgParam) {
+	//		switch (type) {
+	//			case 0:
+	//				type = 'success';
+	//				toastr.success(msg, titleText, msgParam);
+	//				break;
+	//			case 1:
+	//				type = 'warning';
+	//				toastr.warning(msg, titleText, msgParam);
+	//				break;
+	//			case 2:
+	//				type = 'danger';
+	//				toastr.error(msg, titleText, msgParam);
+	//				break;
+	//			default:
+	//				type = 'info';
+	//				toastr.info(msg, titleText, msgParam);
+	//				break;
+	//		}
+	//	};
+	//	return alertService;
+	//})
 
 	.service('auth', function($rootScope, localStorageService){
 		return {
@@ -17,7 +45,7 @@ angular.module('modules.core')
 		};
 	})
 
-	.service('http', function($http, $q, constants, alertService, $translate) {
+	.service('http', function($http, $q, constants,$translate) {
 		function get (url, filter){
 			var deferred = $q.defer();
 			$http.get(constants.restUrl + url, filter).then(function (resp) {
@@ -28,20 +56,20 @@ angular.module('modules.core')
 					}
 					else {
 						deferred.reject(false);
-						alertService.add(2, resp.data.state.message);
+						//alertService.add(2, resp.data.state.message);
 					}
 				}
 				else {
 					deferred.reject(false);
-					alertService.add(2, $translate.instant(MSG_NO_DATA));
+					//alertService.add(2, $translate.instant(MSG_NO_DATA));
 				}
 			}, function (error) {
 				deferred.reject(error);
 				if  (error.status == '401') {
-					alertService.add(2, $translate.instant(error.data.state.message));
+					//alertService.add(2, $translate.instant(error.data.state.message));
 				}
 				else {
-					alertService.add(2, error.status + ' ' + error.statusText);
+					//alertService.add(2, error.status + ' ' + error.statusText);
 				}
 			});
 			return deferred.promise;
@@ -58,20 +86,20 @@ angular.module('modules.core')
 					}
 					else {
 						deferred.reject(false);
-						alertService.add(2, resp.data.state.message);
+						//alertService.add(2, resp.data.state.message);
 					}
 				}
 				else {
 					deferred.reject(false);
-					alertService.add(2, $translate.instant(MSG_NO_DATA));
+					//alertService.add(2, $translate.instant(MSG_NO_DATA));
 				}
 			}, function (error) {
 				deferred.reject(error);
 				if  (error.status == '401') {
-					alertService.add(2, $translate.instant(error.data.state.message));
+					//alertService.add(2, $translate.instant(error.data.state.message));
 				}
 				else {
-					alertService.add(2, error.status + ' ' + error.statusText);
+					//alertService.add(2, error.status + ' ' + error.statusText);
 				}
 			});
 			return deferred.promise;
@@ -85,39 +113,39 @@ angular.module('modules.core')
 	})
 
 
-// Интерцептор для перехвата ошибок
-	.service('responseErrorInterceptor', function ($rootScope, $q, $injector, blockUI) {
-		return {
-			'response': function (response) {
-				//console.log('int.responce: '+response);
-				return response;
-			},
-			'responseError': function (rejection) {
-				//console.log('int.rejection: ' + rejection);
-
-				blockUI.reset();
-
-				switch (rejection.status) {
-					case 401:
-					{
-						$injector.get('$state').go('main.public.login',{reload: true});
-						break;
-					}
-					case 404:
-					{
-						//$injector.get('$state').go('main.public.login',{reload: true});
-						break;
-					}
-					default:
-					{
-						//console.log(rejection);
-						break;
-					}
-				}
-				return $q.reject(rejection);
-			}
-		};
-	})
+//// Интерцептор для перехвата ошибок
+//	.service('responseErrorInterceptor', function ($rootScope, $q, $injector, blockUI) {
+//		return {
+//			'response': function (response) {
+//				//console.log('int.responce: '+response);
+//				return response;
+//			},
+//			'responseError': function (rejection) {
+//				//console.log('int.rejection: ' + rejection);
+//
+//				blockUI.reset();
+//
+//				switch (rejection.status) {
+//					case 401:
+//					{
+//						$injector.get('$state').go('main.public.login',{reload: true});
+//						break;
+//					}
+//					case 404:
+//					{
+//						//$injector.get('$state').go('main.public.login',{reload: true});
+//						break;
+//					}
+//					default:
+//					{
+//						//console.log(rejection);
+//						break;
+//					}
+//				}
+//				return $q.reject(rejection);
+//			}
+//		};
+//	})
 
 
 	.service('checkUserAuth', function ($location, localStorageService, $rootScope) {

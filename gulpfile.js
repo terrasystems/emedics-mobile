@@ -1,3 +1,5 @@
+'use strict';
+
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bower = require('bower');
@@ -30,7 +32,7 @@ gulp.task('connect', function () {
           target: 'http://ec2-54-72-132-102.eu-west-1.compute.amazonaws.com:8080/emedics-0.1.0',
           changeOrigin:true
         })
-      ]
+      ];
     }
   });
 });
@@ -44,7 +46,20 @@ gulp.task('copy', function () {
 gulp.task('index',['copy'], function () {
 
   var target = gulp.src('www/index.html');
-  var sources = gulp.src(['./www/js/**/*.js', './www/css/**/*.css']); //{read: false}
+  var sources = gulp.src([
+    './www/main-js/app1.js',
+    './www/main-js/core.emedics2.js',
+    './www/main-js/**/*.js',
+ './www/public/public-core.js',
+    './www/public/**/*.js',
+
+    './www/public/controllers/**/*.js',
+
+    './www/dashboard/**/*.js',
+
+    './www/dashboard/controllers/**/*.js',
+
+    './www/css/**/*.css']);
 
   return target.pipe(inject(sources,{relative: true}))
     .pipe(gulp.dest('./www/'));

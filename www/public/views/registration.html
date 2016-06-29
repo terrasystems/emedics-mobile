@@ -1,0 +1,66 @@
+<ion-header-bar class="bar-positive" >
+    <h1 class="title">Registration</h1>
+    </ion-header-bar>
+
+        <ion-tabs active="vm.active">
+
+            <ion-tab class="tab-animation" title="{{vm.tabs[0].title}}" disable="vm.tabs[0].disabled" active="vm.tabs[0].active"
+                     select="vm.selTab(0);vm.tabs[0].form.options.resetModel()" ng-click="">
+                <form ng-submit="vm.onSubmit()" name="vm.formPat" novalidate>
+                    <div style="height: 64px;"></div>
+                    <formly-form  model="vm.tabs[0].form.model" fields="vm.tabs[0].form.fields" form="vm.formPat" options="vm.tabs[0].form.options">
+                        <label class="item item-input">
+                            <span class="input-label">Date</span>
+                            <input ng-model="vm.reg[vm.tabs[vm.active].type].user.birth" type="date" required>
+                        </label>
+
+                        <button type="submit"  ng-disabled="vm.formPat.$invalid && !vm.reg[vm.tabs[vm.active].type].user.birth" class="button button-full button-positive" translate="SUBMIT_ON_REGISTRATION">
+
+                        </button>
+                    </formly-form>
+                </form>
+
+            </ion-tab>
+
+            <ion-tab class="tab-animation" title="{{vm.tabs[1].title}}" disable="vm.tabs[1].disabled" active="vm.tabs[1].active"
+                     select="vm.selTab(1);vm.tabs[1].form.options.resetModel()" ng-click="">
+                <form ng-submit="vm.onSubmit()" name="vm.formDoc" novalidate>
+                    <div style="height: 64px;"></div>
+                    <formly-form model="vm.tabs[1].form.model" fields="vm.tabs[1].form.fields" form="vm.formDoc" options="vm.tabs[1].form.options">
+                        <label class="item item-input">
+                            <span class="input-label">Date</span>
+                            <input ng-model="vm.reg[vm.tabs[vm.active].type].user.birth" type="date">
+                        </label>
+
+                        <button type="submit" class="button button-full button-positive" ng-disabled="vm.formDoc.$invalid" translate="SUBMIT_ON_REGISTRATION">
+
+                        </button>
+                    </formly-form>
+                </form>
+            </ion-tab>
+
+            <ion-tab class="tab-animation" title="{{vm.tabs[2].title}}" disable="vm.tabs[2].disabled" active="vm.tabs[2].active"
+                     select="vm.selTab(2);vm.tabs[2].form.options.resetModel()" ng-click="">
+                <form ng-submit="vm.onSubmit()" name="vm.formOrg" novalidate>
+                    <div style="height: 64px;"></div>
+                    <formly-form model="vm.tabs[2].form.model" fields="vm.tabs[2].form.fields" form="vm.formOrg" options="vm.tabs[2].form.options">
+                        <button type="submit" class="button button-full button-positive" ng-disabled="vm.formOrg.$invalid" translate="SUBMIT_ON_REGISTRATION">
+
+                        </button>
+                    </formly-form>
+                </form>
+            </ion-tab>
+
+        </ion-tabs>
+
+    <a class="login-page-form" ui-sref="main.public.login"> <i class="glyphicon glyphicon-arrow-left"></i><span translate="BACK_LOGIN"></span></a>
+
+
+<script type="text/ng-template" id="error-messages.html">
+    <formly-transclude></formly-transclude>
+    <div ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched" class="error-messages">
+        <div ng-message="{{ ::name }}" ng-repeat="(name, message) in ::options.validation.messages" class="message">{{ message(fc.$viewValue, fc.$modelValue, this)}}</div>
+    </div>
+</script>
+
+
