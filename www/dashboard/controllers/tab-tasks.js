@@ -2,7 +2,7 @@
 /*jshint -W117, -W097*/
 
 angular.module('eMedicsMobile')
-	.controller('tasksCtrl', function ($scope,localStorageService,http) {
+	.controller('tasksCtrl', function ($state,$scope,localStorageService,http) {
 
 		var vm = this;
 		console.log("TasksCTRL");
@@ -11,7 +11,9 @@ angular.module('eMedicsMobile')
 		vm.tasks = [];
 		vm.history = [];
 
-
+		vm.onClickNew = function (index) {
+			$state.go('tab.tasksedit', {id: index, type: 'tasks', patId: null});
+		};
 		vm.GetAllTasks = function() {
 			http.get('private/dashboard/tasks/all')
 				.then(function (res) {
@@ -22,48 +24,6 @@ angular.module('eMedicsMobile')
 				});
 		};
 		vm.GetAllTasks();
-		//$scope.items = [
-		//	{ id: 0,
-		//	  name:'Doctor Form'
-		//	},
-		//	{ id: 1,
-		//		name:'Doctor Form' },
-		//	{ id: 2,
-		//		name:'Doctor Form' },
-		//	{ id: 3,
-		//		name:'Doctor Form' },
-		//	{ id: 4,
-		//		name:'Doctor Form' },
-		//	{ id: 5,
-		//		name:'Doctor Form' },
-		//	{ id: 6,
-		//		name:'Doctor Form' },
-		//	{ id: 7,
-		//		name:'Doctor Form' },
-		//	{ id: 8,
-		//		name:'Doctor Form' },
-		//	{ id: 9,
-		//		name:'Doctor Form' },
-		//	{ id: 10,
-		//		name:'Doctor Form' },
-		//	{ id: 2,
-		//		name:'Doctor Form' },
-		//	{ id: 3,
-		//		name:'Doctor Form' },
-		//	{ id: 4,
-		//		name:'Doctor Form' },
-		//	{ id: 5,
-		//		name:'Doctor Form' },
-		//	{ id: 6,
-		//		name:'Doctor Form' },
-		//	{ id: 7,
-		//		name:'Doctor Form' },
-		//	{ id: 8,
-		//		name:'Doctor Form' },
-		//	{ id: 9,
-		//		name:'Doctor Form' },
-		//	{ id: 10,
-		//		name:'Doctor Form' }
-		//];
+
 	});
 

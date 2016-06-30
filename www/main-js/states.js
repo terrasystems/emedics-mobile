@@ -55,6 +55,20 @@ angular.module('core.medics')
 					}
 				}
 			})
+			.state('tab.tasksedit', {
+				url: '/tasksedit',
+				views: {
+					'menuContent': {
+						templateUrl: 'dashboard/views/tab-tasks.edit.html',
+						controller: 'tasksEditCtrl as vm'
+					}
+				},
+				params:{
+					id: '',
+					type: '',
+					patId: null
+				}
+			})
 
 			.state('tab.references', {
 				url: '/references',
@@ -74,16 +88,16 @@ angular.module('core.medics')
 					}
 				}
 			})
-		//	.state('tab.notifications', {
-		//		url: '/notifications',
-		//		views: {
-		//			'menuContent': {
-		//				templateUrl: 'templates/tab-notifications.html',
-		//				controller: 'notificationsCtrl as vm'
-		//			}
-		//		}
-		//	})
-		//
+			.state('tab.notifications', {
+				url: '/notifications',
+				views: {
+					'menuContent': {
+						templateUrl: 'dashboard/views/tab-notifications.html',
+						controller: 'notificationsCtrl as vm'
+					}
+				}
+			})
+
 			.state('tab.catalog', {
 				url: '/catalog',
 				views: {

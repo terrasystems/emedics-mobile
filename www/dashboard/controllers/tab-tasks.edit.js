@@ -1,12 +1,9 @@
-/**
- * Created by valiknovikov on 6/27/16.
- */
 'use strict';
-/*jshint -W117, -W097, -W116, -W089, -W061*/
-angular.module('eMedicsMobile')
-	.controller('patientTasksEditCtrl', function ($uibModal, http, $q, $stateParams, $state, localStorageService, blockUI,
-                                                $scope, alertService, $timeout, $translate, $base64, confirmService,$rootScope) {
+/*jshint -W117, -W097*/
 
+angular.module('eMedicsMobile')
+	.controller('tasksEditCtrl',function( http, $q, $stateParams, $state, localStorageService,
+                                       $scope, $timeout, $translate, $base64,$rootScope){
 		if (!$stateParams.type || $stateParams.type === '' || $stateParams.type === null) {
 			$state.go('tab.tasks');
 			return;
@@ -47,7 +44,7 @@ angular.module('eMedicsMobile')
 		vm.getModelEdit = function (id) {
 			http.get('private/dashboard/tasks/' + id)
 				.then(function (res) {
-					blockUI.stop();
+					//blockUI.stop();
 
 					vm.checkArr = (res.result && res.result.template && res.result.template.body && res.result.template.body.sections && res.result.id);
 
@@ -106,7 +103,7 @@ angular.module('eMedicsMobile')
 			var paramsPOST = {event: {id: vm.id, data: {sections: vm.model}}};
 			http.post(vm.setUrl, paramsPOST)
 				.then(function (res) {
-					blockUI.stop();
+					//blockUI.stop();
 					deferred.resolve(res);
 					if (res.state) {
 						alertService.add(0, res.state.message);
@@ -146,32 +143,6 @@ angular.module('eMedicsMobile')
 
 		};
 
-		//db.allDocs({include_docs: true}).then(function(result){
-		//	console.log(result.rows);
-		//});
-
-		//$scope.recordlist = dataService.get();
-		//console.log($scope.recordlist);
-
-		//vm.onSaveDraft = function () {
-		//	var doc = {
-		//		_id:new Date().toISOString(),
-		//		_rev:'',
-		//		status:"draft",
-		//		body:{
-		//			sections: vm.model
-		//		}
-		//	};
-		//
-		//db.post(doc)
-		//		.then(get)
-		//		.then(bind)
-		//		.catch(error);
-		//
-		//
-		//
-		//	//$state.go(vm.mainState);
-		//};
 
 		vm.onSend = function() {
 			var config = {
@@ -186,20 +157,20 @@ angular.module('eMedicsMobile')
 					}
 				}
 			};
-			confirmService('Save task?')
-				.then(function(res) {
-					save().then(function () {
-						var result = $uibModal.open(config);
-						result.result.then(function () {
-							$state.go(vm.mainState);
-						});
-					});
-				}, function() {
-					var result = $uibModal.open(config);
-					result.result.then(function() {
-						$state.go(vm.mainState);
-					});
-				});
+			//confirmService('Save task?')
+			//	.then(function(res) {
+			//		save().then(function () {
+			//			var result = $uibModal.open(config);
+			//			result.result.then(function () {
+			//				$state.go(vm.mainState);
+			//			});
+			//		});
+			//	}, function() {
+			//		var result = $uibModal.open(config);
+			//		result.result.then(function() {
+			//			$state.go(vm.mainState);
+			//		});
+			//	});
 		};
 
 		vm.onReturn = function () {
@@ -211,11 +182,10 @@ angular.module('eMedicsMobile')
 				.then(function(res) {
 					http.get('private/dashboard/tasks/close/'+vm.id)
 						.then(function (res) {
-							blockUI.stop();
+							//blockUI.stop();
 							alertService.add(0, res.state.message);
 							vm.onReturn();
 						});
 				});
 		};
-
 	});

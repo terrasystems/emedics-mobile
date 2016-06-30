@@ -1,5 +1,5 @@
 var Emedics=angular.module('eMedics', ['ionic','eMedicsMobile','public.core',
-  'core.medics','formlyIonic', 'LocalStorageModule','pascalprecht.translate'
+  'core.medics','formlyIonic', 'LocalStorageModule','pascalprecht.translate','base64'
   ]);
 
 
@@ -27,7 +27,7 @@ Emedics.config(function(  $stateProvider, $urlRouterProvider, formlyConfigProvid
     suffix: '.json'
   });
 });
-Emedics.run(function($state,$rootScope,$log,$ionicPlatform, formlyConfig, formlyValidationMessages, checkUserAuth, constants, $translate) {
+Emedics.run(function($state,$rootScope,$log,$ionicPlatform,constants,$translate, formlyConfig, formlyValidationMessages, checkUserAuth) {
 
 
   $ionicPlatform.ready(function() {

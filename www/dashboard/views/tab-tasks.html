@@ -6,7 +6,7 @@
 
     <ion-list  show-reorder="data.showReorder">
 
-        <ion-item ng-repeat="item in vm.tasks" item="item"  class="item-remove-animate">
+        <ion-item ng-click="vm.onClickNew(item.id)" ng-repeat="item in vm.tasks track by $index" item="item"  class="item-remove-animate">
             Name: {{ item.template.name }}
            <p> Description:{{item.template.descr}}</p>
 

@@ -46,11 +46,11 @@
                     Drafts
                 <i style="float: right" class="ion-compose"></i>
                 </ion-item>
-                <ion-item nav-clear menu-close href="#/tab/patients">
+                <ion-item ng-if="'patient'!==vm.user.type" nav-clear menu-close href="#/tab/patients">
                     Patients
                 <i style="float: right" class="ion-ios-person"></i>
                 </ion-item>
-                <ion-item nav-clear menu-close href="#/tab/stuff">
+                <ion-item ng-if="vm.user.org == 'true' || vm.user.org == true || vm.user.type == 'stuff'" nav-clear menu-close href="#/tab/stuff">
                     Stuff
                <i style="float: right" class="ion-ios-people"></i>
                 </ion-item>

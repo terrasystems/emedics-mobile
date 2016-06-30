@@ -1,13 +1,19 @@
-<div class="list">
+<ion-pane>
+    <ion-content>
+        <div style="height: 64px;" ></div>
+        <ion-list>
+            <ion-item class="catalog" ng-repeat=" notification in vm.UnreadNotifications">
+                <div style="float: left">
+                        Description:{{notification.descr}}
+                        <p>From:{{notification.fromUser.username}}</p>
+                        <p>Date:{{vm.convertDate(notification.date)}}</p>
+                        <p>Form:{{notification.template.name}}</p>
+                </div>
+                <button ng-click="vm.onDecline(notification.id)" style="float:right;" class="button ion-close-round  button-assertive"></button>
+                <button ng-click="vm.onAccept(notification.id)"  style="float:right;" class="ion-checkmark-round button  button-balanced"></button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-pane>
 
-    <div class="item item-divider">
-        Candy Bars
-    </div>
 
-    <a class="item" href="#">
-        Butterfinger
-    </a>
-
-    <button ng-click="vm.onRefreshNotif();"></button>
-
-</div>

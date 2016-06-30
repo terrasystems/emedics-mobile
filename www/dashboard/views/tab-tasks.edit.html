@@ -1,0 +1,86 @@
+<ion-content>
+
+    <div style="height: 64px;" ></div>
+    <form name="vm.form" novalidate >
+
+            <div class="row">
+
+                <div class="form-group col-md-2 col-sm-2">
+                    <label><span translate="SELECT_SECTION"></span></label>
+                    <select class="form-control"  ng-model="vm.selectedSection" ng-options="o for o in vm.sectionsName"></select>
+                </div>
+
+                <p class="col-md-2 col-sm-2"><span translate="CATEGORY"></span>: {{vm.formInfo.category}}</p>
+                <p class="col-md-2 col-sm-2"><span translate="NAME"></span>: {{vm.formInfo.name}}</p>
+                <p class="col-md-2 col-sm-2">#: {{vm.formInfo.number}}</p>
+                <p class="col-md-2 col-sm-2"><span translate="DESCR"></span>: {{vm.formInfo.descr}}</p>
+
+            </div>
+
+            <formly-form model="vm.model[vm.selectedKey][vm.selectedSection]" fields="vm.sections[vm.selectedKey][vm.selectedSection]" options="vm.options[vm.selectedKey][vm.selectedSection]" form="vm.form" track-by="$index">
+            </formly-form>
+
+        </form>
+
+
+    </div>
+    <!--<div>-->
+        <!--<button ng-click="vm.onReturn();" class="btn btn-primary"><span translate="RETURN"></span></button>-->
+        <!--<button ng-click="vm.onSave();" ng-if="vm.viewButtons" type="submit" class="btn btn-primary submit-button" ng-disabled="vm.form.$invalid"><span translate="SUBMIT"></span></button>-->
+        <!--<button ng-click="vm.onSend();" ng-if="vm.viewButtons"  style="float: right" class="btn btn-primary" ng-disabled="vm.form.$invalid"><span translate="ADDNOTIF"></span></button>-->
+        <!--<button ng-click="vm.onSaveDraft();" ng-if="vm.viewButtons" ng-disabled="" class="btn btn-primary"><span translate="SAVEASDRAFT"></span></button>-->
+        <!--<button ng-click="vm.onCloseTask();" ng-if="vm.viewButtons" ng-disabled="vm.form.$invalid" class="btn btn-primary"><span translate="CLOSE_TASK"></span></button>-->
+    <!--</div>-->
+
+    <script type="text/ng-template" id="error-messages.html">
+        <formly-transclude></formly-transclude>
+        <div ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched" class="error-messages">
+            <div ng-message="{{ ::name }}"
+                 ng-repeat="(name, message) in ::options.validation.messages"
+                 class="message">
+                {{ message(fc.$viewValue, fc.$modelValue, this)}}
+            </div>
+        </div>
+    </script>
+
+    <!--<form name="vm.form" novalidate>-->
+
+
+
+            <!--<div class="form-group">-->
+                <!--<label><span translate="SELECT_SECTION"></span></label>-->
+                <!--<select class="form-control" ng-model="vm.selectedSection"-->
+                        <!--ng-options="o for o in vm.sectionsName"></select>-->
+            <!--</div>-->
+
+            <!--<p class="col-md-2 col-sm-2"><span translate="CATEGORY"></span>: {{vm.formInfo.category}}</p>-->
+
+            <!--<p class="col-md-2 col-sm-2"><span translate="NAME"></span>: {{vm.formInfo.name}}</p>-->
+
+            <!--<p class="col-md-2 col-sm-2">#: {{vm.formInfo.number}}</p>-->
+
+            <!--<p class="col-md-2 col-sm-2"><span translate="DESCR"></span>: {{vm.formInfo.descr}}</p>-->
+
+
+
+        <!--<formly-form model="vm.model[vm.selectedKey][vm.selectedSection]"-->
+                     <!--fields="vm.sections[vm.selectedKey][vm.selectedSection]"-->
+                     <!--options="vm.options[vm.selectedKey][vm.selectedSection]" form="vm.form" track-by="$index">-->
+        <!--</formly-form>-->
+
+    <!--</form>-->
+
+
+
+    <!--<div>-->
+        <!--<button ng-click="vm.onReturn();" class="btn btn-primary"><span translate="RETURN"></span></button>-->
+        <!--<button ng-click="vm.onSave();" ng-if="vm.viewButtons" type="submit" class="btn btn-primary submit-button"-->
+                <!--ng-disabled="vm.form.$invalid"><span translate="SUBMIT"></span></button>-->
+        <!--<button ng-click="vm.onSend();" ng-if="vm.viewButtons" style="float: right" class="btn btn-primary"-->
+                <!--ng-disabled="vm.form.$invalid"><span translate="ADDNOTIF"></span></button>-->
+        <!--<button ng-click="vm.onSaveDraft();" ng-if="vm.viewButtons" ng-disabled="" class="btn btn-primary"><span-->
+                <!--translate="SAVEASDRAFT"></span></button>-->
+        <!--<button ng-click="vm.onCloseTask();" ng-if="vm.viewButtons" ng-disabled="vm.form.$invalid"-->
+                <!--class="btn btn-primary"><span translate="CLOSE_TASK"></span></button>-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+</ion-content>
