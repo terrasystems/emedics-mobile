@@ -114,38 +114,38 @@ angular.module('core.medics')
 
 
 //// Интерцептор для перехвата ошибок
-//	.service('responseErrorInterceptor', function ($rootScope, $q, $injector, blockUI) {
-//		return {
-//			'response': function (response) {
-//				//console.log('int.responce: '+response);
-//				return response;
-//			},
-//			'responseError': function (rejection) {
-//				//console.log('int.rejection: ' + rejection);
-//
-//				blockUI.reset();
-//
-//				switch (rejection.status) {
-//					case 401:
-//					{
-//						$injector.get('$state').go('main.public.login',{reload: true});
-//						break;
-//					}
-//					case 404:
-//					{
-//						//$injector.get('$state').go('main.public.login',{reload: true});
-//						break;
-//					}
-//					default:
-//					{
-//						//console.log(rejection);
-//						break;
-//					}
-//				}
-//				return $q.reject(rejection);
-//			}
-//		};
-//	})
+	.service('responseErrorInterceptor', function ($rootScope, $q, $injector) {
+		return {
+			'response': function (response) {
+				//console.log('int.responce: '+response);
+				return response;
+			},
+			'responseError': function (rejection) {
+				//console.log('int.rejection: ' + rejection);
+
+
+
+				switch (rejection.status) {
+					case 401:
+					{
+						$injector.get('$state').go('main.public.login',{reload: true});
+						break;
+					}
+					case 404:
+					{
+						//$injector.get('$state').go('main.public.login',{reload: true});
+						break;
+					}
+					default:
+					{
+						//console.log(rejection);
+						break;
+					}
+				}
+				return $q.reject(rejection);
+			}
+		};
+	})
 
 
 	.service('checkUserAuth', function ($location, localStorageService, $rootScope) {

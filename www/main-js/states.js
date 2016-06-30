@@ -73,7 +73,7 @@ angular.module('core.medics')
 						controller: 'addReferencesCtrl'
 					}
 				}
-			});
+			})
 		//	.state('tab.notifications', {
 		//		url: '/notifications',
 		//		views: {
@@ -84,15 +84,15 @@ angular.module('core.medics')
 		//		}
 		//	})
 		//
-		//	.state('tab.catalog', {
-		//		url: '/catalog',
-		//		views: {
-		//			'menuContent': {
-		//				templateUrl: 'templates/tab-catalog.html',
-		//				controller: 'catalogCtrl as vm'
-		//			}
-		//		}
-		//	})
+			.state('tab.catalog', {
+				url: '/catalog',
+				views: {
+					'menuContent': {
+						templateUrl: 'dashboard/views/tab-catalog.html',
+						controller: 'catalogCtrl as vm'
+					}
+				}
+			});
 		//	.state('tab.drafts', {
 		//		url: '/drafts',
 		//		views: {

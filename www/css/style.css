@@ -9,3 +9,7 @@
 .scroll-content{
     top:0 !important
 }
+.catalog>button{
+
+    margin-right: 5px;
+}

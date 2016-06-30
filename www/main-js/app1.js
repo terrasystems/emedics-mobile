@@ -7,16 +7,16 @@ Emedics.config(function(  $stateProvider, $urlRouterProvider, formlyConfigProvid
                          localStorageServiceProvider, $translateProvider) {
   $urlRouterProvider.otherwise('/login');
 
-  formlyConfigProvider.setWrapper({
-    name: 'validation',
-    types: ['input'],
-    templateUrl: 'error-messages.html'
-  });
+  //formlyConfigProvider.setWrapper({
+  //  name: 'validation',
+  //  types: ['input'],
+  //  templateUrl: 'error-messages.html'
+  //});
 
 
   // Interceptors
-  //$httpProvider.interceptors.push('responseErrorInterceptor');
-  //$httpProvider.interceptors.push('requestInterceptor');
+  $httpProvider.interceptors.push('responseErrorInterceptor');
+  $httpProvider.interceptors.push('requestInterceptor');
 
   // Local storage Prefix
   localStorageServiceProvider.setPrefix('emed');
@@ -44,7 +44,7 @@ Emedics.run(function($state,$rootScope,$log,$ionicPlatform, formlyConfig, formly
 
 
   });
-  $rootScope.$on('$stateChangeError', function ($rootScope, $state, formlyConfig, formlyValidationMessages, checkUserAuth,$log,constants) {
+  $rootScope.$on('$stateChangeError', function ($rootScope,constants,$translate, $state, formlyConfig, formlyValidationMessages, checkUserAuth,$log) {
     var jState = JSON.stringify(toState);
     var jParams = JSON.stringify(toParams);
     $log.error('Cannot change state %s with params %s:\n%s', jState, jParams, error.stack || error);
@@ -58,12 +58,13 @@ Emedics.run(function($state,$rootScope,$log,$ionicPlatform, formlyConfig, formly
   formlyConfig.extras.errorExistsAndShouldBeVisibleExpression = 'fc.$touched || form.$submitted';
   formlyValidationMessages.addStringMessage('required', 'This field is required');
 
-  //$rootScope.$on('$stateChangeStart', function(event, toState) { //toParams, fromParams
-  //  if  ( (toState.name).indexOf('private')>-1 ) {
-  //    checkUserAuth();
-  //  }
-  //
-  //});
+  $rootScope.$on('$stateChangeStart', function(event, toState, fromState) { //toParams, fromParams
+    if  ( (toState.name).indexOf('tab')>-1 ) {
+      checkUserAuth();
+    }
+
+
+  });
 
 });
 
