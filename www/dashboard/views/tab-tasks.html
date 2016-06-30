@@ -6,20 +6,18 @@
 
     <ion-list  show-reorder="data.showReorder">
 
-        <ion-item ng-repeat="item in items"
-                  item="item"
-                  href="#/item/{{item.id}}" class="item-remove-animate">
-            Form {{ item.id }}
-           <p> Name:{{item.name}}</p>
+        <ion-item ng-repeat="item in vm.tasks" item="item"  class="item-remove-animate">
+            Name: {{ item.template.name }}
+           <p> Description:{{item.template.descr}}</p>
 
-            <ion-option-button class="button-assertive"
-                               ng-click="edit(item)">
-                Edit
-            </ion-option-button>
-            <ion-option-button class="button-calm"
-                               ng-click="share(item)">
-                Share
-            </ion-option-button>
+            <!--<ion-option-button class="button-assertive"-->
+                               <!--ng-click="edit(item)">-->
+                <!--Edit-->
+            <!--</ion-option-button>-->
+            <!--<ion-option-button class="button-calm"-->
+                               <!--ng-click="share(item)">-->
+                <!--Share-->
+            <!--</ion-option-button>-->
             <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
         </ion-item>
 

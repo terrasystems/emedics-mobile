@@ -7,10 +7,10 @@
 
                 {{formTemplate.name}}
                 <button style="float: right" class="button ion-eye button-small button-calm" ng-click="vm.onView(formTemplate.id);">
-                    View
+                
                 </button>
                 <button style="float: right" class="button ion-plus-round  button-small button-balanced" ng-click="vm.onLoad(formTemplate.id);formTemplate.isLoad=true;">
-                    Load
+
                 </button>
                 <button ng-click="vm.Buy(formTemplate.id);formTemplate.isPay=true;formTemplate.isLoad=true;" ng-disabled="formTemplate.isPay" ng-if="formTemplate.commercialEnum==='PAID'" ng-hide="formTemplate.existPaid === true" style="float: right" class="button ion-bag  button-small button-assertive">
                     Buy
