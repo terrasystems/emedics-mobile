@@ -106,25 +106,38 @@ angular.module('core.medics')
 						controller: 'catalogCtrl as vm'
 					}
 				}
+			})
+			.state('tab.drafts', {
+				url: '/drafts',
+				views: {
+					'menuContent': {
+						templateUrl: 'dashboard/views/tab-drafts.html',
+						controller: 'draftsCtrl as vm'
+					}
+				}
+			})
+			.state('tab.patients', {
+				url: '/patients',
+				views: {
+					'menuContent': {
+						templateUrl: 'dashboard/views/tab-patients.html',
+						controller: 'patientsCtrl as vm'
+					}
+				}
+			})
+			.state('tab.draftsedit',{
+				url: '/draftsedit',
+				views: {
+					'menuContent': {
+						templateUrl: 'dashboard/views/tab-drafts.edit.html',
+						controller: 'draftsEditCtrl as vm'
+					}
+				},
+
+		params:{
+			id: ''
+		}
 			});
-		//	.state('tab.drafts', {
-		//		url: '/drafts',
-		//		views: {
-		//			'menuContent': {
-		//				templateUrl: 'templates/tab-drafts.html',
-		//				controller: 'draftsCtrl as vm'
-		//			}
-		//		}
-		//	})
-		//	.state('tab.patients', {
-		//		url: '/patients',
-		//		views: {
-		//			'menuContent': {
-		//				templateUrl: 'templates/tab-patients.html',
-		//				controller: 'patientsCtrl as vm'
-		//			}
-		//		}
-		//	})
 		//	.state('tab.stuff', {
 		//		url: '/stuff',
 		//		views: {

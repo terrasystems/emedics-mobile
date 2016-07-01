@@ -4,7 +4,6 @@
 angular.module('core.medics')
 
 
-
 	//.service('alertService', function ($rootScope, toastr) {
 	//	var alertService = {};
 	//	alertService.add = function (type, titleText, msg, msgParam) {
@@ -30,7 +29,7 @@ angular.module('core.medics')
 	//	return alertService;
 	//})
 
-	.service('auth', function($rootScope, localStorageService){
+	.service('auth', function ($rootScope, localStorageService) {
 		return {
 			saveUserData: function (data) {
 				if (data.token) {
@@ -45,13 +44,13 @@ angular.module('core.medics')
 		};
 	})
 
-	.service('http', function($http, $q, constants,$translate) {
-		function get (url, filter){
+	.service('http', function ($http, $q, constants, $translate) {
+		function get(url, filter) {
 			var deferred = $q.defer();
 			$http.get(constants.restUrl + url, filter).then(function (resp) {
 				resp.data.state.message = $translate.instant(resp.data.state.message);
-				if  (resp.data && resp.data.state) {
-					if  (resp.data.state.value===true) {
+				if (resp.data && resp.data.state) {
+					if (resp.data.state.value === true) {
 						deferred.resolve(resp.data);
 					}
 					else {
@@ -65,7 +64,7 @@ angular.module('core.medics')
 				}
 			}, function (error) {
 				deferred.reject(error);
-				if  (error.status == '401') {
+				if (error.status == '401') {
 					//alertService.add(2, $translate.instant(error.data.state.message));
 				}
 				else {
@@ -75,13 +74,13 @@ angular.module('core.medics')
 			return deferred.promise;
 		}
 
-		function post (url, params) {
+		function post(url, params) {
 			//console.log('post: '+ url);
 			var deferred = $q.defer();
 			$http.post(constants.restUrl + url, params).then(function (resp) {
 				resp.data.state.message = $translate.instant(resp.data.state.message);
-				if  (resp.data && resp.data.state) {
-					if  (resp.data.state.value===true) {
+				if (resp.data && resp.data.state) {
+					if (resp.data.state.value === true) {
 						deferred.resolve(resp.data);
 					}
 					else {
@@ -95,7 +94,7 @@ angular.module('core.medics')
 				}
 			}, function (error) {
 				deferred.reject(error);
-				if  (error.status == '401') {
+				if (error.status == '401') {
 					//alertService.add(2, $translate.instant(error.data.state.message));
 				}
 				else {
@@ -124,11 +123,10 @@ angular.module('core.medics')
 				//console.log('int.rejection: ' + rejection);
 
 
-
 				switch (rejection.status) {
 					case 401:
 					{
-						$injector.get('$state').go('main.public.login',{reload: true});
+						$injector.get('$state').go('main.public.login', {reload: true});
 						break;
 					}
 					case 404:
@@ -191,6 +189,7 @@ angular.module('core.medics')
 			}
 		};
 		return {
-			'params' :  paramsPOST
+			'params': paramsPOST
 		};
 	});
+

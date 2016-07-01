@@ -1,9 +1,45 @@
-<ion-view view-title="Account">
-  <ion-content>
-    <ion-list>
-    <ion-toggle>
-        Enable Friends
-    </ion-toggle>
-    </ion-list>
-  </ion-content>
-</ion-view>
+<div class="container">
+  <div class="row form-list " options="listOptions">
+    <div ng-show="vm.list.rows.length == 0" class="alert alert-info" role="alert"><h5  class="noData_msg">You dont have any drafts</h5></div>
+    <div ui-list-view="draft in vm.list.rows track by $index" options="listOptions">
+
+      <div class="tasks">
+        <button style="margin-top: 10px;" class="btn btn-danger red green" ng-click="vm.onSend(draft)">
+          <i class="glyphicon glyphicon-envelope"></i>
+        </button>
+        <button style="margin-top: 10px;" class="btn btn-danger green" ng-click="vm.onEdit(draft.doc._id)">
+          <i class="glyphicon glyphicon-edit"></i>
+        </button>
+        <button style="margin-top: 10px;" class="btn btn-danger red green" ng-click="vm.onDelete(draft.doc._id)">
+          <i class="glyphicon glyphicon-trash"></i>
+        </button>
+        <p class="col-md-3 col-sm-3 col-xs-3"><label class="control-label"><span translate="NAME"></span>: </label>{{draft.doc.draftName}}</p>
+        <!--<p class="col-md-3 col-sm-3 col-xs-3"><label class="control-label"><span translate="DATE"></span>: </label>{{vm.convertDateTime(draft.doc._id)}}</p>-->
+      </div>
+
+    </div>
+  </div>
+</div>
+<ion-content >
+  <div style="height: 64px;" ></div>
+  <!-- The list directive is great, but be sure to also checkout the collection repeat directive when scrolling through large lists -->
+
+  <ion-list  show-reorder="data.showReorder">
+
+    <ion-item ng-click="vm.onEdit(draft.doc._id)" ng-repeat="draft in vm.list.rows track by $index" item="item"  class="item-remove-animate">
+      Name: {{draft.doc.draftName}}
+      <p> Description:{{draft.doc.body.formInfo.descr}}</p>
+
+      <!--<ion-option-button class="button-assertive"-->
+      <!--ng-click="edit(item)">-->
+      <!--Edit-->
+      <!--</ion-option-button>-->
+      <!--<ion-option-button class="button-calm"-->
+      <!--ng-click="share(item)">-->
+      <!--Share-->
+      <!--</ion-option-button>-->
+      <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

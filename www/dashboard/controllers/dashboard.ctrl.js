@@ -12,7 +12,7 @@ angular.module('eMedicsMobile')
 		};
 
 
-		//$rootScope.db = new PouchDB(vm.user.id);
+		$rootScope.db = new PouchDB(vm.user.id);
 		var base= $rootScope.db;
 		var doc = {
 			_id:new Date().toISOString(),

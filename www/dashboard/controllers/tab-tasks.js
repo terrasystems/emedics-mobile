@@ -25,5 +25,21 @@ angular.module('eMedicsMobile')
 		};
 		vm.GetAllTasks();
 
+		//vm.onRefreshNew = function() {
+		//	var params = {
+		//		period: null,
+		//		templateName: null,
+		//		patientName: null,
+		//		fromName: null
+		//	};
+		//	http.post('private/dashboard/tasks/all', params)
+		//		.then(function (res) {
+		//			//blockUI.stop();
+		//			if (res.result) {
+		//				vm.tasks = res.result;
+		//			}
+		//		});
+		//};
+		//vm.onRefreshNew();
 	});
 
