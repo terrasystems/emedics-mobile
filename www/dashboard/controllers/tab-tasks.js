@@ -10,12 +10,36 @@ angular.module('eMedicsMobile')
 		vm.page = {};
 		vm.tasks = [];
 		vm.history = [];
+		vm.showFilter = true;
+		vm.showFilterH = true;
 
+		vm.filterModel = { period: 1, fromName: '', patientName: '', templateName: '' };
+		vm.filterModelH= { period: 1, fromName: '', patientName: '', templateName: '' };
+
+		if (vm.user.type === 'patient') {
+			vm.filterModel.period = 4;
+			vm.filterModelH.period = 4;
+		}
+		//$scope.$watch('vm.filterModel.period', function (newValue) {
+		//	vm.onRefreshNew();
+		//});
+
+		//$scope.$watch('vm.filterModelH.period', function (newValue) {
+		//	vm.onRefreshHistory();
+		//});
 		vm.onClickNew = function (index) {
 			$state.go('tab.tasksedit', {id: index, type: 'tasks', patId: null});
 		};
+		//vm.onClearFilters = function() {
+		//	vm.filterModel = { period: 1, fromName: null, patientName: null, templateName: null };
+		//};
+
+		//vm.onApplyFilters = function() {
+		//	vm.onRefreshNew();
+		//};
+
 		vm.GetAllTasks = function() {
-			http.get('private/dashboard/tasks/all')
+			http.post('private/dashboard/tasks/all',vm.filterModel)
 				.then(function (res) {
 					//blockUI.stop();
 					if (res.result) {

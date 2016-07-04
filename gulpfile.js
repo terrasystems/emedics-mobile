@@ -29,7 +29,8 @@ gulp.task('connect', function () {
     middleware: function (connect, opt) {
       return [
         proxy('/rest', {
-          target: 'http://ec2-54-72-132-102.eu-west-1.compute.amazonaws.com:8080/emedics-0.1.0',
+          //target: 'http://ec2-54-72-132-102.eu-west-1.compute.amazonaws.com:8080/emedics-0.1.0',
+          target:'http://192.168.20.252:8080/emedics-0.1.0',
           changeOrigin:true
         })
       ];

@@ -1,43 +1,51 @@
-<div class="container ui-list-view edit_form">
-    <div class="pad"></div>
-    <button type="submit" class="btn btn-primary"ng-click="vm.onReturn();"><i class="glyphicon glyphicon-arrow-left">&nbsp;</i></button>
+<ion-content>
+    <div style="height: 64px;"></div>
+    <div class="container ui-list-view edit_form">
+        <div class="pad"></div>
+        <button type="submit" class="btn btn-primary" ng-click="vm.onReturn();"><i
+                class="glyphicon glyphicon-arrow-left">&nbsp;</i></button>
 
-    <form name="vm.form" novalidate >
+        <form name="vm.form" novalidate>
 
-        <div class="row">
-            <div class="form-group col-md-2 col-sm-2">
-                <label><span translate="SELECT_SECTION"></span></label>
-                <select class="form-control"  ng-model="vm.data.selectedSection" ng-options="o for o in vm.data.sectionsName"></select>
+            <div class="row">
+                <div class="form-group col-md-2 col-sm-2">
+                    <label><span translate="SELECT_SECTION"></span></label>
+                    <select class="form-control" ng-model="vm.data.selectedSection"
+                            ng-options="o for o in vm.data.sectionsName"></select>
+                </div>
+
+                <p class="col-md-2 col-sm-2"><span translate="CATEGORY"></span>: {{vm.data.formInfo.category}}</p>
+
+                <p class="col-md-2 col-sm-2"><span translate="NAME"></span>: {{vm.data.formInfo.name}}</p>
+
+                <p class="col-md-2 col-sm-2">#: {{vm.data.formInfo.number}}</p>
+
+                <p class="col-md-2 col-sm-2"><span translate="DESCR"></span>: {{vm.data.formInfo.descr}}</p>
             </div>
 
-            <p class="col-md-2 col-sm-2"><span translate="CATEGORY"></span>: {{vm.data.formInfo.category}}</p>
-            <p class="col-md-2 col-sm-2"><span translate="NAME"></span>: {{vm.data.formInfo.name}}</p>
-            <p class="col-md-2 col-sm-2">#: {{vm.data.formInfo.number}}</p>
-            <p class="col-md-2 col-sm-2"><span translate="DESCR"></span>: {{vm.data.formInfo.descr}}</p>
-        </div>
+            <formly-form model="vm.data.model[vm.data.selectedKey][vm.data.selectedSection]"
+                         fields="vm.data.sections[vm.data.selectedKey][vm.data.selectedSection]"
+                         options="vm.data.options[vm.data.selectedKey][vm.data.selectedSection]"
+                         form="vm.form"
+                         track-by="$index">
+            </formly-form>
 
-        <formly-form model="vm.data.model[vm.data.selectedKey][vm.data.selectedSection]"
-                     fields="vm.data.sections[vm.data.selectedKey][vm.data.selectedSection]"
-                     options="vm.data.options[vm.data.selectedKey][vm.data.selectedSection]"
-                     form="vm.form"
-                     track-by="$index">
-        </formly-form>
+        </form>
+    </div>
 
-    </form>
-</div>
+    <div>
+        <button ng-click="vm.onSaveDraft();" class="btn btn-primary" translate="SAVEASDRAFT"></button>
+    </div>
 
-<div>
-    <button ng-click="vm.onSaveDraft();" class="btn btn-primary" translate="SAVEASDRAFT"></button>
-</div>
-
-<!--<script type="text/ng-template" id="error-messages.html">-->
+    <!--<script type="text/ng-template" id="error-messages.html">-->
     <!--<formly-transclude></formly-transclude>-->
     <!--<div ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched" class="error-messages">-->
-        <!--<div ng-message="{{ ::name }}"-->
-             <!--ng-repeat="(name, message) in ::options.validation.messages"-->
-             <!--class="message">-->
-            <!--{{ message(fc.$viewValue, fc.$modelValue, this)}}-->
-        <!--</div>-->
+    <!--<div ng-message="{{ ::name }}"-->
+    <!--ng-repeat="(name, message) in ::options.validation.messages"-->
+    <!--class="message">-->
+    <!--{{ message(fc.$viewValue, fc.$modelValue, this)}}-->
     <!--</div>-->
-<!--</script>-->
+    <!--</div>-->
+    <!--</script>-->
 
+</ion-content>

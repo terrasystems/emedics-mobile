@@ -1,5 +1,6 @@
-<div style="height: 64px;"></div>
+
 <ion-header-bar class="bar-light bar-subheader">
+
     <input type="search"
            placeholder="Filter contacts..."
            ng-model="search">
@@ -7,15 +8,27 @@
             class="button button-icon ion-android-close input-button"
             ng-click="clearSearch()">
     </button>
+
 </ion-header-bar>
 <ion-content>
-    <div class="list">
-        <a class="item my-item"
-           collection-repeat="item in contacts | orderBy:'first_name' | searchContacts:search"
+    <div style="height: 64px;" ></div>
+    <div style="height: 40px;" ></div>
+    <ion-list >
+
+        <ion-item  class=" item my-item"
+           collection-repeat="item in contacts | orderBy:'email' | searchContacts:search | limitTo:numberOfItemsToDisplay"
            collection-item-height="60"
            collection-item-width="'100%'">
-            <img ng-src="http://placekitten.com/60/{{55 + ($index % 10)}}">
-            {{item.first_name+' '+item.last_name}}
-        </a>
-    </div>
+            <button ng-click="addRefs(item.id)" style="float: right" class="button ion-plus-round  button-small button-balanced"> add </button>
+               {{item.name}}
+            <p>{{item.email}}</p>
+            <p>{{item.type}}</p>
+
+
+        </ion-item>
+
+    </ion-list>
+    <ion-infinite-scroll on-infinite="addMoreItem()" icon="" ng-if="contacts.length">
+
+    </ion-infinite-scroll>
 </ion-content>

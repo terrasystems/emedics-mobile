@@ -15,41 +15,50 @@ angular.module('eMedicsMobile')
 		};
 
 		vm.onSend = function (obj) {
-			var paramsPOST = {
+			var paramsCreate = {
 				template: {
 					id: obj.doc.body.formInfo.rawData.template.id,
 					templateDto: null
 				},
-				patient: obj.doc.body.formInfo.rawData.patient.id
+				patient: obj.doc.body.formInfo.rawData.patient ? obj.doc.body.formInfo.rawData.patient.id : null,
+				fromID: null, //vm.user.id,
+				data: JSON.stringify({sections: obj.doc.body.sections})
 			};
-			http.post('private/dashboard/tasks/create', paramsPOST)
-				.then(function (res) {
-					//blockUI.stop();
-					if (res.state && res.state.value && !!res.state.value) {
-						var newTaskID = res.result.id;
-						paramsPOST = {event:
-						{	id: newTaskID,
-							patient: res.result.patient,
-							template: res.result.template,
-							data: {sections: obj.doc.body.sections},
-							fromUser: res.result.fromUser,
-							toUser: null,
-							descr: res.result.descr
-						}
-						};
-						http.post('private/dashboard/tasks/edit', paramsPOST);
+			if (vm.user.type === 'stuff' || vm.user.type === 'patient') {
+				http.get('private/dashboard/tasks/findTask/' + obj.doc.body.formInfo.rawData.template.id)
+					.then(function (res) {
+						if (res.result) {
+							//edit promis
+							var newTaskID = res.result.id;
+							var paramsEdit = {
+								event: {
+									id: newTaskID,
+									patient: res.result.patient,
+									template: res.result.template,
+									data: {sections: obj.doc.body.sections}, // !!!!!
+									fromUser: res.result.fromUser,
+									toUser: null,
+									descr: res.result.descr
+								}
+							};
+							http.post('private/dashboard/tasks/edit', paramsEdit);
 							//.then(function (res) {
 							//	blockUI.stop();
-							//	if (res.result) {
-							//
+							//	//modal window
+							//	if (res.state && res.state.value && !!res.state.value) {
 							//		var config = {
 							//			templateUrl: 'modules/dashboard/views/modal.addNotif.html',
 							//			controller: 'modalAddNotifCtrl',
 							//			controllerAs: 'vm',
 							//			resolve: {
-							//				model: function($q) {
+							//				model: function ($q) {
 							//					var deferred = $q.defer();
-							//					deferred.resolve({data: {task_id: newTaskID, obj: obj.doc.body.formInfo}});
+							//					deferred.resolve({
+							//						data: {
+							//							task_id: newTaskID,
+							//							obj: obj.doc.body.formInfo
+							//						}
+							//					});
 							//					return deferred.promise;
 							//				}
 							//			}
@@ -61,12 +70,71 @@ angular.module('eMedicsMobile')
 							//
 							//	}
 							//});
-					//} else {
-					//	//alertService.add(2, res.state.message);
-					}
-				});
-		};
+							//} else {
+							//create promis with model
+							//				http.post('private/dashboard/tasks/create', paramsCreate)
+							//					.then(function (res) {
+							//						blockUI.stop();
+							//						if (res.state && res.state.value && !!res.state.value) {
+							//							var newTaskID = res.result.id;
+							//							//modal window
+							//							var config = {
+							//								templateUrl: 'modules/dashboard/views/modal.addNotif.html',
+							//								controller: 'modalAddNotifCtrl',
+							//								controllerAs: 'vm',
+							//								resolve: {
+							//									model: function ($q) {
+							//										var deferred = $q.defer();
+							//										deferred.resolve({
+							//											data: {
+							//												task_id: newTaskID,
+							//												obj: obj.doc.body.formInfo
+							//											}
+							//										});
+							//										return deferred.promise;
+							//									}
+							//								}
+							//							};
+							//							var result = $uibModal.open(config);
+							//							result.result.then(function () {
+							//								vm.onRefresh();
+							//							});
+							//						}
+							//					});
+							//			}
+							//		});
+							//}
 
+							//}else {
+							//		//create with model
+							//		http.post('private/dashboard/tasks/create', paramsCreate)
+							//			.then(function (res) {
+							//				blockUI.stop();
+							//				if (res.state && res.state.value && !!res.state.value) {
+							//					var newTaskID = res.result.id;
+							//					//modal window
+							//					var config = {
+							//						templateUrl: 'modules/dashboard/views/modal.addNotif.html',
+							//						controller: 'modalAddNotifCtrl',
+							//						controllerAs: 'vm',
+							//						resolve: {
+							//							model: function ($q) {
+							//								var deferred = $q.defer();
+							//								deferred.resolve({data: {task_id: newTaskID, obj: obj.doc.body.formInfo}});
+							//								return deferred.promise;
+							//							}
+							//						}
+							//					};
+							//					var result = $uibModal.open(config);
+							//					result.result.then(function () {
+							//						vm.onRefresh();
+							//					});
+							//				}
+							//			});
+						}
+					});
+			}
+		};
 		vm.onDelete = function(id) {
 			//confirmService('Delete draft?')
 			//	.then(function(res) {

@@ -78,7 +78,8 @@ angular.module('eMedicsMobile')
 							description: null,
 							templateDto: null
 						},
-						patient: null
+						patient: null,
+						data: "{}"
 					};
 					http.post('private/dashboard/tasks/create', paramsPOST);
 						//.then(function (res) {
