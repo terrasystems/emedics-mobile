@@ -2,7 +2,7 @@
 /*jshint -W117, -W097*/
 
 angular.module('eMedicsMobile')
-	.controller('catalogCtrl', function ( $state,localStorageService,http) {
+	.controller('catalogCtrl', function ( $state,localStorageService,http, alertService) {
 
 		var vm = this;
 		console.log('catalogCTRL');
@@ -70,7 +70,10 @@ angular.module('eMedicsMobile')
 		};
 
 		vm.onLoad = function (id) {
-			http.get('private/dashboard/template/load/' + id)
+			alertService.showPopap('Hello' ,'' ,'dashboard/views/popups/sendTask.html').then(function (res) {
+				console.log(res);
+			});
+/*			http.get('private/dashboard/template/load/' + id)
 				.then(function (rest) {
 					vm.templateParams = vm.FormTemplate.find(function (form) {
 						return form.id === id;
@@ -95,7 +98,7 @@ angular.module('eMedicsMobile')
 				//	blockUI.stop();
 				//	alertService.add(0, res.state.message);
 				//}
-			);
+			);*/
 		};
 
 		vm.DeleteMyForm = function (id) {

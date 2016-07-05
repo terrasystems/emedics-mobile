@@ -45,6 +45,25 @@ angular.module('core.medics')
 	})
 	.service('alertService',function($ionicPopup) {
 	return {
+		showPopap: function (title, subTitle, template) {
+			return $ionicPopup.show({
+				templateUrl: template,
+				title: title,
+				subTitle: subTitle,
+				scope: null,
+				buttons: [
+					{ text: 'Cancel' },
+					{
+						text: '<b>Ok</b>',
+						type: 'button-positive',
+						onTap: function(e) {
+							// Returning a value will cause the promise to resolve with the given value.
+							return this.scope.data;
+						}
+					}
+				]
+			});
+		},
 		showAlert: function (title, template) {
 
 			return $ionicPopup.alert({
