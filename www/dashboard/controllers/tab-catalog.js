@@ -14,8 +14,12 @@ angular.module('eMedicsMobile')
 		vm.user = localStorageService.get('userData');
 		vm.isPatient = ((vm.user.type).toUpperCase() === 'PATIENT');
 
+		vm.type = 'main';
+		getTemplates('main');
+		vm.getTemplates = getTemplates;
+
 		vm.convertFormTemplate = function (arr) {
-			arr.map(function (item) {
+			arr = arr.map(function (item) {
 				item.isPay = false;
 				item.isLoad = false;
 				item.isPreview = false;
@@ -40,30 +44,30 @@ angular.module('eMedicsMobile')
 			return arr;
 		};
 
-
-		vm.getAllTemplates =  function () {
+		function getTemplates(type) {
+		if ('main' === type)
+		{
 			http.get('private/dashboard/template')
 				.then(function (res) {
 					console.log(res);
 					if (res.state) {
-						vm.FormTemplate = vm.convertFormTemplate(res.result);
+						vm.formTemplates = vm.convertFormTemplate(res.result);
+						vm.type = type;
 					}
 				});
-		};
-		vm.getAllTemplates();
-
-
-		vm.getUserTemplate=function () {
+		}
+			else
+		{
 			http.get('private/dashboard/user/template')
 				.then(function (res) {
 					if (res.state) {
-						vm.myForms = res.result;
+						vm.formTemplates = res.result;
+						vm.type = type;
 					}
 				});
 		}
 
-		vm.getUserTemplate();
-
+		};
 
 		vm.onLoad = function (id) {
 			http.get('private/dashboard/template/load/' + id)
