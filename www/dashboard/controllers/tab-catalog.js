@@ -101,7 +101,7 @@ angular.module('eMedicsMobile')
 		vm.DeleteMyForm = function (id) {
 			http.get('private/dashboard/template/delete/' + id)
 				.then(function () {
-					vm.getUserTemplate();
+					vm.getTemplates('my');
 					//blockUI.stop();
 					//alertService.add(0, res.state.message);
 				});
