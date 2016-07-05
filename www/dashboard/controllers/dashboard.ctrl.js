@@ -6,6 +6,7 @@ angular.module('eMedicsMobile')
 
 		var vm = this;
 		console.log("DashboardCTRL");
+
 		vm.user = localStorageService.get('userData');
 		$scope.toggleLeft = function() {
 			$ionicSideMenuDelegate.toggleLeft();

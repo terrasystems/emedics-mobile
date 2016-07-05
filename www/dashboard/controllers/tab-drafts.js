@@ -153,6 +153,8 @@ angular.module('eMedicsMobile')
 		};
 		vm.onRefresh();
 
+
+
 		vm.convertDateTime = function (d) {
 			return d.slice(0, 19).replace('T', ' / ');
 		};
