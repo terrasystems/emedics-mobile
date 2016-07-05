@@ -2,7 +2,7 @@
 /*jshint -W117, -W097*/
 
 angular.module('eMedicsMobile')
-	.controller('patientsCtrl', function ($scope,http,localStorageService) {
+	.controller('patientsCtrl', function ($scope,http,localStorageService,$translate) {
 
 		var vm = this;
     console.log('patientsCTRL');

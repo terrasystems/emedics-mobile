@@ -30,8 +30,13 @@ angular.module('eMedicsMobile')
 
 		$scope.addRefs= function(id){
 			console.log(id);
-			http.get('private/dashboard/' + vm.user.type + '/references/add/'+ id);
-      $state.go('tab.references');
+			http.get('private/dashboard/' + vm.user.type + '/references/add/'+ id)
+				.then(function(res){
+					if(res){
+						$state.go('tab.references');
+					}
+				});
+
 		};
 
 

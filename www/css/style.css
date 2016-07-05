@@ -16,3 +16,9 @@
 .refs>p{
    float: left;
 }
+.patients_form{
+    border-top: dotted 1px;
+}
+.button_right > button{
+    float: right;
+}

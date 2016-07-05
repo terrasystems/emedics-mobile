@@ -1,48 +1,78 @@
-
-
 <ion-content>
     <div style="height: 64px;"></div>
     <ion-list>
 
         <div ng-repeat=" patient in vm.patients">
-            <ion-item class="item-stable"
+            <ion-item class=" item-stable"
                       ng-click="toggleGroup(patient);vm.onOpenPatient(patient.id)"
                       ng-class="{active: isGroupShown(patient)}">
                 <i class="icon" ng-class="isGroupShown(patient) ? 'ion-minus' : 'ion-plus'"></i>
 
                 Name: {{patient.name}}
                 <p>Email:{{patient.email}}</p>
+
+                <button ng-click="sadad()" style="float:right" class="button ion-trash-a button-small button-assertive"></button>
+
             </ion-item>
 
             <ion-item class="item-accordion" ng-show="isGroupShown(patient)">
 
 
-
                 <!--nested accordion-->
                 <div ng-repeat="form in vm.templates">
-                <ion-item class="item-stable"
-                          ng-click="toggleGroup1(form)"
-                          ng-class="{active: isGroupShown1(form)}">
-                    <i class="icon" ng-class="isGroupShown1(form) ? 'ion-minus' : 'ion-plus'"></i>
+                    <ion-item class="item-stable"
+                              ng-click="toggleGroup1(form)"
+                              ng-class="{active: isGroupShown1(form)}">
+                        <i class="icon" ng-class="isGroupShown1(form) ? 'ion-minus' : 'ion-plus'"></i>
+                        <span translate="NAME"></span>: {{form.name}}
 
 
-
-                </ion-item>
+                    </ion-item>
 
                     <ion-item class="item-accordion" ng-show="isGroupShown1(form)">
 
 
-                    <div class="patients_form" ng-repeat="event in form.events">
+                        <div class="patients_form " ng-repeat="event in form.events">
 
-                        <p class="col col-30"><label><span translate="DATE"></span>: </label>{{vm.convertDate(event.date)}}</p>
-                        <p class="col col-30"><label><span translate="FROM"></span>: </label>{{event.fromUser.username}}</p>
-                        <p class="col col-30"><label><span translate="DESCR"></span>: </label>{{event.descr}}</p>
-                        <p class="col col-30"><label><span translate="STATUS"></span>: </label>{{event.status}}</p>
+                            <div class="row">
 
-                    </div>
+                                <div class="col">
+                                    <p class=""><label><span translate="DATE"></span>: </label>{{vm.convertDate(event.date)}}
+                                    </p>
+                                    <br>
+
+                                    <p class=""><label><span translate="FROM"></span>: </label>{{event.fromUser.username}}
+                                    </p>
+                                    <br>
+
+                                    <p class=""><label><span translate="DESCR"></span>: </label>{{event.descr}}</p>
+                                    <br>
+
+                                    <p class=""><label><span translate="STATUS"></span>: </label>{{event.status}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                    <button class=" col col-33 button button-small button-balanced"
+                                            ng-click="vm.onSend(item, event)">
+                                        <span translate="SEND"></span>
+                                    </button>
+
+
+                                    <button class="col col-33 button button-small button-calm"
+                                            ng-click="vm.onView(event.id, patient.id)"><span
+                                            translate="VIEW"></span></button>
+
+
+                                    <button class="col col-33 button button-small button-positive"
+                                            ng-click="vm.onCopyTask(hist, patient.id)"><span
+                                            translate="COPY_TASK"></span></button>
+
+                            </div>
+                        </div>
 
                     </ion-item>
-            </div>
+                </div>
 
 
                 <!--nested accordion-->
