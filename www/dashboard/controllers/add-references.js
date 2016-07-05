@@ -32,7 +32,7 @@ angular.module('eMedicsMobile')
 			console.log(id);
 			http.get('private/dashboard/' + vm.user.type + '/references/add/'+ id)
 				.then(function(res){
-					if(res){
+					if(res.state.value){
 						$state.go('tab.references');
 					}
 				});
