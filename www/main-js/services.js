@@ -43,7 +43,18 @@ angular.module('core.medics')
 			}
 		};
 	})
+	.service('alertService',function($ionicPopup) {
+	return {
+		showAlert: function (title, template) {
 
+			return $ionicPopup.alert({
+				title: title,
+				template: template ? template : ''
+			});
+		}
+
+	};
+})
 	.service('http', function ($http, $q, constants, $translate) {
 		function get(url, filter) {
 			var deferred = $q.defer();
