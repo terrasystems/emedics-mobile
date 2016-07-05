@@ -1,31 +1,30 @@
 'use strict';
 
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var bower = require('bower');
-var concat = require('gulp-concat');
-var sass = require('gulp-sass');
-var minifyCss = require('gulp-minify-css');
-var rename = require('gulp-rename');
-var sh = require('shelljs');
-var inject = require('gulp-inject');
-var connect = require('gulp-connect');
-var mainBowerFiles = require('main-bower-files');
-var proxy = require('http-proxy-middleware');
-var gulpCopy = require('gulp-copy');
-var rename = require('gulp-rename');
-var paths = {
-  sass: ['./scss/**/*.scss']
-};
+var gulp = require('gulp'),
+    gutil = require('gulp-util'),
+    bower = require('bower'),
+    concat = require('gulp-concat'),
+    sass = require('gulp-sass'),
+    minifyCss = require('gulp-minify-css'),
+    sh = require('shelljs'),
+    inject = require('gulp-inject'),
+    connect = require('gulp-connect'),
+    mainBowerFiles = require('main-bower-files'),
+    proxy = require('http-proxy-middleware'),
+    rename = require('gulp-rename'),
+    paths = {
+      sass: ['./scss/**/*.scss'],
+      src:['./main-js/**/*', './public/**/*', './dashboard/**/*']
+    };
 
-gulp.task('default', ['sass','copy' ,'index','bwc','connect']);
+gulp.task('default', ['sass','copy' ,'index','bwc', 'connect']);
 
 gulp.task('connect', function () {
   connect.server({
     root: ['./www'],
     port: 9000,
     livereload: true,
-    debug:true,
+    debug:false,
     middleware: function (connect, opt) {
       return [
         proxy('/rest', {
@@ -87,9 +86,11 @@ gulp.task('sass', function(done) {
     .on('end', done);
 });
 
-gulp.task('watch', function() {
-  gulp.watch(paths.sass, ['sass']);
-});
+
+/*gulp.task('watch', function() {
+  //gulp.watch(paths.sass, ['sass']);
+  gulp.watch(paths.src);
+});*/
 
 gulp.task('install', ['git-check'], function() {
   return bower.commands.install()

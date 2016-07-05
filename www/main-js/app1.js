@@ -4,7 +4,7 @@ var Emedics=angular.module('eMedics', ['ionic','eMedicsMobile','public.core',
 
 
 Emedics.config(function(  $stateProvider, $urlRouterProvider, formlyConfigProvider, $httpProvider,
-                         localStorageServiceProvider, $translateProvider) {
+                         localStorageServiceProvider, $translateProvider, $ionicConfigProvider) {
   $urlRouterProvider.otherwise('/login');
 
   //formlyConfigProvider.setWrapper({
@@ -15,7 +15,7 @@ Emedics.config(function(  $stateProvider, $urlRouterProvider, formlyConfigProvid
 
 
   // Interceptors
-  $httpProvider.interceptors.push('responseErrorInterceptor');
+   $httpProvider.interceptors.push('responseErrorInterceptor');
   $httpProvider.interceptors.push('requestInterceptor');
 
   // Local storage Prefix
@@ -26,6 +26,12 @@ Emedics.config(function(  $stateProvider, $urlRouterProvider, formlyConfigProvid
     prefix: 'i18n/translation_',
     suffix: '.json'
   });
+
+  // ionic Config
+  $ionicConfigProvider.backButton.text('').previousTitleText('').icon('ion-ios-arrow-back');
+  $ionicConfigProvider.tabs.position('bottom');
+  $ionicConfigProvider.scrolling.jsScrolling(false); // http://tombuyse.com/improving-the-performance-of-your-ionic-application/
+  $ionicConfigProvider.views.maxCache(0);
 });
 Emedics.run(function($state,$rootScope,$log,$ionicPlatform,constants,$translate, formlyConfig, formlyValidationMessages, checkUserAuth) {
 
