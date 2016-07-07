@@ -14,7 +14,7 @@ angular.module('eMedicsMobile')
 		vm.addRefs = function () {
 			//vm.paramsPOST = initParamsPOST.params;
 			//vm.paramsPOST.criteria.list = [];
-			http.get('private/dashboard/' + vm.user.type + '/references')
+			http.post('private/dashboard/' + vm.user.type + '/references',{"name":'', "type":null})
 				.then(function (res) {
 					//blockUI.stop();
 					if (res.result) {

@@ -2,7 +2,7 @@
 /*jshint -W117, -W097*/
 angular.module('eMedicsMobile')
 
-	.controller('addReferencesCtrl', function ($scope, localStorageService, $http, http,$state) {
+	.controller('addReferencesCtrl', function ($scope, localStorageService, $http, http,$state,alertService) {
 		var vm = this;
 		vm.user = localStorageService.get('userData');
 		$scope.contacts = [];
@@ -33,7 +33,11 @@ angular.module('eMedicsMobile')
 			http.get('private/dashboard/' + vm.user.type + '/references/add/'+ id)
 				.then(function(res){
 					if(res.state.value){
-						$state.go('tab.references');
+						alertService.showAlert(res.state.message)
+							.then(function(){
+							$state.go('tab.references');
+						});
+
 					}
 				});
 
@@ -50,6 +54,8 @@ angular.module('eMedicsMobile')
 				var item = items[i];
 				if (query) {
 					if (letterMatch.test(item.name.substring(0, query.length))) {
+						filtered.push(item);
+					}else if(letterMatch.test(item.email.substring(0, query.length))) {
 						filtered.push(item);
 					}
 				} else {

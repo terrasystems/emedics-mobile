@@ -22,3 +22,15 @@
 .button_right > button{
     float: right;
 }
+.overflow-scroll{
+    overflow-y:auto;
+}
+.overflow-scroll.pane{
+    overflow-y: auto;
+}
+.user{
+    background:#ddecff;
+}
+.datePicker{
+    width: 100%;
+}

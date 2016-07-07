@@ -8,6 +8,7 @@
             <!--&lt;!&ndash;Reorder&ndash;&gt;-->
         <!--&lt;!&ndash;</button>&ndash;&gt;-->
     <!--</div>-->
+    <button class="button button-small button-assertive" ng-click="vm.logout()"><span translate="LOGOUT"></span></button>
 </ion-header-bar>
 
 
@@ -22,41 +23,49 @@
 
     <ion-side-menu side="left" >
 
-        <ion-content class="has-header">
+        <ion-content>
             <div style="height: 64px;"></div>
             <ion-list>
+                <ion-item class="user">
+                    Hello,{{vm.user.type.toUpperCase()}}({{vm.user.username}})
+                </ion-item>
+
                 <ion-item nav-clear menu-close href="#/tab/tasks">
-                    Tasks
+
+                    <span translate="TASKS"></span>
                     <i style="float: right" class="ion-settings"></i>
 
                 </ion-item>
                 <ion-item nav-clear menu-close href="#/tab/references">
-                    References
+                    <span translate="REFERENCES"></span>
                 <i style="float: right" class="ion-medkit"></i>
                 </ion-item>
                 <ion-item nav-clear menu-close href="#/tab/notifications">
-                    Notifications
+                    <span translate="NOTIFICATIONS"></span>
                 <i style="float: right" class="ion-email"></i>
                 </ion-item>
                 <ion-item nav-clear menu-close href="#/tab/catalog">
-                    Catalog
+                   <span translate="MYFORMS"></span>
                 <i style="float: right" class="ion-clipboard"></i>
                 </ion-item>
                 <ion-item ng-click="" nav-clear menu-close href="#/tab/drafts">
-                    Drafts
+                    <span translate="DRAFTS"></span>
                 <i style="float: right" class="ion-compose"></i>
                 </ion-item>
                 <ion-item ng-if="'patient'!==vm.user.type" nav-clear menu-close href="#/tab/patients">
-                    Patients
+                    <span translate="PATIENTS"></span>
                 <i style="float: right" class="ion-ios-person"></i>
                 </ion-item>
                 <ion-item ng-if="vm.user.org == 'true' || vm.user.org == true || vm.user.type == 'stuff'" nav-clear menu-close href="#/tab/stuff">
-                    Stuff
+                    <span translate="STUFF"></span>
                <i style="float: right" class="ion-ios-people"></i>
                 </ion-item>
             </ion-list>
+
         </ion-content>
+
     </ion-side-menu>
+
 </ion-side-menus>
 
 <!--<div class="bar bar-footer bar-positive">-->

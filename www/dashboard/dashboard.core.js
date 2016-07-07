@@ -223,7 +223,7 @@ angular.module('eMedicsMobile', [])
 
 		formlyConfig.setType({
 			name: 'datepicker',
-			template: '<input type="date" ng-model="model[options.key]" />'
+			template: '<input class="datePicker" type="date" ng-model="model[options.key]" />'
 		});
 
 

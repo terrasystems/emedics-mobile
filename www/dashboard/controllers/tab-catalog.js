@@ -49,7 +49,6 @@ angular.module('eMedicsMobile')
 		{
 			http.get('private/dashboard/template')
 				.then(function (res) {
-					console.log(res);
 					if (res.state) {
 						vm.formTemplates = vm.convertFormTemplate(res.result);
 						vm.type = type;
@@ -67,7 +66,7 @@ angular.module('eMedicsMobile')
 				});
 		}
 
-		};
+		}
 
 		vm.onLoad = function (id) {
 			alertService.showPopap('Hello' ,'' ,'dashboard/views/popups/sendTask.html').then(function (res) {
@@ -100,27 +99,44 @@ angular.module('eMedicsMobile')
 				//}
 			);*/
 		};
-
+		vm.onAddTask = function (obj) {
+			if(obj){
+			var paramsPOST = {
+				template: {
+					id: obj.templateDto.id,
+					type: obj.templateDto.typeEnum,
+					description: null,
+					templateDto: null
+				},
+				patient: null,
+				data: "{}"
+			};
+         http.post('private/dashboard/tasks/create', paramsPOST)
+	         .then(function (res) {
+					alertService.showAlert(res.state.message);
+				});
+			}
+		};
 		vm.DeleteMyForm = function (id) {
 			http.get('private/dashboard/template/delete/' + id)
-				.then(function () {
+				.then(function (res) {
 					vm.getTemplates('my');
 					//blockUI.stop();
-					//alertService.add(0, res.state.message);
+					alertService.showAlert(res.state.message);
 				});
 		};
 		vm.Buy = function (id) {
-			http.get('private/dashboard/template/pay/' + id);
-				//.then(function (res) {
+			http.get('private/dashboard/template/pay/' + id)
+				.then(function (res) {
 				//	blockUI.stop();
-				//	alertService.add(0, res.state.message);
-				//});
+					alertService.showAlert(res.state.message);
+				});
 		};
 		vm.onView = function (id) {
-			http.get('private/dashboard/template/preview/' + id);
-				//.then(function (res) {
+			http.get('private/dashboard/template/preview/' + id)
+				.then(function (res) {
 				//	blockUI.stop();
-				//	alertService.add(0, res.state.message);
-				//});
+					alertService.showAlert(res.state.message);
+				});
 		};
 	});

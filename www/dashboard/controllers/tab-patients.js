@@ -1,9 +1,8 @@
 'use strict';
 /*jshint -W117, -W097*/
 
-angular.module('eMedicsMobile')
-	.controller('patientsCtrl', function ($scope,http,localStorageService,$translate) {
-
+angular.module('core.medics')
+	.controller('patientsCtrl', function ($state,$scope,http,localStorageService,$translate,initParamsPOST,alertService) {
 		var vm = this;
     console.log('patientsCTRL');
 		vm.user = localStorageService.get('userData');
@@ -12,7 +11,7 @@ angular.module('eMedicsMobile')
 		vm.templates = [];
 
 		vm.getMyPatients = function () {
-			http.get('private/dashboard/patients')
+			http.post('private/dashboard/patients',{"name":''})
 				.then(function (res) {
 					//blockUI.stop();
 					if (res.result && angular.isArray(res.result) ) {
@@ -38,6 +37,76 @@ angular.module('eMedicsMobile')
 			return y.toLocaleString().replace(',', ' / ');
 		};
 
+		vm.Remove = function (id_,$event) {
+			if($event){
+				$event.stopPropagation();
+				$event.preventDefault();
+			}
+			vm.paramsPOST = initParamsPOST.params;
+			vm.paramsPOST.criteria.list = [];
+			vm.paramsPOST.criteria.list.push({id: id_});
+			alertService.showPopap('Do you want to remove patient?')
+				.then(function(res){
+
+			if(res.isIonicTap === true) {
+				http.post('private/dashboard/patients/remove', vm.paramsPOST)
+					.then(function (res) {
+						//blockUI.stop();
+						alertService.showAlert(res.state.message);
+						vm.getMyPatients();
+					});
+			}else{
+				console.log("canceled");
+			}
+			});
+		};
+
+		vm.Invite = function (id, event) {
+			if(event){
+				event.isPropagationStopped() ;
+				event.preventDefault();
+			}
+			http.get('private/dashboard/' + vm.user.type + '/references/invite/' + id)
+				.then(function (res) {
+					//blockUI.stop();
+					if  (res.state) {
+						alertService.showAlert(0, res.state.message);
+						vm.getMyPatients();
+					}
+				});
+		};
+
+
+		vm.SendForm = function (obj,hist) {
+			var model = { templ_id: obj.id, obj: obj };
+
+			//blockUI.start();
+			alertService.showPopap('','','dashboard/views/popups/SendTaskFromPatientTab.html');
+			//	.then(function (res) {
+			//	console.log(res);
+			//});
+
+			//
+			//var result = alertService.showPopap({
+			//	templateUrl: 'dashboard/views/popups/SendTaskFromPatientTab.html',
+			//	controller: 'modalAddNotifCtrl',
+			//	controllerAs: 'vm',
+			//	resolve: {
+			//		model: function ($q) {
+			//			var deferred = $q.defer();
+			//			deferred.resolve({data: model,patient:{
+			//				'name':hist.patient.username,
+			//				'email':hist.patient.email,
+			//				'id':hist.patient.id
+			//			}});
+			//			return deferred.promise;
+			//		}
+			//	}
+			//}).result;
+		};
+		vm.onView = function (histId, patientId) {
+			$state.go('tab.tasksedit', {id: histId, type: 'patients+', patId: patientId});
+		};
 		//script for accordion
 		$scope.toggleGroup = function(group) {
 			if ($scope.isGroupShown(group)) {

@@ -1,5 +1,5 @@
 
-<ion-pane header-shrink >
+
 <ion-content >
     <div style="height: 64px;" ></div>
     <!-- The list directive is great, but be sure to also checkout the collection repeat directive when scrolling through large lists -->
@@ -7,8 +7,11 @@
     <ion-list  show-reorder="data.showReorder">
 
         <ion-item ng-click="vm.onClickNew(item.id)" ng-repeat="item in vm.tasks track by $index" item="item"  class="item-remove-animate">
-            Name: {{ item.template.name }}
-           <p> Description:{{item.template.descr}}</p>
+            <span translate="NAME"></span>: {{ item.template.name }}
+            <p><span translate="DATE"></span>: {{vm.convertDateTime(item.date)}}</p>
+            <p><span translate="DESCRIPTION"></span>: {{item.template.descr}}</p>
+            <p><span translate="FROM"></span>: {{item.fromUser.firstName}}  {{item.fromUser.lastName}}</p>
+            <p><span translate="STATUS"></span>: {{item.status}}</p>
 
             <!--<ion-option-button class="button-assertive"-->
                                <!--ng-click="edit(item)">-->
@@ -24,4 +27,4 @@
     </ion-list>
 </ion-content>
 
-</ion-pane>
+

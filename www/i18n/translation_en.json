@@ -168,6 +168,7 @@
   "LOAD":"Load",
   "LAST_NAME":"Last Name",
   "ENTER_LAST_NAME":"Enter your last name",
-  "ENTER_BIRTH_DATE":"Select your birth date"
+  "ENTER_BIRTH_DATE":"Select your birth date",
+  "FROM":"From"
 
 }

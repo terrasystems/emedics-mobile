@@ -26,11 +26,12 @@
   <!-- The list directive is great, but be sure to also checkout the collection repeat directive when scrolling through large lists -->
 
   <ion-list  show-reorder="data.showReorder">
+    <ion-item  ng-repeat="draft in vm.list.rows track by $index" item="item"  class="catalog item-remove-animate">
 
-    <ion-item ng-click="vm.onEdit(draft.doc._id)" ng-repeat="draft in vm.list.rows track by $index" item="item"  class="item-remove-animate">
       Name: {{draft.doc.draftName}}
       <p> Description:{{draft.doc.body.formInfo.descr}}</p>
-
+      <button ng-click="vm.Delete(draft.doc._id,event)" style="float: right;" class="button ion-trash-b  button-assertive"></button>
+      <button ng-click="vm.onEdit(draft.doc._id)" style="float: right;margin-right: 10px" class="button  button-positive" translate="EDIT"></button>
       <!--<ion-option-button class="button-assertive"-->
       <!--ng-click="edit(item)">-->
       <!--Edit-->

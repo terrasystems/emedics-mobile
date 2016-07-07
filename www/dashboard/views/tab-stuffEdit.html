@@ -1,0 +1,28 @@
+
+<ion-content>
+    <div style="height: 67px;"></div>
+
+    <form ng-submit="vm.onSave()" name="vm.form">
+
+        <!--<button ui-sref="main.private.dashboard.abstract.stafs" class="btn btn-primary"><i-->
+                <!--class="glyphicon glyphicon-arrow-left">&nbsp;</i></button>-->
+
+        <formly-form model="vm.stuff" fields="vm.StuffFields" form="vm.form">
+            <button type="submit" class="button pull-right button-positive" ng-click="" ng-disabled="vm.form.$invalid">Submit
+            </button>
+        </formly-form>
+
+    </form>
+
+
+    <script type="text/ng-template" id="error-messages.html">
+        <formly-transclude></formly-transclude>
+        <div ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched" class="error-messages">
+            <div ng-message="{{ ::name }}"
+                 ng-repeat="(name, message) in ::options.validation.messages"
+                 class="message">
+                {{ message(fc.$viewValue, fc.$modelValue, this)}}
+            </div>
+        </div>
+    </script>
+</ion-content>

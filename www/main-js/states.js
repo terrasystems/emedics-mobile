@@ -137,17 +137,29 @@ angular.module('core.medics')
 		params:{
 			id: ''
 		}
+			})
+			.state('tab.stuff', {
+				url: '/stuff',
+				views: {
+					'menuContent': {
+						templateUrl: 'dashboard/views/tab-stuff.html',
+						controller: 'stuffCtrl as vm'
+					}
+				}
+			})
+			.state('tab.stuffedit',{
+				url: '/stuffedit',
+				views: {
+					'menuContent': {
+						templateUrl: 'dashboard/views/tab-stuffEdit.html',
+						controller: 'stuffEditCtrl as vm'
+					}
+				},
+				params:{
+					id: ''
+				}
 			});
-		//	.state('tab.stuff', {
-		//		url: '/stuff',
-		//		views: {
-		//			'menuContent': {
-		//				templateUrl: 'templates/tab-stuff.html',
-		//				controller: 'stuffCtrl as vm'
-		//			}
-		//		}
-		//	});
-		//
+
 		$urlRouterProvider.otherwise('/login');
 
 	});

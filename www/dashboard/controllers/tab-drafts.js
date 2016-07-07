@@ -135,14 +135,17 @@ angular.module('eMedicsMobile')
 					});
 			}
 		};
-		vm.onDelete = function(id) {
-			//confirmService('Delete draft?')
-			//	.then(function(res) {
-					db2.del(base_db, id)
+
+		vm.Delete = function(id,$event) {
+			if($event){
+				$event.stopPropagation();
+				$event.preventDefault();
+			}
+			       db2.del(base_db, id)
 						.then(function() {
 							vm.onRefresh();
 						});
-				//});
+
 		};
 
 		vm.onRefresh = function () {

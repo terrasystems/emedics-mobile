@@ -2,7 +2,7 @@
 /*jshint -W117, -W097*/
 
 angular.module('eMedicsMobile')
-	.controller('dashboardCtrl', function ($rootScope,$scope, $ionicSideMenuDelegate,localStorageService) {
+	.controller('dashboardCtrl', function ($state,$rootScope,$scope, $ionicSideMenuDelegate,localStorageService) {
 
 		var vm = this;
 		console.log("DashboardCTRL");
@@ -12,6 +12,13 @@ angular.module('eMedicsMobile')
 			$ionicSideMenuDelegate.toggleLeft();
 		};
 
+		vm.logout = function () {
+			$rootScope.userData = null;
+			$rootScope.token = null;
+			localStorageService.set('token', null);
+			localStorageService.set('userData', null);
+			$state.go('main.public.login');
+		};
 
 		$rootScope.db = new PouchDB(vm.user.id);
 		var base= $rootScope.db;

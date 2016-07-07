@@ -2,7 +2,7 @@
 /*jshint -W117, -W097*/
 
 angular.module('eMedicsMobile')
-	.controller('tasksCtrl', function ($state,$scope,localStorageService,http) {
+	.controller('tasksCtrl', function ($translate,$state,$scope,localStorageService,http) {
 
 		var vm = this;
 		console.log("TasksCTRL");
@@ -49,6 +49,8 @@ angular.module('eMedicsMobile')
 		};
 		vm.GetAllTasks();
 
+
+
 		//vm.onRefreshNew = function() {
 		//	var params = {
 		//		period: null,
@@ -65,5 +67,9 @@ angular.module('eMedicsMobile')
 		//		});
 		//};
 		//vm.onRefreshNew();
+		vm.convertDateTime = function (d) {
+			var y = new Date(d);
+			return y.toLocaleString().replace(',', ' / ');
+		};
 	});
 

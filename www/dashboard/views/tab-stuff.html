@@ -1,0 +1,28 @@
+<ion-content>
+    <div style="height: 64px;"></div>
+    <ion-list>
+        <button ng-click="vm.onEdit('add')" class="button button-full button-positive">Add Stuff</button>
+        <div ng-repeat="stuff in vm.stuffs">
+            <ion-item class="item-stable"
+                      ng-click="toggleGroup(stuff)"
+                      ng-class="{active: isGroupShown(stuff)}">
+                <i class="icon" ng-class="isGroupShown(stuff) ? 'ion-minus' : 'ion-plus'"></i>
+                {{stuff.name}}
+            </ion-item>
+
+
+            <ion-item class="item-accordion"
+                      ng-repeat="stuffInfo in vm.stuffs"
+                      ng-show="isGroupShown(stuffInfo)">
+
+                <p><label class=""><span translate="FIRST_NAME"></span>: </label>{{stuffInfo.firstName || ' - '}}</p>
+                <p><label><span translate="LAST_NAME"></span>: </label>{{stuffInfo.lastName || ' - '}}</p>
+                <p><label><span translate="PHONE"></span>: </label>{{stuffInfo.phone || '(none)'}}</p>
+                <p><label><span translate="EMAIL"></span>: </label>{{stuffInfo.email || '(none)'}}</p>
+                <p><label><span translate="BIRTH_DATE"></span>:</label>{{vm.convertDate(stuffInfo.birth)}}
+                <button ng-click="vm.onEdit(stuff.id)" style="float: right" class="button button-small button-calm" ng-show="vm.canEdit;"> <span translate="EDIT"></span></button>
+            </ion-item>
+        </div>
+    </ion-list>
+
+</ion-content>

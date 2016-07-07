@@ -43,22 +43,46 @@ angular.module('core.medics')
 			}
 		};
 	})
+	//.service('utilsService', function($ionicModal) {
+	//
+	//	this.showModal = function() {
+	//
+	//		var service = this;
+	//
+	//		$ionicModal.fromTemplateUrl('dashboard/views/popups/SendTaskFromPatientTab.html', {
+	//			scope: null,
+	//			controller: 'modalAddNotifCtrl as vm'
+	//		}).then(function(modal) {
+	//			service.modal = modal;
+	//			service.modal.show();
+	//		});
+	//	};
+	//
+	//	this.hideModal = function() {
+	//		this.modal.hide();
+	//	};
+	//
+	//})
+
 	.service('alertService',function($ionicPopup) {
 	return {
 		showPopap: function (title, subTitle, template) {
 			return $ionicPopup.show({
 				templateUrl: template,
+				//controller: 'modalAddNotifCtrl as vm',
+				//controllerAs: 'vm',
 				title: title,
 				subTitle: subTitle,
 				scope: null,
+				controller:'modalAddNotifCtrl',
 				buttons: [
 					{ text: 'Cancel' },
 					{
 						text: '<b>Ok</b>',
 						type: 'button-positive',
-						onTap: function(e) {
+						onTap: function(res) {
 							// Returning a value will cause the promise to resolve with the given value.
-							return this.scope.data;
+							return res;
 						}
 					}
 				]

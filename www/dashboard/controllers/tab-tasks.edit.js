@@ -3,7 +3,7 @@
 angular.module('eMedicsMobile')
 	.controller('tasksEditCtrl', function ( http, $q, $stateParams, $state, localStorageService,
                                                 $scope, $timeout, $translate, $base64,
-                                                $rootScope,db2, forEditTask) {
+                                                $rootScope,db2, forEditTask,alertService) {
 
 		if (!$stateParams.type || $stateParams.type === '' || $stateParams.type === null) {
 			$state.go('tab.tasks');
@@ -84,7 +84,8 @@ angular.module('eMedicsMobile')
 		}
 
 		vm.onSave = function () {
-			save().then(function () {
+			save().then(function (res) {
+				alertService.showAlert("Saved");
 				$state.go(vm.mainState);
 			});
 		};
@@ -92,7 +93,7 @@ angular.module('eMedicsMobile')
 		vm.onSaveDraft = function() {
 			db2.save($rootScope.db, 'add', vm.data.formInfo, vm.data.model)
 				.then(function() {
-					//alertService.add(0, 'Saved - Ok!');
+					alertService.showAlert('Saved as Draft');
 					$state.go(vm.mainState);
 				});
 		};
