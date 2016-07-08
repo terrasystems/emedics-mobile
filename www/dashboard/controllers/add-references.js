@@ -2,7 +2,7 @@
 /*jshint -W117, -W097*/
 angular.module('eMedicsMobile')
 
-	.controller('addReferencesCtrl', function ($scope, localStorageService, $http, http,$state,alertService) {
+	.controller('addReferencesCtrl', function ($scope, localStorageService, http,$state,alertService) {
 		var vm = this;
 		vm.user = localStorageService.get('userData');
 		$scope.contacts = [];
@@ -11,9 +11,9 @@ angular.module('eMedicsMobile')
 		};
 
 		vm.getFind = function () {
-			return $http.post('rest/private/dashboard/' + vm.user.type + '/references/refs', {search: '', type: 'all'})
+			return http.post('private/dashboard/' + vm.user.type + '/references/refs', {search: '', type: 'all'})
 				.then(function(res){
-					$scope.contacts = res.data.result;
+					$scope.contacts = res.result;
 				});
 
 		};
