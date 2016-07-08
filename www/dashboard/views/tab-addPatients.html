@@ -1,0 +1,34 @@
+<ion-header-bar class="bar-light bar-subheader">
+
+    <input style="width: 100%" type="search"
+           placeholder="Search references..."
+           ng-model="search">
+    <button ng-if="search.length"
+            class="button button-icon ion-android-close input-button"
+            ng-click="clearSearch()">
+    </button>
+
+</ion-header-bar>
+
+<ion-content>
+
+    <div style="height: 68px;" ></div>
+    <div style="height: 40px;" ></div>
+    <ion-list >
+
+        <ion-item  class=" item my-item"
+                   collection-repeat="item in users | orderBy:'email' | searchContacts:search | limitTo:numberOfItemsToDisplay"
+                   collection-item-height="60"
+                   collection-item-width="'100%'">
+            <button ng-click="vm.addPatient(item.id)" style="float: right" class="button ion-plus-round  button-small button-balanced"> add </button>
+            {{item.name}}
+            <p>{{item.email}}</p>
+            <p>{{item.type}}</p>
+
+
+        </ion-item>
+
+    </ion-list>
+
+    <ion-infinite-scroll on-infinite="addMoreItem()" icon="" ng-if="users.length">
+</ion-content>

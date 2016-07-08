@@ -97,7 +97,6 @@ angular.module('eMedicsMobile')
 				type: 'input',
 				templateOptions: {
 					type:'password',
-					required: true,
 					placeholder: $translate.instant('PASSWORD')
 				},
 				validation: {

@@ -56,7 +56,7 @@ angular.module('public.core')
 
 
 	})
-	.controller('RegistrationCtrl', function ($translate, $state, pat_fields, doc_fields,org_fields, $timeout, auth, http) {
+	.controller('RegistrationCtrl', function (alertService,$translate, $state, pat_fields, doc_fields,org_fields, $timeout, auth, http) {
 		var vm = this;
 		vm.pat_fields = pat_fields;
 		vm.doc_fields = doc_fields;
@@ -151,8 +151,11 @@ angular.module('public.core')
 			}
 			http.post('public/registration', paramsPOST).then(function (res) {
 				//blockUI.stop();
+				if(!res){
+					alertService.showAlert(res.state.message);
+				}
 				auth.saveUserData(res);
-				//alertService.add(0, '', res.state.message, '');
+				alertService.showAlert(res.state.message);
 				$timeout(function () {
 					$state.go('main.public.login');
 				}, 0);
@@ -208,8 +211,8 @@ angular.module('public.core')
 			blockUI.start();
 			http.post('public/reset_pass', paramsPOST)
 				.then(function (res) {
-					blockUI.stop();
-					alertService.add(0, '', res.state.message, '');
+					//blockUI.stop();
+					alertService.showAlert(res.state.message);
 					$timeout(function () {
 						$state.go('main.public.login');
 					}, 500);
@@ -279,11 +282,11 @@ angular.module('public.core')
 				newPassword: vm.newPass.password
 			};
 
-			blockUI.start();
+			//blockUI.start();
 			http.post('public/changePassword', paramsPOST)
 				.then(function (res) {
 					blockUI.stop();
-					alertService.add(0, '', res.state.message, '');
+					alertService.showAlert(res.state.message);
 					$timeout(function () {
 						$state.go('main.public.login');
 					}, 500);

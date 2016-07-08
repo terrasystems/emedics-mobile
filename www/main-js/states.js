@@ -124,6 +124,14 @@ angular.module('core.medics')
 						controller: 'patientsCtrl as vm'
 					}
 				}
+			}).state('tab.addpatient',{
+				url: '/addpatients',
+				views: {
+					'menuContent': {
+						templateUrl: 'dashboard/views/tab-addPatients.html',
+						controller: 'addPatientCtrl as vm'
+					}
+				}
 			})
 			.state('tab.draftsedit',{
 				url: '/draftsedit',

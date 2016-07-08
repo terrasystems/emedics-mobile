@@ -1,7 +1,7 @@
 <ion-content>
     <div style="height: 64px;"></div>
     <ion-list>
-
+<button class="button button-full button-positive" ui-sref="tab.addpatient" translate="ADDPATIENT"></button>
         <div ng-repeat=" patient in vm.patients">
             <ion-item class=" item-stable"
                       ng-click="toggleGroup(patient);vm.onOpenPatient(patient.id)"
