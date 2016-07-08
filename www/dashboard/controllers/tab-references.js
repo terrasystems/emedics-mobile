@@ -2,7 +2,7 @@
 /*jshint -W117, -W097*/
 
 angular.module('eMedicsMobile')
-	.controller('referencesCtrl', function ($scope,initParamsPOST,http, localStorageService) {
+	.controller('referencesCtrl', function (alertService,$scope,initParamsPOST,http, localStorageService) {
 
 		var vm = this;
 		console.log("referencesCTRL");
@@ -27,7 +27,7 @@ angular.module('eMedicsMobile')
 			http.get('private/dashboard/' + vm.user.type + '/references/remove/'+id)
 				.then(function (res) {
 					//blockUI.stop();
-					//alertService.add(0, res.state.message);
+					alertService.showAlert(res.state.message);
 					vm.addRefs();
 				});
 		};

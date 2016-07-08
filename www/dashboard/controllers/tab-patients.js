@@ -107,6 +107,46 @@ angular.module('core.medics')
 		vm.onView = function (histId, patientId) {
 			$state.go('tab.tasksedit', {id: histId, type: 'patients+', patId: patientId});
 		};
+
+
+		vm.onCopyTask = function(taskObj, patientId) {
+			var paramsPOST = {
+				template: {
+					id: taskObj.template.id,
+					templateDto: {id : taskObj.template.id}
+				},
+				patient: patientId,
+				data: "{}"
+			};
+			http.post('private/dashboard/tasks/create', paramsPOST)
+				.then(function (res) {
+					//blockUI.stop();
+					if (res.state && res.state.value && !!res.state.value) {
+						var newTaskID = res.result.id;
+						paramsPOST = {event:
+						{	id: newTaskID,
+							patient: taskObj.patient,
+							template: taskObj.template,
+							data: taskObj.data,
+							fromUser: taskObj.fromUser,
+							toUser: taskObj.toUser,
+							descr: taskObj.descr
+						}
+						};
+						http.post('private/dashboard/tasks/edit', paramsPOST)
+							.then(function (res) {
+								//blockUI.stop();
+								if (res.result) {
+									alertService.showAlert(res.state.message);
+									newTaskID = res.result.id;
+									$state.go('tab.tasksedit', {id: newTaskID, type: 'patients', patId: patientId});
+								}
+							});
+					} else {
+						alertService.showAlert(res.state.message);
+					}
+				});
+		};
 		//script for accordion
 		$scope.toggleGroup = function(group) {
 			if ($scope.isGroupShown(group)) {

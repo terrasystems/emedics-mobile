@@ -20,7 +20,7 @@
                    collection-repeat="item in users | orderBy:'email' | searchContacts:search | limitTo:numberOfItemsToDisplay"
                    collection-item-height="60"
                    collection-item-width="'100%'">
-            <button ng-click="vm.addPatient(item.id)" style="float: right" class="button ion-plus-round  button-small button-balanced"> add </button>
+            <button ng-click="vm.addPatient(item.id)" style="float: right" class="button ion-plus-round  button-small button-balanced"><span translate="ADD"></span> </button>
             {{item.name}}
             <p>{{item.email}}</p>
             <p>{{item.type}}</p>
