@@ -18,6 +18,7 @@ angular.module('eMedicsMobile')
 				.then(function (res) {
 					//blockUI.stop();
 					vm.stuff = res.result;
+					vm.stuff.birth = new Date(vm.stuff.birth);
 				});
 		}
 
