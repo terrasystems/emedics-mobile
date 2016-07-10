@@ -2,7 +2,7 @@
 /*jshint -W117, -W097*/
 
 angular.module('core.dashboard')
-	.controller('tasksCtrl', function ($translate,$state,$scope,localStorageService,http) {
+	.controller('tasksCtrl', function (alertService,$translate,$state,$scope,localStorageService,http) {
 
 		var vm = this;
 		console.log("TasksCTRL");
@@ -67,6 +67,15 @@ angular.module('core.dashboard')
 		//		});
 		//};
 		//vm.onRefreshNew();
+
+
+		vm.CreateTask=function(){
+			alertService.showPopap('','','dashboard/views/popups/CreateTask.html');
+			//$ionicModal.fromTemplateUrl('dashboard/views/popups/CreateTask.html', {
+			//	scope: $scope
+			//});
+		};
+
 		vm.convertDateTime = function (d) {
 			var y = new Date(d);
 			return y.toLocaleString().replace(',', ' / ');

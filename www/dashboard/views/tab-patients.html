@@ -54,20 +54,23 @@
                             </div>
                             <div class="row">
 
-                                    <button class=" col col-33 button button-small button-balanced"
+                                    <button class=" col col-25 button button-small button-balanced"
                                             ng-click="vm.SendForm(form, event)">
                                         <span translate="SEND"></span>
                                     </button>
 
 
-                                    <button class="col col-33 button button-small button-calm"
+                                    <button class="col col-25 button button-small button-calm"
                                             ng-click="vm.onView(event.id, patient.id)"><span
                                             translate="VIEW"></span></button>
 
 
-                                    <button class="col col-33 button button-small button-positive"
+                                    <button class="col col-15 button button-small button-positive"
                                             ng-click="vm.onCopyTask(event, patient.id)"><span
                                             translate="COPY_TASK"></span></button>
+                                <button class="col col-25 button button-small button button-energized"
+                                        ng-click="vm.onEditTask (event.id,patient.id)"><span
+                                        translate="EDIT"></span></button>
 
                             </div>
                         </div>

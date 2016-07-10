@@ -81,28 +81,26 @@ angular.module('core.dashboard')
 			var model = { templ_id: obj.id, obj: obj };
 
 			//blockUI.start();
-			alertService.showPopap('','','dashboard/views/popups/SendTaskFromPatientTab.html');
+			//alertService.showPopap('','','dashboard/views/popups/SendTaskFromPatientTab.html');
 			//	.then(function (res) {
 			//	console.log(res);
 			//});
 
 			//
-			//var result = alertService.showPopap({
-			//	templateUrl: 'dashboard/views/popups/SendTaskFromPatientTab.html',
-			//	controller: 'modalAddNotifCtrl',
-			//	controllerAs: 'vm',
-			//	resolve: {
-			//		model: function ($q) {
-			//			var deferred = $q.defer();
-			//			deferred.resolve({data: model,patient:{
-			//				'name':hist.patient.username,
-			//				'email':hist.patient.email,
-			//				'id':hist.patient.id
-			//			}});
-			//			return deferred.promise;
-			//		}
-			//	}
-			//}).result;
+			var result = alertService.showPopap({
+				templateUrl: 'dashboard/views/popups/SendTaskFromPatientTab.html',
+				resolve: {
+					model: function ($q) {
+						var deferred = $q.defer();
+						deferred.resolve({data: model,patient:{
+							'name':hist.patient.username,
+							'email':hist.patient.email,
+							'id':hist.patient.id
+						}});
+						return deferred.promise;
+					}
+				}
+			}).result;
 		};
 		vm.onView = function (histId, patientId) {
 			$state.go('tab.tasksedit', {id: histId, type: 'patients+', patId: patientId});
@@ -146,6 +144,10 @@ angular.module('core.dashboard')
 						alertService.showAlert(res.state.message);
 					}
 				});
+		};
+
+		vm.onEditTask = function(histId, patientId) {
+			$state.go('tab.tasksedit', {id: histId, type: 'patients', patId: patientId});
 		};
 		//script for accordion
 		$scope.toggleGroup = function(group) {
