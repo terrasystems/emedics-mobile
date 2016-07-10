@@ -129,9 +129,10 @@ angular.module('core.medics')
 		};
 	})
 //
-	.service('offlineRepository', function ($q, $log, localStorageService) {
-		var db,
-			user = localStorageService.get('userData');
+	.service('offlineRepository', function ($q, $log, localStorageService, pouchDB) {
+		var vm = this
+
+
 
 		//Save or add draft document
 		function addDraft(id, info, model) {
@@ -143,17 +144,17 @@ angular.module('core.medics')
 					draftName: info.name,
 					body: {sections: model, formInfo: info}
 				};
-				db.put(doc, function (res) {
+				vm.db.put(doc, function (res) {
 					deferred.resolve(res);
 				});
 			} else {
-				db.get(id).then(function (doc) {
+				vm.db.get(id).then(function (doc) {
 					doc.body = {sections: model, formInfo: info};
 					return doc;
 				}, function () {
 					deferred.reject(false);
 				}).then(function (doc) {
-					db.put(doc, function (res) {
+					vm.db.put(doc, function (res) {
 						deferred.resolve(res);
 					});
 				});
@@ -195,24 +196,25 @@ angular.module('core.medics')
 			});
 		};
 
-		function get(id) {
+/*		function get(id) {
 			return db.get(id);
 		};
 		function allDocs(params) {
 			return db.allDocs(params);
-		};
+		};*/
 		function init() {
-			db = new PouchDB(user.id);
-			createDesignDoc(db);
+			vm.user = localStorageService.get('userData');
+			vm.db = pouchDB(vm.user.id);
+			vm.serv.__proto__ = vm.db;
+			createDesignDoc(vm.db);
 		};
-
-		return {
+		vm.serv = {
 			init: init,
-			addDraft: addDraft,
-			get: get,
-			allDocs:allDocs,
-			db: db
+			addDraft: addDraft
+			/*get: get,
+			 allDocs:allDocs,*/
 		}
+		return vm.serv;
 	})
 //// Error interceptor
 	.service('responseErrorInterceptor', function ($rootScope, $q, $injector) {

@@ -14,6 +14,7 @@
     "angular-translate-loader-static-files": "^2.11.0",
     "angular-base64": "^2.0.5",
     "ngCordova": "v0.1.17-alpha",
-    "lodash": "^4.13.1"
+    "lodash": "^4.13.1",
+    "angular-pouchdb": "^4.3.0"
   }
 }

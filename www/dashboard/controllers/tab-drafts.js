@@ -8,7 +8,7 @@ angular.module('core.dashboard')
 		var vm = this;
 		vm.user = localStorageService.get('userData');
 		vm.list = [];
-		var base_db = $rootScope.db;
+
 
 		vm.onEdit = function (id) {
 			$state.go('tab.draftsedit', {id: id});
@@ -141,7 +141,7 @@ angular.module('core.dashboard')
 				$event.stopPropagation();
 				$event.preventDefault();
 			}
-			       db2.del(base_db, id)
+			offlineRepository.remove(id)
 						.then(function() {
 							vm.onRefresh();
 						});
@@ -149,7 +149,7 @@ angular.module('core.dashboard')
 		};
 
 		vm.onRefresh = function () {
-			offlineRepository.allDocs({include_docs: true, descending: true})
+			offlineRepository.query('index/docType',{key:'draft', include_docs: true, descending: true})
 				.then(function(res) {
 					vm.list = _.map(res.rows, 'doc');
 				});

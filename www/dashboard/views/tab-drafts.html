@@ -8,13 +8,13 @@
         <button style="margin-top: 10px;" class="btn btn-danger red green" ng-click="vm.onSend(draft)">
           <i class="glyphicon glyphicon-envelope"></i>
         </button>
-        <button style="margin-top: 10px;" class="btn btn-danger green" ng-click="vm.onEdit(draft.doc._id)">
+        <button style="margin-top: 10px;" class="btn btn-danger green" ng-click="vm.onEdit(draft._id)">
           <i class="glyphicon glyphicon-edit"></i>
         </button>
-        <button style="margin-top: 10px;" class="btn btn-danger red green" ng-click="vm.onDelete(draft.doc._id)">
+        <button style="margin-top: 10px;" class="btn btn-danger red green" ng-click="vm.onDelete(draft._id)">
           <i class="glyphicon glyphicon-trash"></i>
         </button>
-        <p class="col-md-3 col-sm-3 col-xs-3"><label class="control-label"><span translate="NAME"></span>: </label>{{draft.doc.draftName}}</p>
+        <p class="col-md-3 col-sm-3 col-xs-3"><label class="control-label"><span translate="NAME"></span>: </label>{{draft.draftName}}</p>
         <!--<p class="col-md-3 col-sm-3 col-xs-3"><label class="control-label"><span translate="DATE"></span>: </label>{{vm.convertDateTime(draft.doc._id)}}</p>-->
       </div>
 
@@ -28,10 +28,10 @@
   <ion-list  show-reorder="data.showReorder">
     <ion-item  ng-repeat="draft in vm.list track by $index" item="item"  class="catalog item-remove-animate">
 
-      Name: {{draft.doc.draftName}}
-      <p> Description:{{draft.doc.body.formInfo.descr}}</p>
-      <button ng-click="vm.Delete(draft.doc._id,event)" style="float: right;" class="button ion-trash-b  button-assertive"></button>
-      <button ng-click="vm.onEdit(draft.doc._id)" style="float: right;margin-right: 10px" class="button  button-positive" translate="EDIT"></button>
+      Name: {{draft.draftName}}
+      <p> Description:{{draft.body.formInfo.descr}}</p>
+      <button ng-click="vm.Delete(draft,event)" style="float: right;" class="button ion-trash-b  button-assertive"></button>
+      <button ng-click="vm.onEdit(draft._id)" style="float: right;margin-right: 10px" class="button  button-positive" translate="EDIT"></button>
       <!--<ion-option-button class="button-assertive"-->
       <!--ng-click="edit(item)">-->
       <!--Edit-->
