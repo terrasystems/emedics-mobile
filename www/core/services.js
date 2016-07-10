@@ -90,6 +90,74 @@ angular.module('core.medics')
 			  offlineResp = {data:{state:{message:'', value:''}}},
 		    error = {status: $translate.instant('MSG_OFFLINE_MODE'), statusText:$translate.instant('MSG_NOT_OF_WORK')};
 
+		function syncDoc(url, list) {
+
+			function saveDoc(list, type) {
+				var ids = _.map(list, 'id'),
+					pushDocs = [],
+					diff;
+
+				offlineRepository.allDocs({keys:ids, include_docs:true}).then(function (docs) {
+
+					pushDocs = _.filter(docs.rows, function (row) {
+						if (!row.error) {
+							var rev = row.doc._rev;
+							row.doc = _.find(list, {id: row.doc._id});
+							if (row.doc) {
+								row.doc._id = row.doc.id;
+								row.doc._rev = rev;
+								return row.doc;
+							}
+						}
+					});
+
+					diff = _.differenceBy(list, pushDocs, 'id');
+
+					diff = _.map(diff, function (item) {
+						item.type = type;
+						item._id = item.id;
+						return item;
+					});
+					offlineRepository.bulkDocs(pushDocs);
+					offlineRepository.bulkDocs(diff);
+				});
+			}
+			switch (url) {
+				case 'private/dashboard/tasks/all':
+				{
+					saveDoc(list,'task');
+					break;
+				}
+				case 'private/dashboard/patient/references':
+				{
+					saveDoc(list,'reference');
+					break;
+				}
+				case 'private/dashboard/template':
+				{
+					saveDoc(list,'template');
+					break;
+				}
+				case 'private/dashboard/user/template':
+				{
+					saveDoc(list,'userTemplate');
+					break;
+				}
+/*				case '':
+				{
+					break;
+				}
+				case '':
+				{
+					break;
+				}*/
+				default:
+				{
+					$log.warning('Offline synchronisation: method not allowed to sync')
+				}
+			}
+		}
+
     //offline http
 		function getOfflineDoc(url, params) {
 
@@ -142,14 +210,14 @@ angular.module('core.medics')
 					});
 					break;
 				}
-				case '':
+/*				case '':
 				{
 					break;
 				}
 				case '':
 				{
 					break;
-				}
+				}*/
 				default:
 				{
 					deferred.reject(error);
@@ -185,7 +253,8 @@ angular.module('core.medics')
 			var deferred = $q.defer();
 			if (!$rootScope.offlineState)
 				$http[method](constants.restUrl + url, params).then(function (resp) {
-						successListener(resp, deferred)
+						successListener(resp, deferred);
+						syncDoc(url, resp.data.result);
 					},
 					function (error) {
 						errorListener(error, deferred);
