@@ -3,7 +3,7 @@
 
 angular.module('core.dashboard')
 
-	.controller('modalAddNotifCtrl', function (utilsService, model,  alertService, $timeout, http, localStorageService, $scope, $q){
+	.controller('modalAddNotifCtrl', function (model,alertService, $timeout, http, localStorageService, $scope, $q){
 
 
 		var vm = this;

@@ -33,19 +33,19 @@
         <button ng-click="vm.onCloseTask();" ng-if="vm.viewButtons" ng-disabled="vm.form.$invalid" class="btn btn-primary" translate="CLOSE_TASK"></button>
     </div>
 
-    <script type="text/ng-template" id="error-messages.html">
-        <formly-transclude></formly-transclude>
+    <!--<script type="text/ng-template" id="error-messages.html">-->
+        <!--<formly-transclude></formly-transclude>-->
 
-    <script type="text/ng-template" id="error-messages.html">
-        <formly-transclude></formly-transclude>
-        <div ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched" class="error-messages">
-            <div ng-message="{{ ::name }}"
-                 ng-repeat="(name, message) in ::options.validation.messages"
-                 class="message">
-                {{ message(fc.$viewValue, fc.$modelValue, this)}}
-            </div>
-        </div>
-    </script>
+    <!--<script type="text/ng-template" id="error-messages.html">-->
+        <!--<formly-transclude></formly-transclude>-->
+        <!--<div ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched" class="error-messages">-->
+            <!--<div ng-message="{{ ::name }}"-->
+                 <!--ng-repeat="(name, message) in ::options.validation.messages"-->
+                 <!--class="message">-->
+                <!--{{ message(fc.$viewValue, fc.$modelValue, this)}}-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</script>-->
 
 
 </ion-content>

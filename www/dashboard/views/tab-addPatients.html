@@ -17,7 +17,7 @@
     <ion-list >
 
         <ion-item  class=" item my-item"
-                   collection-repeat="item in users | orderBy:'email' | searchContacts:search | limitTo:numberOfItemsToDisplay"
+                   collection-repeat="item in users | orderBy:'email && name' | searchContacts:search | limitTo:numberOfItemsToDisplay"
                    collection-item-height="60"
                    collection-item-width="'100%'">
             <button ng-click="vm.addPatient(item.id)" style="float: right" class="button ion-plus-round  button-small button-balanced"><span translate="ADD"></span> </button>

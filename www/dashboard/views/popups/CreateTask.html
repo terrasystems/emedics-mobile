@@ -1,0 +1,14 @@
+<ion-content ng-controller="CreateTaskCtrl as vm">
+
+
+    <p></p>
+    <h4>Template:</h4>
+    <ui-select ng-model="vm.message.template" theme="bootstrap" close-on-select="true" title="Choose a template" on-select="vm.onSelected($item, $model)">
+        <ui-select-match placeholder="Select template...">{{$select.selected.templateDto.name}} &lt;{{$select.selected.templateDto.number}}&gt;</ui-select-match>
+        <ui-select-choices repeat="template.templateDto.id as template in vm.myForms | filter: {name: $select.search}">
+            <div ng-bind-html="template.templateDto.name"></div>
+            <small>Type: {{template.templateDto.typeEnum}}</small>
+        </ui-select-choices>
+    </ui-select>
+
+</ion-content>
