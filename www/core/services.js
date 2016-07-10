@@ -110,7 +110,7 @@ angular.module('core.medics')
 				alertService.error(2, error.status + ' ' + error.statusText);
 			}
 		};
-		//Function wrapper on $http service 
+		//Function wrapper on $http service
 		function H (url, params, method) {
 			var deferred = $q.defer();
 			$http[method](constants.restUrl + url, params).then(function (resp) {successListener(resp,deferred)},
@@ -129,9 +129,37 @@ angular.module('core.medics')
 		};
 	})
 //
-	.service('offlineRepository', function ($log,localStorageService) {
+	.service('offlineRepository', function ($q, $log, localStorageService) {
 		var db,
-				user = localStorageService.get('userData');
+			user = localStorageService.get('userData');
+
+		//Save or add draft document
+		function addDraft(id, info, model) {
+			var deferred = $q.defer();
+			if (id === 'add') {
+				var doc = {
+					_id: new Date().toISOString(),
+					status: 'draft',
+					draftName: info.name,
+					body: {sections: model, formInfo: info}
+				};
+				db.put(doc, function (res) {
+					deferred.resolve(res);
+				});
+			} else {
+				db.get(id).then(function (doc) {
+					doc.body = {sections: model, formInfo: info};
+					return doc;
+				}, function () {
+					deferred.reject(false);
+				}).then(function (doc) {
+					db.put(doc, function (res) {
+						deferred.resolve(res);
+					});
+				});
+			}
+			return deferred.promise;
+		}
 
 		function createDesignDoc(db) {
 			// create a design doc
@@ -140,8 +168,8 @@ angular.module('core.medics')
 				views: {
 					docType: {
 						map: function (doc) {
-							if (doc.type) {
-								emit( doc.type);
+							if (doc.status) {
+								emit(doc.status);
 							}
 						}.toString()
 					}
@@ -165,16 +193,25 @@ angular.module('core.medics')
 					if (err.status !== 409) $log.error('design Doc put failed, ', err);
 				});
 			});
-		}
+		};
 
-		function init () {
+		function get(id) {
+			return db.get(id);
+		};
+		function allDocs(params) {
+			return db.allDocs(params);
+		};
+		function init() {
 			db = new PouchDB(user.id);
 			createDesignDoc(db);
 		};
 
 		return {
-			init:init,
-			db:db
+			init: init,
+			addDraft: addDraft,
+			get: get,
+			allDocs:allDocs,
+			db: db
 		}
 	})
 //// Error interceptor

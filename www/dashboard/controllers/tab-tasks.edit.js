@@ -3,7 +3,7 @@
 angular.module('core.dashboard')
 	.controller('tasksEditCtrl', function ( http, $q, $stateParams, $state, localStorageService,
                                                 $scope, $timeout, $translate, $base64,
-                                                $rootScope,db2, forEditTask,alertService) {
+                                                $rootScope,offlineRepository, forEditTask,alertService) {
 
 		if (!$stateParams.type || $stateParams.type === '' || $stateParams.type === null) {
 			$state.go('tab.tasks');
@@ -91,7 +91,7 @@ angular.module('core.dashboard')
 		};
 
 		vm.onSaveDraft = function() {
-			db2.save($rootScope.db, 'add', vm.data.formInfo, vm.data.model)
+			offlineRepository.addDraft('add', vm.data.formInfo, vm.data.model)
 				.then(function() {
 					alertService.showAlert('Saved as Draft');
 					$state.go(vm.mainState);

@@ -7,7 +7,7 @@ angular.module('core.dashboard')
 		var vm = this;
 		console.log("DashboardCTRL");
 
-		//vm.user = localStorageService.get('userData');
+		vm.user = localStorageService.get('userData');
 		$scope.toggleLeft = function() {
 			$ionicSideMenuDelegate.toggleLeft();
 		};

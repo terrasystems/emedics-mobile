@@ -5,7 +5,7 @@ var Emedics=angular.module('emedics', ['ionic', 'ngCordova', 'core.dashboard','c
 
 Emedics.config(function(  $stateProvider, $urlRouterProvider, formlyConfigProvider, $httpProvider,
                          localStorageServiceProvider, $translateProvider, $ionicConfigProvider) {
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/tab/tasks');
 
   //formlyConfigProvider.setWrapper({
   //  name: 'validation',

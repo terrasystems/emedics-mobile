@@ -70,7 +70,7 @@ angular.module('core.dashboard', [])
 			del: del
 		};
 	})
-.service('forEditTask', function ($q, http, $base64, $translate,db2, $rootScope) {
+.service('forEditTask', function ($q, http, $base64, $translate,offlineRepository, $rootScope) {
 	var getModelForEdit = function (getUrl, id) {
 		var deferred = $q.defer();
 		var data = { sections: [], options: [], model: [], sectionsName: [], selectedSection: '', selectedKey: '', editModel: {}, formInfo: {} };
@@ -98,7 +98,7 @@ angular.module('core.dashboard', [])
 		};
 
 		if  (getUrl==='' && id !==  null) {
-			db2.load($rootScope.db, id)
+			offlineRepository.get(id)
 				.then(function(res) {
 					data.x = res;
 					data.formInfo = res.body.formInfo;

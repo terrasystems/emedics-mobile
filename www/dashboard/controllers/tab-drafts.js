@@ -4,7 +4,7 @@
 angular.module('core.dashboard')
 
 	.controller('draftsCtrl', function ($scope, $rootScope, $state, db2,
-                                      http,localStorageService) {
+                                      http,localStorageService, offlineRepository) {
 		var vm = this;
 		vm.user = localStorageService.get('userData');
 		vm.list = [];
@@ -149,9 +149,9 @@ angular.module('core.dashboard')
 		};
 
 		vm.onRefresh = function () {
-			db2.load_all(base_db, $scope)
+			offlineRepository.allDocs({include_docs: true, descending: true})
 				.then(function(res) {
-					vm.list = res;
+					vm.list = _.map(res.rows, 'doc');
 				});
 		};
 		vm.onRefresh();
