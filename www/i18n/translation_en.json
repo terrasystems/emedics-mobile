@@ -122,7 +122,8 @@
   "WEBSITE": "Website",
   "WEBSITE_1": "Enter your web-site",
 
-
+  "MSG_OFFLINE_MODE":"Offline mode. ",
+  "MSG_NOT_OF_WORK":"You can't receive this data!",
   "MSG_PATS_NOT_EXIST": "Patient with such id doesn't exist",
   "MSG_PAT_ADD": "Patient added",
   "MSG_FORM_EDIT": "Forms edited",

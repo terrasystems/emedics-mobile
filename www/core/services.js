@@ -39,53 +39,122 @@ angular.module('core.medics')
 	//
 	//})
 
-	.service('alertService',function($ionicPopup) {
-		function showAlert (title, template) {
+	.service('alertService', function ($ionicPopup) {
+		function showAlert(title, template) {
 
 			return $ionicPopup.alert({
 				title: title,
 				template: template ? template : ''
 			});
 		}
-	return {
-		showPopap: function (title, subTitle, template) {
-			return $ionicPopup.show({
-				templateUrl: template,
-				//controller: 'modalAddNotifCtrl as vm',
-				//controllerAs: 'vm',
-				title: title,
-				subTitle: subTitle,
-				scope: null,
-				controller:'modalAddNotifCtrl',
-				buttons: [
-					{ text: 'Cancel' },
-					{
-						text: '<b>Ok</b>',
-						type: 'button-positive',
-						onTap: function(res) {
-							// Returning a value will cause the promise to resolve with the given value.
-							return res;
-						}
-					}
-				]
-			});
-		},
-		success: function (template) {
-			showAlert('Success', template);
-		},
-		warning: function (template) {
-			showAlert('Warning', template);
-		},
-		error: function (template) {
-			showAlert('Error', template);
-		},
-		showAlert: showAlert
 
-	};
-})
-	.service('http', function ($http, $q, constants, $translate, alertService) {
-		function getOfflineDoc(list) {
-			var deferred = $q.defer();
+		return {
+			showPopap: function (title, subTitle, template) {
+				return $ionicPopup.show({
+					templateUrl: template,
+					//controller: 'modalAddNotifCtrl as vm',
+					//controllerAs: 'vm',
+					title: title,
+					subTitle: subTitle,
+					scope: null,
+					controller: 'modalAddNotifCtrl',
+					buttons: [
+						{text: 'Cancel'},
+						{
+							text: '<b>Ok</b>',
+							type: 'button-positive',
+							onTap: function (res) {
+								// Returning a value will cause the promise to resolve with the given value.
+								return res;
+							}
+						}
+					]
+				});
+			},
+			success: function (template) {
+				showAlert('Success', template);
+			},
+			warning: function (template) {
+				showAlert('Warning', template);
+			},
+			error: function (template) {
+				showAlert('Error', template);
+			},
+			showAlert: showAlert
+
+		};
+	})
+	.service('http', function ($http, $q, constants, $translate, alertService, $rootScope, offlineRepository) {
+			//variables
+		var deferred = $q.defer(),
+			  offlineResp = {data:{state:{message:'', value:''}}},
+		    error = {status: $translate.instant('MSG_OFFLINE_MODE'), statusText:$translate.instant('MSG_NOT_OF_WORK')};
+
+    //offline http
+		function getOfflineDoc(url, params) {
+
+			//all good
+			function successList(resp, deferred) {
+				var list = _.map(resp, 'doc');
+				offlineResp.result = list;
+				deferred.resolve(offlineResp);
+			};
+			///if error
+			function errorList(error, deferred) {
+				deferred.reject(error);
+			};
+
+
+			switch (url){
+				case 'private/dashboard/tasks/all':
+				{
+					offlineRepository.getAllTasks().then(function (resp) {
+						successList(resp, deferred);
+					}, function (error) {
+						errorList(error, deferred);
+					});
+					break;
+				}
+				case 'private/dashboard/patient/references':
+				{
+					offlineRepository.getReferences().then(function (resp) {
+						successList(resp, deferred);
+					}, function (error) {
+						errorList(error, deferred);
+					});
+					break;
+				}
+				case 'private/dashboard/template':
+				{
+					offlineRepository.getAllTemplates().then(function (resp) {
+						successList(resp, deferred);
+					}, function (error) {
+						errorList(error, deferred);
+					});
+					break;
+				}
+				case 'private/dashboard/user/template':
+				{
+					offlineRepository.getUserTemplates().then(function (resp) {
+						successList(resp, deferred);
+					}, function (error) {
+						errorList(error, deferred);
+					});
+					break;
+				}
+				case '':
+				{
+					break;
+				}
+				case '':
+				{
+					break;
+				}
+				default:
+				{
+					deferred.reject(error);
+				}
+			}
 
 			return deferred.promise;
 		};
@@ -93,11 +162,11 @@ angular.module('core.medics')
 		function successListener(resp, deferred) {
 			resp.data.state.message = $translate.instant(resp.data.state.message);
 			if (resp.data && resp.data.state && resp.data.state.value) {
-					deferred.resolve(resp.data);
+				deferred.resolve(resp.data);
 			}
 			else {
 				deferred.reject(false);
-				alertService.warning('Warning', $translate.instant(MSG_NO_DATA));
+				alertService.warning($translate.instant('MSG_NO_DATA'));
 			}
 		};
 		//Call if error
@@ -107,14 +176,28 @@ angular.module('core.medics')
 				alertService.error($translate.instant(error.data.state.message));
 			}
 			else {
-				alertService.error(2, error.status + ' ' + error.statusText);
+				alertService.error(error.status + ' ' + error.statusText);
 			}
 		};
 		//Function wrapper on $http service
-		function H (url, params, method) {
+		function H(url, params, method) {
+
 			var deferred = $q.defer();
-			$http[method](constants.restUrl + url, params).then(function (resp) {successListener(resp,deferred)},
-				function (error) {errorListener(error, deferred);});
+			if (!$rootScope.offlineState)
+				$http[method](constants.restUrl + url, params).then(function (resp) {
+						successListener(resp, deferred)
+					},
+					function (error) {
+						errorListener(error, deferred);
+					});
+			else {
+				getOfflineDoc(url, params).then(function (resp) {
+						successListener(resp, deferred)
+					},
+					function (error) {
+						errorListener(error, deferred);
+					});
+			}
 			return deferred.promise;
 		}
 
@@ -132,16 +215,14 @@ angular.module('core.medics')
 	.service('offlineRepository', function ($q, $log, localStorageService, pouchDB) {
 		var vm = this
 
-
-
 		//Save or add draft document
 		function addDraft(id, info, model) {
 			var deferred = $q.defer();
 			if (id === 'add') {
 				var doc = {
 					_id: new Date().toISOString(),
-					status: 'draft',
-					draftName: info.name,
+					type: 'draft',
+					name: info.name,
 					body: {sections: model, formInfo: info}
 				};
 				vm.db.put(doc, function (res) {
@@ -169,8 +250,8 @@ angular.module('core.medics')
 				views: {
 					docType: {
 						map: function (doc) {
-							if (doc.status) {
-								emit(doc.status);
+							if (doc.type) {
+								emit(doc.type);
 							}
 						}.toString()
 					}
@@ -195,13 +276,24 @@ angular.module('core.medics')
 				});
 			});
 		};
-
-/*		function get(id) {
-			return db.get(id);
+		function getAllTasks() {
+			return vm.db.query('index/docType', {key:'task', includeDocs:true});
 		};
-		function allDocs(params) {
-			return db.allDocs(params);
-		};*/
+		function getAllTemplates() {
+			return vm.db.query('index/docType', {key:'template', includeDocs:true});
+		};
+		function getUserTemplates() {
+			return vm.db.query('index/docType', {key:'userTemplate', includeDocs:true});
+		};
+		function getReferences() {
+			return vm.db.query('index/docType', {key:'reference', includeDocs:true});
+		};
+		function sendTask() {
+
+		};
+		function loadTask() {
+
+		};
 		function init() {
 			vm.user = localStorageService.get('userData');
 			vm.db = pouchDB(vm.user.id);
@@ -210,9 +302,13 @@ angular.module('core.medics')
 		};
 		vm.serv = {
 			init: init,
-			addDraft: addDraft
-			/*get: get,
-			 allDocs:allDocs,*/
+			addDraft: addDraft,
+			getAllTasks: getAllTasks,
+			getAllTemplates:getAllTemplates,
+			getUserTemplates:getUserTemplates,
+			getReferences:getReferences,
+			sendTask:sendTask,
+			loadTask:loadTask
 		}
 		return vm.serv;
 	})

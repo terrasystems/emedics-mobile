@@ -50,13 +50,18 @@ Emedics.run(function($state,$rootScope,$log,$ionicPlatform,constants,$translate,
 
     if (localStorageService.get('userData'))
     offlineRepository.init();
-    //$rootScope.networkType = $cordovaNetwork.getNetwork();
-    //$log.info('networkType=', $rootScope.networkType);
+    $rootScope.offlineState = $cordovaNetwork.isOffline();
+    $log.info('offlineState=', $rootScope.offlineState);
     // listen for Offline event
-    /*$rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
-      $rootScope.offlineState = networkState;
-      //$log.info('offlineState=', networkState);
-    });*/
+    $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+      $rootScope.offlineState = true;
+      $log.info('offlineState=', $rootScope.offlineState);
+    });
+
+    $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+      $rootScope.offlineState = false;
+      $log.info('offlineState=', $rootScope.offlineState);
+    });
 
   });
   $rootScope.$on('$stateChangeError', function ($rootScope,constants,$translate, $state, formlyConfig, formlyValidationMessages, checkUserAuth,$log) {

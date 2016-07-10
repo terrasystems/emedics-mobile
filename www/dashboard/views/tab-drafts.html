@@ -1,26 +1,3 @@
-
-<div class="container">
-  <div class="row form-list " options="listOptions">
-    <div ng-show="vm.list.length == 0" class="alert alert-info" role="alert"><h5  class="noData_msg">You dont have any drafts</h5></div>
-    <div ui-list-view="draft in vm.list track by $index" options="listOptions">
-
-      <div class="tasks">
-        <button style="margin-top: 10px;" class="btn btn-danger red green" ng-click="vm.onSend(draft)">
-          <i class="glyphicon glyphicon-envelope"></i>
-        </button>
-        <button style="margin-top: 10px;" class="btn btn-danger green" ng-click="vm.onEdit(draft._id)">
-          <i class="glyphicon glyphicon-edit"></i>
-        </button>
-        <button style="margin-top: 10px;" class="btn btn-danger red green" ng-click="vm.onDelete(draft._id)">
-          <i class="glyphicon glyphicon-trash"></i>
-        </button>
-        <p class="col-md-3 col-sm-3 col-xs-3"><label class="control-label"><span translate="NAME"></span>: </label>{{draft.draftName}}</p>
-        <!--<p class="col-md-3 col-sm-3 col-xs-3"><label class="control-label"><span translate="DATE"></span>: </label>{{vm.convertDateTime(draft.doc._id)}}</p>-->
-      </div>
-
-    </div>
-  </div>
-</div>
 <ion-content >
   <div style="height: 64px;" ></div>
   <!-- The list directive is great, but be sure to also checkout the collection repeat directive when scrolling through large lists -->
@@ -28,7 +5,7 @@
   <ion-list  show-reorder="data.showReorder">
     <ion-item  ng-repeat="draft in vm.list track by $index" item="item"  class="catalog item-remove-animate">
 
-      Name: {{draft.draftName}}
+      Name: {{draft.name}}
       <p> Description:{{draft.body.formInfo.descr}}</p>
       <button ng-click="vm.Delete(draft,event)" style="float: right;" class="button ion-trash-b  button-assertive"></button>
       <button ng-click="vm.onEdit(draft._id)" style="float: right;margin-right: 10px" class="button  button-positive" translate="EDIT"></button>
