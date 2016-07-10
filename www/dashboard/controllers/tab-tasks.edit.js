@@ -1,6 +1,6 @@
 'use strict';
 /*jshint -W117, -W097, -W116*/
-angular.module('eMedicsMobile')
+angular.module('core.dashboard')
 	.controller('tasksEditCtrl', function ( http, $q, $stateParams, $state, localStorageService,
                                                 $scope, $timeout, $translate, $base64,
                                                 $rootScope,db2, forEditTask,alertService) {

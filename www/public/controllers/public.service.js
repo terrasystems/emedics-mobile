@@ -1,7 +1,7 @@
 'use strict';
 /*jshint -W117, -W097*/
 
-angular.module('public.core')
+angular.module('core.public')
 	.service('pat_fields', function ($translate) {
 		var arr = [
 			{

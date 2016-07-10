@@ -4,7 +4,7 @@ var gulp = require('gulp'),
     gutil = require('gulp-util'),
     bower = require('bower'),
     concat = require('gulp-concat'),
-    sass = require('gulp-sass'),
+    //sass = require('gulp-sass'),
     minifyCss = require('gulp-minify-css'),
     sh = require('shelljs'),
     inject = require('gulp-inject'),
@@ -14,15 +14,16 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     paths = {
       sass: ['./scss/**/*.scss'],
-      src:['./main-js/**/*', './public/**/*', './dashboard/**/*']
+      src:['./www/core/**/*.js','./www/public/public.core.js','./www/public/**/*.js','./www/dashboard/**/*.js',
+           './www/css/**/*.css']
     };
 
-gulp.task('default', ['sass','copy' ,'index','bwc', 'connect']);
+gulp.task('default', ['copy' ,'index','bwc', 'connect']);
 
 gulp.task('connect', function () {
   connect.server({
     root: ['./www'],
-    port: 9000,
+    port: 8100,
     livereload: true,
     debug:false,
     middleware: function (connect, opt) {
@@ -46,20 +47,7 @@ gulp.task('copy', function () {
 gulp.task('index',['copy'], function () {
 
   var target = gulp.src('www/index.html');
-  var sources = gulp.src([
-    './www/main-js/app1.js',
-    './www/main-js/core.emedics2.js',
-    './www/main-js/**/*.js',
- './www/public/public-core.js',
-    './www/public/**/*.js',
-
-    './www/public/controllers/**/*.js',
-
-    './www/dashboard/**/*.js',
-
-    './www/dashboard/controllers/**/*.js',
-
-    './www/css/**/*.css']);
+  var sources = gulp.src(paths.src);
 
   return target.pipe(inject(sources,{relative: true}))
     .pipe(gulp.dest('./www/'));
@@ -73,7 +61,7 @@ gulp.task('bwc',['index'], function () {
     .pipe(gulp.dest('./www/'));
 });
 
-gulp.task('sass', function(done) {
+/*gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
     .pipe(sass())
     .on('error', sass.logError)
@@ -85,12 +73,6 @@ gulp.task('sass', function(done) {
     .pipe(gulp.dest('./www/css/'))
     .on('end', done);
 });
-
-
-/*gulp.task('watch', function() {
-  //gulp.watch(paths.sass, ['sass']);
-  gulp.watch(paths.src);
-});*/
 
 gulp.task('install', ['git-check'], function() {
   return bower.commands.install()
@@ -111,3 +93,4 @@ gulp.task('git-check', function(done) {
   }
   done();
 });
+ */

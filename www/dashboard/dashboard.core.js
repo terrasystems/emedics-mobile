@@ -1,7 +1,7 @@
 'use strict';
 /*jshint -W117, -W097*/
 
-angular.module('eMedicsMobile', [])
+angular.module('core.dashboard', [])
 	//работа с базой pouchdb
 	.service('db2', function($q) {
 		function save (base, id, info, model){

@@ -1,7 +1,7 @@
 'use strict';
 /*jshint -W117, -W097*/
 
-angular.module('eMedicsMobile')
+angular.module('core.dashboard')
 
 	.controller('draftsCtrl', function ($scope, $rootScope, $state, db2,
                                       http,localStorageService) {

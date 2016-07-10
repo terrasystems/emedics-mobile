@@ -1,7 +1,7 @@
 'use strict';
 /*jshint -W117, -W097*/
 
-angular.module('core.medics')
+angular.module('core.dashboard')
 	.controller('patientsCtrl', function ($state,$scope,http,localStorageService,$translate,initParamsPOST,alertService) {
 		var vm = this;
     console.log('patientsCTRL');

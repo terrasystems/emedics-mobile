@@ -1,7 +1,7 @@
 'use strict';
 /*jshint -W117, -W097*/
 
-angular.module('eMedicsMobile')
+angular.module('core.dashboard')
 	.controller('notificationsCtrl', function (http,$scope,$rootScope) {
 
 		console.log('notificationsCTRL');

@@ -1,6 +1,6 @@
 'use strict';
 /*jshint -W117, -W097, -W116*/
-angular.module('eMedicsMobile')
+angular.module('core.dashboard')
 	.controller('draftsEditCtrl', function ($stateParams, $state, $scope, $translate, $rootScope, db2, forEditTask) {
 		var vm = this;
 console.log('draftsEditCtrl');

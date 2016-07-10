@@ -1,4 +1,4 @@
-var Emedics=angular.module('eMedics', ['ionic','eMedicsMobile','public.core',
+var Emedics=angular.module('emedics', ['ionic','core.dashboard','core.public',
   'core.medics','formlyIonic', 'LocalStorageModule','pascalprecht.translate','base64'
   ]);
 

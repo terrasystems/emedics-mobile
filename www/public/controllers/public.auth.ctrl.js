@@ -1,7 +1,7 @@
 'use strict';
 /*jshint -W117, -W097*/
 
-angular.module('public.core')
+angular.module('core.public')
 	.controller('loginCtrl',function($translate, $state, $timeout, auth, http){
 		var vm = this;
 		vm.user = {};

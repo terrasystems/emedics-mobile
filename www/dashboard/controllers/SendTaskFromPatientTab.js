@@ -1,7 +1,7 @@
 'use strict';
 /*jshint -W117, -W097, -W116*/
 
-angular.module('eMedicsMobile')
+angular.module('core.dashboard')
 
 	.controller('modalAddNotifCtrl', function (utilsService, model,  alertService, $timeout, http, localStorageService, $scope, $q){
 

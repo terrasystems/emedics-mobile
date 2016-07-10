@@ -1,7 +1,7 @@
 'use strict';
 /*jshint -W117, -W097*/
 
-angular.module('eMedicsMobile')
+angular.module('core.dashboard')
 	.controller('catalogCtrl', function ( $state,localStorageService,http, alertService) {
 
 		var vm = this;
