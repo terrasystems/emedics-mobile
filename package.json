@@ -24,13 +24,17 @@
     "gulp-util": "^2.2.14",
     "http-proxy-middleware": "^0.16.0",
     "main-bower-files": "^2.13.1",
+    "ripple-emulator": "^0.9.36",
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
     "cordova-plugin-console",
     "cordova-plugin-device",
-    "cordova-plugin-splashscreen"
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-network-information",
+    "com.ionic.keyboard",
+    "cordova-plugin-console"
   ],
   "cordovaPlatforms": [
     "android",
