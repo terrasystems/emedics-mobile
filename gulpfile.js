@@ -12,13 +12,16 @@ var gulp = require('gulp'),
     mainBowerFiles = require('main-bower-files'),
     proxy = require('http-proxy-middleware'),
     rename = require('gulp-rename'),
+    exec = require('child_process').exec,
     paths = {
       sass: ['./scss/**/*.scss'],
       src:['./www/core/**/*.js','./www/public/public.core.js','./www/public/**/*.js','./www/dashboard/**/*.js',
            './www/css/**/*.css']
     };
 
-gulp.task('default', ['copy' ,'index','bwc', 'connect']);
+gulp.task('default', ['copy' ,'index','bwc']);
+
+gulp.task('serve', ['copy' ,'index','bwc', 'connect']);
 
 gulp.task('connect', function () {
   connect.server({
@@ -61,6 +64,10 @@ gulp.task('bwc',['index'], function () {
     .pipe(gulp.dest('./www/'));
 });
 
+
+gulp.task('ripple', ['copy' ,'index','bwc'], function () {
+  exec('ripple emulate', function (err, stdout, stderr) {});
+});
 /*gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
     .pipe(sass())
