@@ -3,33 +3,7 @@
 
 angular.module('core.medics')
 
-
-	//.service('alertService', function ($rootScope, toastr) {
-	//	var alertService = {};
-	//	alertService.add = function (type, titleText, msg, msgParam) {
-	//		switch (type) {
-	//			case 0:
-	//				type = 'success';
-	//				toastr.success(msg, titleText, msgParam);
-	//				break;
-	//			case 1:
-	//				type = 'warning';
-	//				toastr.warning(msg, titleText, msgParam);
-	//				break;
-	//			case 2:
-	//				type = 'danger';
-	//				toastr.error(msg, titleText, msgParam);
-	//				break;
-	//			default:
-	//				type = 'info';
-	//				toastr.info(msg, titleText, msgParam);
-	//				break;
-	//		}
-	//	};
-	//	return alertService;
-	//})
-
-	.service('auth', function ($rootScope, localStorageService) {
+	.service('auth', function ($rootScope, localStorageService, offlineRepository) {
 		return {
 			saveUserData: function (data) {
 				if (data.token) {
@@ -39,6 +13,7 @@ angular.module('core.medics')
 				if (data.user) {
 					$rootScope.userData = data.user;
 					localStorageService.set('userData', data.user);
+					offlineRepository.init();
 				}
 			}
 		};
@@ -65,6 +40,13 @@ angular.module('core.medics')
 	//})
 
 	.service('alertService',function($ionicPopup) {
+		function showAlert (title, template) {
+
+			return $ionicPopup.alert({
+				title: title,
+				template: template ? template : ''
+			});
+		}
 	return {
 		showPopap: function (title, subTitle, template) {
 			return $ionicPopup.show({
@@ -88,85 +70,114 @@ angular.module('core.medics')
 				]
 			});
 		},
-		showAlert: function (title, template) {
-
-			return $ionicPopup.alert({
-				title: title,
-				template: template ? template : ''
-			});
-		}
+		success: function (template) {
+			showAlert('Success', template);
+		},
+		warning: function (template) {
+			showAlert('Warning', template);
+		},
+		error: function (template) {
+			showAlert('Error', template);
+		},
+		showAlert: showAlert
 
 	};
 })
-	.service('http', function ($http, $q, constants, $translate) {
-		function get(url, filter) {
+	.service('http', function ($http, $q, constants, $translate, alertService) {
+		function getOfflineDoc(list) {
 			var deferred = $q.defer();
-			$http.get(constants.restUrl + url, filter).then(function (resp) {
-				resp.data.state.message = $translate.instant(resp.data.state.message);
-				if (resp.data && resp.data.state) {
-					if (resp.data.state.value === true) {
-						deferred.resolve(resp.data);
-					}
-					else {
-						deferred.reject(false);
-						//alertService.add(2, resp.data.state.message);
-					}
-				}
-				else {
-					deferred.reject(false);
-					//alertService.add(2, $translate.instant(MSG_NO_DATA));
-				}
-			}, function (error) {
-				deferred.reject(error);
-				if (error.status == '401') {
-					//alertService.add(2, $translate.instant(error.data.state.message));
-				}
-				else {
-					//alertService.add(2, error.status + ' ' + error.statusText);
-				}
-			});
-			return deferred.promise;
-		}
 
-		function post(url, params) {
-			//console.log('post: '+ url);
+			return deferred.promise;
+		};
+		//Call if all good
+		function successListener(resp, deferred) {
+			resp.data.state.message = $translate.instant(resp.data.state.message);
+			if (resp.data && resp.data.state && resp.data.state.value) {
+					deferred.resolve(resp.data);
+			}
+			else {
+				deferred.reject(false);
+				alertService.warning('Warning', $translate.instant(MSG_NO_DATA));
+			}
+		};
+		//Call if error
+		function errorListener(error, deferred) {
+			deferred.reject(error);
+			if (error.status == '401') {
+				alertService.error($translate.instant(error.data.state.message));
+			}
+			else {
+				alertService.error(2, error.status + ' ' + error.statusText);
+			}
+		};
+		//Function wrapper on $http service 
+		function H (url, params, method) {
 			var deferred = $q.defer();
-			$http.post(constants.restUrl + url, params).then(function (resp) {
-				resp.data.state.message = $translate.instant(resp.data.state.message);
-				if (resp.data && resp.data.state) {
-					if (resp.data.state.value === true) {
-						deferred.resolve(resp.data);
-					}
-					else {
-						deferred.reject(false);
-						//alertService.add(2, resp.data.state.message);
-					}
-				}
-				else {
-					deferred.reject(false);
-					//alertService.add(2, $translate.instant(MSG_NO_DATA));
-				}
-			}, function (error) {
-				deferred.reject(error);
-				if (error.status == '401') {
-					//alertService.add(2, $translate.instant(error.data.state.message));
-				}
-				else {
-					//alertService.add(2, error.status + ' ' + error.statusText);
-				}
-			});
+			$http[method](constants.restUrl + url, params).then(function (resp) {successListener(resp,deferred)},
+				function (error) {errorListener(error, deferred);});
 			return deferred.promise;
 		}
 
 		//******
 		return {
-			get: get,
-			post: post
+			get: function (url, params) {
+				return H(url, params, 'get');
+			},
+			post: function (url, params) {
+				return H(url, params, 'post');
+			}
 		};
 	})
+//
+	.service('offlineRepository', function ($log,localStorageService) {
+		var db,
+				user = localStorageService.get('userData');
 
+		function createDesignDoc(db) {
+			// create a design doc
+			var ddoc = {
+				_id: '_design/index',
+				views: {
+					docType: {
+						map: function (doc) {
+							if (doc.type) {
+								emit( doc.type);
+							}
+						}.toString()
+					}
+				}
+			};
+			// get/set design
+			db.get('_design/index').then(function (doc) {
+				if (!_.isEqual(_.omit(doc, '_rev'), ddoc)) { // check if docs are equal to not update on every page refresh
+					ddoc._rev = doc._rev;
+					db.put(ddoc).then(function (res) {
+						$log.debug('design Doc updated, ', res.rev);
+					}, function (err) {
+						if (err.status !== 409) $log.error('design Doc put failed, ', err);
+					});
+				}
+			}, function (err) {
+				$log.warn('design Doc get failed, lets create', err);
+				db.post(ddoc).then(function (res) {
+					$log.debug('design Doc created, ', res.rev);
+				}, function (err) {
+					if (err.status !== 409) $log.error('design Doc put failed, ', err);
+				});
+			});
+		}
 
-//// Интерцептор для перехвата ошибок
+		function init () {
+			db = new PouchDB(user.id);
+			createDesignDoc(db);
+		};
+
+		return {
+			init:init,
+			db:db
+		}
+	})
+//// Error interceptor
 	.service('responseErrorInterceptor', function ($rootScope, $q, $injector) {
 		return {
 			'response': function (response) {

@@ -3,4 +3,5 @@ node_modules/
 plugins/
 platforms/
 www/lib
-www/index.html
+/www/index.html
+www/config.xml

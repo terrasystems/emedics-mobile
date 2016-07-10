@@ -7,7 +7,7 @@ angular.module('core.dashboard')
 		var vm = this;
 		console.log("DashboardCTRL");
 
-		vm.user = localStorageService.get('userData');
+		//vm.user = localStorageService.get('userData');
 		$scope.toggleLeft = function() {
 			$ionicSideMenuDelegate.toggleLeft();
 		};
@@ -20,7 +20,7 @@ angular.module('core.dashboard')
 			$state.go('main.public.login');
 		};
 
-		$rootScope.db = new PouchDB(vm.user.id);
+/*		$rootScope.db = new PouchDB(vm.user.id);
 		var base= $rootScope.db;
 		var doc = {
 			_id:new Date().toISOString(),
@@ -40,5 +40,5 @@ angular.module('core.dashboard')
 
 		function bind(res) {
 			$scope.doc = res;
-		}
+		}*/
 	});

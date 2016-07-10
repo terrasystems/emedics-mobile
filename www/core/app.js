@@ -33,7 +33,8 @@ Emedics.config(function(  $stateProvider, $urlRouterProvider, formlyConfigProvid
   $ionicConfigProvider.scrolling.jsScrolling(false); // http://tombuyse.com/improving-the-performance-of-your-ionic-application/
   $ionicConfigProvider.views.maxCache(0);
 });
-Emedics.run(function($state,$rootScope,$log,$ionicPlatform,constants,$translate, formlyConfig, formlyValidationMessages, checkUserAuth, $cordovaNetwork) {
+Emedics.run(function($state,$rootScope,$log,$ionicPlatform,constants,$translate, formlyConfig, formlyValidationMessages, checkUserAuth, $cordovaNetwork, offlineRepository, localStorageService) {
+
 
 
   $ionicPlatform.ready(function() {
@@ -47,13 +48,15 @@ Emedics.run(function($state,$rootScope,$log,$ionicPlatform,constants,$translate,
       StatusBar.styleDefault();
     }
 
-    $rootScope.networkType = $cordovaNetwork.getNetwork();
-    $log.info('networkType=', $rootScope.networkType);
+    if (localStorageService.get('userData'))
+    offlineRepository.init();
+    //$rootScope.networkType = $cordovaNetwork.getNetwork();
+    //$log.info('networkType=', $rootScope.networkType);
     // listen for Offline event
-    $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+    /*$rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
       $rootScope.offlineState = networkState;
       //$log.info('offlineState=', networkState);
-    });
+    });*/
 
   });
   $rootScope.$on('$stateChangeError', function ($rootScope,constants,$translate, $state, formlyConfig, formlyValidationMessages, checkUserAuth,$log) {
