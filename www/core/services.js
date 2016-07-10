@@ -106,6 +106,7 @@ angular.module('core.medics')
 							if (row.doc) {
 								row.doc._id = row.doc.id;
 								row.doc._rev = rev;
+								row.doc.type = type;
 								return row.doc;
 							}
 						}
