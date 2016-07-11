@@ -84,11 +84,12 @@ angular.module('core.medics')
 
 		};
 	})
-	.service('http', function ($http, $q, constants, $translate, alertService, $rootScope, offlineRepository) {
+	.service('http', function ($http, $q, constants, $translate, alertService, $rootScope, offlineRepository, localStorageService, $log) {
 			//variables
 		var deferred = $q.defer(),
 			  offlineResp = {data:{state:{message:'', value:''}}},
-		    error = {status: '', statusText:''};
+		    error = {status: '', statusText:''},
+			  user = localStorageService.get('userData');
 
 		error.status = $translate.instant('MSG_NOT_OF_WORK');
 		error.statusText = $translate.instant('MSG_OFFLINE_MODE')
@@ -132,7 +133,7 @@ angular.module('core.medics')
 					saveDoc(list,'task');
 					break;
 				}
-				case 'private/dashboard/patient/references':
+				case 'private/dashboard/'+user.type+'/references':
 				{
 					saveDoc(list,'reference');
 					break;
@@ -164,11 +165,13 @@ angular.module('core.medics')
 
     //offline http
 		function getOfflineDoc(url, params) {
+
 			var deferred = $q.defer();
 			//all good
 			function successList(resp, deferred) {
-				var list = _.map(resp, 'doc');
-				offlineResp.result = list;
+				var list = _.map(resp.rows, 'doc');
+				offlineResp.data.state.value = true;
+				offlineResp.data.result = list;
 				deferred.resolve(offlineResp);
 			};
 			///if error
@@ -187,7 +190,7 @@ angular.module('core.medics')
 					});
 					break;
 				}
-				case 'private/dashboard/patient/references':
+				case 'private/dashboard/'+user.type+'/references':
 				{
 					offlineRepository.getReferences().then(function (resp) {
 						successList(resp, deferred);
@@ -350,16 +353,22 @@ angular.module('core.medics')
 			});
 		};
 		function getAllTasks() {
-			return vm.db.query('index/docType', {key:'task', includeDocs:true});
+			return vm.db.query('index/docType', {key:'task', include_docs:true});
 		};
 		function getAllTemplates() {
-			return vm.db.query('index/docType', {key:'template', includeDocs:true});
+			return vm.db.query('index/docType', {key:'template', include_docs:true});
 		};
 		function getUserTemplates() {
-			return vm.db.query('index/docType', {key:'userTemplate', includeDocs:true});
+			return vm.db.query('index/docType', {key:'userTemplate', include_docs:true});
 		};
 		function getReferences() {
-			return vm.db.query('index/docType', {key:'reference', includeDocs:true});
+			return vm.db.query('index/docType', {key:'reference', include_docs:true});
+		};
+		function getPatients() {
+
+		};
+		function getStaff() {
+
 		};
 		function sendTask() {
 
@@ -380,6 +389,8 @@ angular.module('core.medics')
 			getAllTemplates:getAllTemplates,
 			getUserTemplates:getUserTemplates,
 			getReferences:getReferences,
+			getPatients:getPatients,
+			getStaff:getStaff,
 			sendTask:sendTask,
 			loadTask:loadTask
 		}
