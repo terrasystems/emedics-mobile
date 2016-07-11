@@ -14,7 +14,18 @@ angular.module('core.dashboard')
 		vm.addRefs = function () {
 			//vm.paramsPOST = initParamsPOST.params;
 			//vm.paramsPOST.criteria.list = [];
-			http.post('private/dashboard/' + vm.user.type + '/references',{"name":'', "type":null})
+			http.post('private/dashboard/' + vm.user.type + '/references',
+				{
+					"page": {
+						"start": 0,
+						"count": 20,
+						"size": 0
+					},
+					"criteria": {
+						"search": '',
+						"list": []
+					}
+				})
 				.then(function (res) {
 					//blockUI.stop();
 					if (res.result) {

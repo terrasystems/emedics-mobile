@@ -158,7 +158,7 @@ angular.module('core.medics')
 				}*/
 				default:
 				{
-					$log.warning('Offline synchronisation: method not allowed to sync')
+					$log.warn('Offline synchronisation: method not allowed to sync')
 				}
 			}
 		}
