@@ -35,7 +35,7 @@ Emedics.config(function(  $stateProvider, $urlRouterProvider, formlyConfigProvid
 });
 Emedics.run(function($state,$rootScope,$log,$ionicPlatform,constants,$translate, formlyConfig, formlyValidationMessages, checkUserAuth, $cordovaNetwork, offlineRepository, localStorageService) {
 
-
+  $translate.use('en');
 
   $ionicPlatform.ready(function() {
     $rootScope.$state = $state;
@@ -72,8 +72,6 @@ Emedics.run(function($state,$rootScope,$log,$ionicPlatform,constants,$translate,
   $rootScope.$on('$stateNotFound', function (event, toState, fromState) {
     $log.error('$stateNotFound', toState.to, ' from ', fromState.name);
   });
-
-  $translate.use('en');
 
   formlyConfig.extras.errorExistsAndShouldBeVisibleExpression = 'fc.$touched || form.$submitted';
   formlyValidationMessages.addStringMessage('required', 'This field is required');

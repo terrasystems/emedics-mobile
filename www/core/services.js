@@ -88,7 +88,10 @@ angular.module('core.medics')
 			//variables
 		var deferred = $q.defer(),
 			  offlineResp = {data:{state:{message:'', value:''}}},
-		    error = {status: $translate.instant('MSG_OFFLINE_MODE'), statusText:$translate.instant('MSG_NOT_OF_WORK')};
+		    error = {status: '', statusText:''};
+
+		error.status = $translate.instant('MSG_NOT_OF_WORK');
+		error.statusText = $translate.instant('MSG_OFFLINE_MODE')
 
 		function syncDoc(url, list) {
 
@@ -161,7 +164,7 @@ angular.module('core.medics')
 
     //offline http
 		function getOfflineDoc(url, params) {
-
+			var deferred = $q.defer();
 			//all good
 			function successList(resp, deferred) {
 				var list = _.map(resp, 'doc');
