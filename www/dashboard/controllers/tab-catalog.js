@@ -67,7 +67,6 @@ angular.module('core.dashboard')
 		}
 
 		}
-
 		vm.onLoad = function (id) {
 
 				ModalService
@@ -76,43 +75,9 @@ angular.module('core.dashboard')
 						modal.show();
 					});
 
-
-			/*vm.modal2 = function() {
-				ModalService
-					.init('modal2.html')
-					.then(function(modal) {
-						modal.show();
-					});
-			};*/
-			/*alertService.showPopap('Hello' ,'' ,'dashboard/views/popups/CreateTask.html').then(function (res) {
-				console.log(res);
-			});*/
-/*			http.get('private/dashboard/template/load/' + id)
-				.then(function (rest) {
-					vm.templateParams = vm.FormTemplate.find(function (form) {
-						return form.id === id;
-					});
-					var paramsPOST = {
-						template: {
-							id: rest.result,
-							type: null,
-							description: null,
-							templateDto: null
-						},
-						patient: null,
-						data: "{}"
-					};
-					http.post('private/dashboard/tasks/create', paramsPOST);
-						//.then(function (res) {
-						//	//blockUI.stop();
-						//	//alertService.add(0, res.state.message);
-						//});
-				}
-				//function (res) {
-				//	blockUI.stop();
-				//	alertService.add(0, res.state.message);
-				//}
-			);*/
+			$scope.$on('modalOk', function (event, model) {
+				var v = model;
+			});
 		};
 		vm.onAddTask = function (obj) {
 			if(obj){
@@ -154,38 +119,4 @@ angular.module('core.dashboard')
 					alertService.showAlert(res.state.message);
 				});
 		};
-	})
-	.service('ModalService', function($ionicModal, $rootScope) {
-
-
-		var init = function(tpl, $scope) {
-
-			var promise;
-			$scope = $scope || $rootScope.$new();
-
-			promise = $ionicModal.fromTemplateUrl(tpl, {
-				scope: $scope,
-				animation: 'slide-in-up'
-			}).then(function(modal) {
-				$scope.modal = modal;
-				return modal;
-			});
-
-			$scope.openModal = function() {
-				$scope.modal.show();
-			};
-			$scope.closeModal = function() {
-				$scope.modal.hide();
-			};
-			$scope.$on('$destroy', function() {
-				$scope.modal.remove();
-			});
-
-			return promise;
-		}
-
-		return {
-			init: init
-		}
-
-	})
+	});

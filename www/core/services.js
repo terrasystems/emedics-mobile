@@ -464,5 +464,45 @@ angular.module('core.medics')
 		return {
 			'params': paramsPOST
 		};
+	})
+	//
+	.service('ModalService', function($ionicModal, $rootScope) {
+
+
+		var init = function(tpl, $scope) {
+
+			var promise;
+			$scope.model = {};
+			$scope = $scope || $rootScope.$new();
+
+			promise = $ionicModal.fromTemplateUrl(tpl, {
+				scope: $scope,
+				animation: 'slide-in-up'
+			}).then(function(modal) {
+				$scope.modal = modal;
+				return modal;
+			});
+
+			$scope.openModal = function() {
+				return $scope.modal.show();
+			};
+			$scope.modalOk = function() {
+				$rootScope.$broadcast('modalOk', $scope.model)
+				$scope.modal.hide();
+			};
+			$scope.modalCancel = function() {
+				$scope.modal.hide();
+			};
+			$scope.$on('$destroy', function() {
+				$scope.modal.remove();
+			});
+
+			return promise;
+		}
+
+		return {
+			init: init
+		}
+
 	});
 

@@ -1,5 +1,6 @@
 var Emedics=angular.module('emedics', ['ionic', 'ngCordova', 'core.dashboard','core.public',
-  'core.medics','formlyIonic', 'LocalStorageModule','pascalprecht.translate','base64', 'pouchdb'
+  'core.medics','formlyIonic', 'LocalStorageModule','pascalprecht.translate','base64', 'pouchdb',
+  'ion-autocomplete'
   ]);
 
 
