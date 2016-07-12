@@ -2,7 +2,7 @@
 /*jshint -W117, -W097*/
 
 angular.module('core.dashboard')
-	.controller('SendTaskCTRL', function (http,$stateParams,alertService,localStorageService, $rootScope) {
+	.controller('SendTaskCTRL', function (http,$stateParams,alertService,localStorageService, $rootScope, $state) {
 		console.log('SendTasksTab');
 		var vm = this;
 		vm.user = localStorageService.get('userData');
@@ -74,6 +74,7 @@ angular.module('core.dashboard')
 							.then(function (res) {
 								if (res.state) {
 									alertService.showAlert(res.state.message);
+									$state.go('tab.sub.tasks');
 								}
 							//	$uibModalInstance.close(res);
 							//}, function (error) {

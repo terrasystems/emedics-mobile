@@ -198,6 +198,15 @@ angular.module('core.medics')
 					});
 					break;
 				}
+				case (url.indexOf('private/dashboard/tasks/edit') > -1):
+				{
+					offlineRepository.editTask(params).then(function (resp) {
+						successList(resp, deferred);
+					}, function (error) {
+						errorList(error, deferred);
+					});
+					break;
+				}
 				case (url.indexOf('private/dashboard/tasks/all') > -1):
 				{
 					offlineRepository.getAllTasks().then(function (resp) {
@@ -308,6 +317,17 @@ angular.module('core.medics')
 //
 	.service('offlineRepository', function ($q, $log, localStorageService, pouchDB) {
 		var vm = this
+
+		function syncOnline() {
+			var promises = [], tmp = [];
+			promises.push(vm.db.query('index/docType', {key: 'task', include_docs: true}));
+			promises.push(vm.db.query('index/docType', {key: 'sent', include_docs: true}));
+			$q.all(promises).then(function (results) {
+				_.each(results, function (res) {
+					tmp = tmp.concat(_.map(res.rows, 'doc'));
+				})
+			});
+		};
 
 		//Save or add draft document
 		function addDraft(id, info, model) {
@@ -423,6 +443,33 @@ angular.module('core.medics')
 			//vm.db.put(params);
       return deferred.promise;
 		};
+		function editTask(params) {
+			var deferred = $q.defer();
+			if (params.event) {
+
+
+					vm.db.get(params.event.id).then(function (doc) {
+						//var ddoc = JSON.parse(JSON.stringify(doc));
+
+						params.event._id = doc._id;
+						params.event._rev = doc._rev;
+						params.event.type = 'task';
+						vm.db.put(params.event, function (res) {
+							deferred.resolve(res);
+						});
+					}, function (error) {
+						if (404 === error.status) {
+							params.event.type = 'task';
+							params.event._id = params.event;
+							vm.db.put(params.event, function (res) {
+								deferred.resolve(res);
+							});
+						}
+						//deferred.reject(false);
+					});
+			}
+			return deferred.promise;
+		}
 		function loadTask() {
 
 		};
@@ -434,6 +481,7 @@ angular.module('core.medics')
 		};
 		vm.serv = {
 			init: init,
+			syncOnline:syncOnline,
 			addDraft: addDraft,
 			getAllTasks: getAllTasks,
 			getAllTemplates: getAllTemplates,
@@ -443,7 +491,8 @@ angular.module('core.medics')
 			getStaff: getStaff,
 			getTask: getTask,
 			sendTask: sendTask,
-			loadTask: loadTask
+			loadTask: loadTask,
+			editTask:editTask
 		}
 		return vm.serv;
 	})

@@ -65,6 +65,7 @@ Emedics.run(function($state,$rootScope,$log,$ionicPlatform,constants,$translate,
 
     $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
       $rootScope.offlineState = false;
+      offlineRepository.syncOnline();
       $log.info('offlineState=', $rootScope.offlineState);
     });
 
