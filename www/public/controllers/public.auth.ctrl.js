@@ -49,7 +49,7 @@ angular.module('core.public')
 						auth.saveUserData(res);
 
 						$timeout(function () {
-							$state.go('tab.tasks');
+							$state.go('tab.sub.tasks');
 						}, 0);
 					});
 				};

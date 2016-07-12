@@ -2,15 +2,23 @@
 /*jshint -W117, -W097*/
 
 angular.module('core.dashboard')
-	.controller('subCtrl', function ($ionicTabsDelegate, $state) {
+	.controller('subCtrl', function ($ionicTabsDelegate, $state, $rootScope, alertService, $translate) {
 		var vm = this;
 		vm.changeTab = function (index) {
-			if (0 === index)
+			if (0 === index) {
 				$state.go('^.tasks');
+				$ionicTabsDelegate.select(index);
+			}
 			else
+			if($rootScope.offlineState) {
 				$state.go('^.sent');
+				$ionicTabsDelegate.select(index);
+			}
+			else
+				alertService.warning($translate.instant('MSG_NOT_OFFLINE'));
 
-			$ionicTabsDelegate.select(index);
+
+
 
 		};
 	})

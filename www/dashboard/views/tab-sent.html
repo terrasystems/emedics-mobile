@@ -5,22 +5,14 @@
     <!-- The list directive is great, but be sure to also checkout the collection repeat directive when scrolling through large lists -->
 
     <ion-list  show-reorder="data.showReorder">
-<button class="button button-full button-positive" translate="CREATE_TAKS" ng-click="vm.CreateTask()"></button>
-        <ion-item ng-click="vm.onClickNew(item.id)" ng-repeat="item in vm.tasks track by $index" item="item"  class="item-remove-animate">
-            <span translate="NAME"></span>: {{ item.template.name }}
-            <p><span translate="DATE"></span>: {{vm.convertDateTime(item.date)}}</p>
-            <p><span translate="DESCRIPTION"></span>: {{item.template.descr}}</p>
-            <p><span translate="FROM"></span>: {{item.fromUser.firstName}}  {{item.fromUser.lastName}}</p>
-            <p><span translate="STATUS"></span>: {{item.status}}</p>
 
-            <!--<ion-option-button class="button-assertive"-->
-                               <!--ng-click="edit(item)">-->
-                <!--Edit-->
-            <!--</ion-option-button>-->
-            <!--<ion-option-button class="button-calm"-->
-                               <!--ng-click="share(item)">-->
-                <!--Share-->
-            <!--</ion-option-button>-->
+        <ion-item ng-click="vm.onClickNew(item.task.id)" ng-repeat="item in vm.tasks track by $index" item="item"  class="item-remove-animate">
+            <span translate="NAME"></span>: {{ item.task.template.name }}
+            <p><span translate="DATE"></span>: {{vm.convertDateTime(item.task.date)}}</p>
+            <p><span translate="DESCRIPTION"></span>: {{item.task.template.descr}}</p>
+            <p><span translate="FROM"></span>: {{item.task.fromUser.firstName}}  {{item.task.fromUser.lastName}}</p>
+            <p><span translate="STATUS"></span>: {{item.type}}</p>
+
             <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
         </ion-item>
 

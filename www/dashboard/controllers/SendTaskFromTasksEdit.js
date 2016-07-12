@@ -2,7 +2,7 @@
 /*jshint -W117, -W097*/
 
 angular.module('core.dashboard')
-	.controller('SendTaskCTRL', function (http,$stateParams,alertService,localStorageService) {
+	.controller('SendTaskCTRL', function (http,$stateParams,alertService,localStorageService, $rootScope) {
 		console.log('SendTasksTab');
 		var vm = this;
 		vm.user = localStorageService.get('userData');
@@ -63,6 +63,8 @@ angular.module('core.dashboard')
 			console.log(vm.message);
 			vm.message.patient=vm.message.patient[0];
 			vm.message.toUser=vm.message.toUser[0];
+			if($rootScope.offlineState)
+				vm.message.task = $stateParams.task;
 
 			//if (!vm.model.data.task_id) {
 			//	vm.save()

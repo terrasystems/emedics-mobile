@@ -6,7 +6,7 @@ angular.module('core.dashboard')
                                                 $rootScope,offlineRepository, forEditTask,alertService) {
 
 		if (!$stateParams.type || $stateParams.type === '' || $stateParams.type === null) {
-			$state.go('tab.tasks');
+			$state.go('tab.sub.tasks');
 			return;
 		}
 
@@ -14,11 +14,11 @@ angular.module('core.dashboard')
 		vm.user = localStorageService.get('userData');
 
 		if ($stateParams.type == 'tasks' || $stateParams.type == 'tasks+') {
-			vm.mainState = 'tab.tasks';
+			vm.mainState = 'tab.sub.tasks';
 		} else if ($stateParams.type == 'patients' || $stateParams.type == 'patients+') {
 			vm.mainState = 'tab.patients';
 		} else if ($stateParams.type == 'tasksAdmin') {
-			vm.mainState = 'tab.tasks';
+			vm.mainState = 'tab.sub.tasks';
 		}
 
 		if (!$stateParams.id || $stateParams.id === '' || $stateParams.id === null) {
@@ -96,7 +96,15 @@ angular.module('core.dashboard')
 		};
 
 		vm.onSend = function() {
-			$state.go('tab.taskssend',{templates: $stateParams.id});
+			var paramsPOST = null;
+			if ($rootScope.offlineState) {
+				paramsPOST = {id: vm.id, data: {sections: vm.data.model}};
+				paramsPOST.patient = vm.data.editModel.patient;
+				paramsPOST.template = vm.data.editModel.template;
+				paramsPOST.fromUser = vm.data.editModel.fromUser;
+				paramsPOST.toUser = vm.data.editModel.toUser;
+			}
+			$state.go('tab.taskssend',{templates: $stateParams.id, task:paramsPOST});
 			//var config = {
 			//	templateUrl: 'modules/dashboard/views/modal.addNotif.html',
 			//	controller: 'modalAddNotifCtrl',
