@@ -85,11 +85,11 @@ angular.module('core.medics')
 		};
 	})
 	.service('http', function ($http, $q, constants, $translate, alertService, $rootScope, offlineRepository, localStorageService, $log) {
-			//variables
+		//variables
 		var deferred = $q.defer(),
-			  offlineResp = {data:{state:{message:'', value:''}}},
-		    error = {status: '', statusText:''},
-			  user = localStorageService.get('userData');
+			offlineResp = {data: {state: {message: '', value: ''}}},
+			error = {status: '', statusText: ''},
+			user = localStorageService.get('userData');
 
 		error.status = $translate.instant('MSG_NOT_OF_WORK');
 		error.statusText = $translate.instant('MSG_OFFLINE_MODE')
@@ -101,7 +101,7 @@ angular.module('core.medics')
 					pushDocs = [],
 					diff;
 
-				offlineRepository.allDocs({keys:ids, include_docs:true}).then(function (docs) {
+				offlineRepository.allDocs({keys: ids, include_docs: true}).then(function (docs) {
 
 					pushDocs = _.filter(docs.rows, function (row) {
 						if (!row.error) {
@@ -127,35 +127,36 @@ angular.module('core.medics')
 					offlineRepository.bulkDocs(diff);
 				});
 			}
+
 			switch (url) {
 				case 'private/dashboard/tasks/all':
 				{
-					saveDoc(list,'task');
+					saveDoc(list, 'task');
 					break;
 				}
-				case 'private/dashboard/'+user.type+'/references':
+				case 'private/dashboard/' + user.type + '/references':
 				{
-					saveDoc(list,'reference');
+					saveDoc(list, 'reference');
 					break;
 				}
 				case 'private/dashboard/template':
 				{
-					saveDoc(list,'template');
+					saveDoc(list, 'template');
 					break;
 				}
 				case 'private/dashboard/user/template':
 				{
-					saveDoc(list,'userTemplate');
+					saveDoc(list, 'userTemplate');
 					break;
 				}
-/*				case '':
-				{
-					break;
-				}
-				case '':
-				{
-					break;
-				}*/
+				/*				case '':
+				 {
+				 break;
+				 }
+				 case '':
+				 {
+				 break;
+				 }*/
 				default:
 				{
 					$log.warn('Offline synchronisation: method not allowed to sync')
@@ -163,13 +164,17 @@ angular.module('core.medics')
 			}
 		}
 
-    //offline http
+		//offline http
 		function getOfflineDoc(url, params) {
 
 			var deferred = $q.defer();
 			//all good
 			function successList(resp, deferred) {
-				var list = _.map(resp.rows, 'doc');
+				var list = null;
+				if (resp.rows)
+					list = _.map(resp.rows, 'doc');
+				else
+					list = resp;
 				offlineResp.data.state.value = true;
 				offlineResp.data.result = list;
 				deferred.resolve(offlineResp);
@@ -180,8 +185,8 @@ angular.module('core.medics')
 			};
 
 
-			switch (url){
-				case 'private/dashboard/tasks/all':
+			switch (true) {
+				case (url.indexOf('private/dashboard/tasks/all') > -1):
 				{
 					offlineRepository.getAllTasks().then(function (resp) {
 						successList(resp, deferred);
@@ -190,7 +195,7 @@ angular.module('core.medics')
 					});
 					break;
 				}
-				case 'private/dashboard/'+user.type+'/references':
+				case (url.indexOf('private/dashboard/' + user.type + '/references') > -1):
 				{
 					offlineRepository.getReferences().then(function (resp) {
 						successList(resp, deferred);
@@ -199,7 +204,7 @@ angular.module('core.medics')
 					});
 					break;
 				}
-				case 'private/dashboard/template':
+				case (url.indexOf('private/dashboard/template') > -1):
 				{
 					offlineRepository.getAllTemplates().then(function (resp) {
 						successList(resp, deferred);
@@ -208,7 +213,7 @@ angular.module('core.medics')
 					});
 					break;
 				}
-				case 'private/dashboard/user/template':
+				case (url.indexOf('private/dashboard/user/template') > -1):
 				{
 					offlineRepository.getUserTemplates().then(function (resp) {
 						successList(resp, deferred);
@@ -217,14 +222,19 @@ angular.module('core.medics')
 					});
 					break;
 				}
-/*				case '':
+				case (url.indexOf('private/dashboard/tasks/') > -1):
 				{
+					offlineRepository.getTask(url.replace('private/dashboard/tasks/', '')).then(function (resp) {
+						successList(resp, deferred);
+					}, function (error) {
+						errorList(error, deferred);
+					});
 					break;
 				}
-				case '':
-				{
-					break;
-				}*/
+				/*case '':
+				 {
+				 break;
+				 }*/
 				default:
 				{
 					deferred.reject(error);
@@ -353,16 +363,19 @@ angular.module('core.medics')
 			});
 		};
 		function getAllTasks() {
-			return vm.db.query('index/docType', {key:'task', include_docs:true});
+			return vm.db.query('index/docType', {key: 'task', include_docs: true});
 		};
 		function getAllTemplates() {
-			return vm.db.query('index/docType', {key:'template', include_docs:true});
+			return vm.db.query('index/docType', {key: 'template', include_docs: true});
 		};
 		function getUserTemplates() {
-			return vm.db.query('index/docType', {key:'userTemplate', include_docs:true});
+			return vm.db.query('index/docType', {key: 'userTemplate', include_docs: true});
 		};
 		function getReferences() {
-			return vm.db.query('index/docType', {key:'reference', include_docs:true});
+			return vm.db.query('index/docType', {key: 'reference', include_docs: true});
+		};
+		function getTask(id) {
+			return vm.db.get(id);
 		};
 		function getPatients() {
 
@@ -386,13 +399,14 @@ angular.module('core.medics')
 			init: init,
 			addDraft: addDraft,
 			getAllTasks: getAllTasks,
-			getAllTemplates:getAllTemplates,
-			getUserTemplates:getUserTemplates,
-			getReferences:getReferences,
-			getPatients:getPatients,
-			getStaff:getStaff,
-			sendTask:sendTask,
-			loadTask:loadTask
+			getAllTemplates: getAllTemplates,
+			getUserTemplates: getUserTemplates,
+			getReferences: getReferences,
+			getPatients: getPatients,
+			getStaff: getStaff,
+			getTask: getTask,
+			sendTask: sendTask,
+			loadTask: loadTask
 		}
 		return vm.serv;
 	})
@@ -477,10 +491,10 @@ angular.module('core.medics')
 		};
 	})
 	//
-	.service('ModalService', function($ionicModal, $rootScope) {
+	.service('ModalService', function ($ionicModal, $rootScope) {
 
 
-		var init = function(tpl, $scope) {
+		var init = function (tpl, $scope) {
 
 			var promise;
 			$scope.model = {};
@@ -489,22 +503,22 @@ angular.module('core.medics')
 			promise = $ionicModal.fromTemplateUrl(tpl, {
 				scope: $scope,
 				animation: 'slide-in-up'
-			}).then(function(modal) {
+			}).then(function (modal) {
 				$scope.modal = modal;
 				return modal;
 			});
 
-			$scope.openModal = function() {
+			$scope.openModal = function () {
 				return $scope.modal.show();
 			};
-			$scope.modalOk = function() {
+			$scope.modalOk = function () {
 				$rootScope.$broadcast('modalOk', $scope.model)
 				$scope.modal.hide();
 			};
-			$scope.modalCancel = function() {
+			$scope.modalCancel = function () {
 				$scope.modal.hide();
 			};
-			$scope.$on('$destroy', function() {
+			$scope.$on('$destroy', function () {
 				$scope.modal.remove();
 			});
 
