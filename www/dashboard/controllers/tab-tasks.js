@@ -2,6 +2,29 @@
 /*jshint -W117, -W097*/
 
 angular.module('core.dashboard')
+	.controller('subCtrl', function ($ionicTabsDelegate, $state) {
+		var vm = this;
+		vm.changeTab = function (index) {
+			if (0 === index)
+				$state.go('^.tasks');
+			else
+				$state.go('^.sent');
+
+			$ionicTabsDelegate.select(index);
+
+		};
+	})
+	.controller('sentCtrl', function (alertService, offlineRepository) {
+		var vm = this;
+		vm.tasks = [];
+
+		offlineRepository.query('index/docType', {key: 'sent', include_docs: true}).then(function (result) {
+			vm.tasks = _.map(result.rows, 'doc');
+		}, function (error) {
+
+		});
+
+	})
 	.controller('tasksCtrl', function (alertService,$translate,$state,$scope,localStorageService,http) {
 
 		var vm = this;
