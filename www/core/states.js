@@ -107,6 +107,18 @@ angular.module('core.medics')
 					}
 				}
 			})
+			.state('tab.sendtask',{
+				url:'/sendtask',
+				views:{
+					'menuContent':{
+						templateUrl:'dashboard/views/popups/CreateTask.html',
+						controller:'modalSendTaskMultiCtrl as vm'
+					}
+				},
+				params:{
+					templates:''
+				}
+			})
 			.state('tab.drafts', {
 				url: '/drafts',
 				views: {

@@ -2,7 +2,7 @@
 /*jshint -W117, -W097*/
 
 angular.module('core.dashboard')
-	.controller('catalogCtrl', function ( $state,localStorageService,http, alertService, ModalService, $scope) {
+	.controller('catalogCtrl', function ( $state,localStorageService,http, alertService,$scope) {
 
 		var vm = this;
 		console.log('catalogCTRL');
@@ -67,17 +67,18 @@ angular.module('core.dashboard')
 		}
 
 		}
-		vm.onLoad = function (id) {
+		vm.onLoad = function (template) {
+			$state.go('tab.sendtask',{templates:template});
 
-				ModalService
-					.init('dashboard/views/popups/CreateTask.html', $scope)
-					.then(function(modal) {
-						modal.show();
-					});
-
-			$scope.$on('modalOk', function (event, model) {
-				var v = model;
-			});
+			//	ModalService
+			//		.init('dashboard/views/popups/CreateTask.html', $scope)
+			//		.then(function(modal) {
+			//			modal.show();
+			//		});
+			//
+			//$scope.$on('modalOk', function (event, model) {
+			//	var v = model;
+			//});
 		};
 		vm.onAddTask = function (obj) {
 			if(obj){

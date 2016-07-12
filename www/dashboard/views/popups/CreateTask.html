@@ -1,15 +1,22 @@
-<div class="modal">
-    <ion-header-bar class="bar bar-header bar-positive">
-        <h1 class="title">My Modal title</h1>
-        <div class="buttons"><button class="button button-clear button-primary" ng-click="modalOk()">Ok</button></div>
-    </ion-header-bar>
 
-    <ion-content>
+<ion-content>
         <div style="height: 67px;"></div>
-        <div class="item">
-            <input ion-autocomplete type="text" readonly="false" class="ion-autocomplete" autocomplete="true" ng-model="model.ref"
-                   item-view-value-key="id"
-                   items-method="getAddressSuggestions(query)" />
-        </div>
+
+        <input class="search_field" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off"
+               ng-model="vm.message.patients"
+               item-value-key="id",
+               item-view-value-key="name"
+               items-method="vm.getTestItems(query)"
+               items-method-value-key="patients"
+               placeholder="tap to search ..."
+               items-clicked-method="itemsClicked(callback)"
+               items-removed-method="itemsRemoved(callback)"
+               max-selected-items="10"/>
+
+    <ion-item style="margin-top: 20px;">
+        <ion-label stacked>Message</ion-label>
+        <ion-textarea [(ngModel)]="msg"></ion-textarea>
+    </ion-item>
+<button class="button button-full button-balanced" ng-click="vm.onSend()" translate="SEND"></button>
     </ion-content>
 </div>
