@@ -13,7 +13,8 @@ angular.module('core.medics')
 			//public
 			.state('main.public', {
 				url: '/',
-				abstract: true
+				abstract: true,
+				parent:'main'
 
 			})
 			.state('main.public.login', {
@@ -24,8 +25,8 @@ angular.module('core.medics')
 						controller: 'loginCtrl as vm'
 					}
 
-				}
-
+				},
+				parent:'main.public'
 			})
 			.state('main.public.registration',{
 				url: 'registration',
@@ -34,7 +35,8 @@ angular.module('core.medics')
 						templateUrl: 'public/views/registration.html',
 						controller: 'RegistrationCtrl as vm'
 					}
-				}
+				},
+				parent:'main.public'
 			})
 
 			.state('tab', {
@@ -44,16 +46,36 @@ angular.module('core.medics')
 				controller: 'dashboardCtrl as vm'
 			})
 
-
-
-			.state('tab.tasks', {
-				url: '/tasks',
+      .state('tab.sub', {
+				url:'',
 				views: {
 					'menuContent': {
+						templateUrl: 'dashboard/views/tab-sub.html',
+						controller: 'subCtrl as vm'
+					}
+				},
+				parent:'tab'
+			})
+
+			.state('tab.sub.tasks', {
+				url: '/tasks',
+				views: {
+					'list': {
 						templateUrl: 'dashboard/views/tab-tasks.html',
 						controller: 'tasksCtrl as vm'
 					}
-				}
+				},
+				parent:'tab.sub'
+			})
+			.state('tab.sub.sent', {
+				url: '/sent',
+				views: {
+					'list': {
+						templateUrl: 'dashboard/views/tab-tasks.html',
+						controller: 'sentCtrl as vm'
+					}
+				},
+				parent:'tab.sub'
 			})
 			.state('tab.tasksedit', {
 				url: '/tasksedit',
@@ -61,7 +83,8 @@ angular.module('core.medics')
 					'menuContent': {
 						templateUrl: 'dashboard/views/tab-tasks.edit.html',
 						controller: 'tasksEditCtrl as vm'
-					}
+					},
+					parent:'tab'
 				},
 				params:{
 					id: '',
@@ -76,7 +99,8 @@ angular.module('core.medics')
 						templateUrl: 'dashboard/views/popups/SendTaskFromTasksEdit.html',
 						controller: 'SendTaskFromTasksEdit as vm'
 					}
-				}
+				},
+				parent:'tab'
 			})
 			.state('tab.references', {
 				url: '/references',
@@ -85,7 +109,8 @@ angular.module('core.medics')
 						templateUrl: 'dashboard/views/tab-references.html',
 						controller: 'referencesCtrl as vm'
 					}
-				}
+				},
+				parent:'tab'
 			})
 			.state('tab.addreferences', {
 				url: '/addreferences',
@@ -94,7 +119,8 @@ angular.module('core.medics')
 						templateUrl: 'dashboard/views/add-references.html',
 						controller: 'addReferencesCtrl'
 					}
-				}
+				},
+				parent:'tab'
 			})
 			.state('tab.notifications', {
 				url: '/notifications',
@@ -103,7 +129,8 @@ angular.module('core.medics')
 						templateUrl: 'dashboard/views/tab-notifications.html',
 						controller: 'notificationsCtrl as vm'
 					}
-				}
+				},
+				parent:'tab'
 			})
 
 			.state('tab.catalog', {
@@ -113,7 +140,8 @@ angular.module('core.medics')
 						templateUrl: 'dashboard/views/tab-catalog.html',
 						controller: 'catalogCtrl as vm'
 					}
-				}
+				},
+				parent:'tab'
 			})
 			.state('tab.sendtask',{
 				url:'/sendTaskCatalog',
@@ -134,7 +162,8 @@ angular.module('core.medics')
 						templateUrl: 'dashboard/views/tab-drafts.html',
 						controller: 'draftsCtrl as vm'
 					}
-				}
+				},
+				parent:'tab'
 			})
 			.state('tab.patients', {
 				url: '/patients',
@@ -143,7 +172,8 @@ angular.module('core.medics')
 						templateUrl: 'dashboard/views/tab-patients.html',
 						controller: 'patientsCtrl as vm'
 					}
-				}
+				},
+				parent:'tab'
 			}).state('tab.addpatient',{
 				url: '/addpatients',
 				views: {
@@ -151,7 +181,8 @@ angular.module('core.medics')
 						templateUrl: 'dashboard/views/tab-addPatients.html',
 						controller: 'addPatientCtrl as vm'
 					}
-				}
+				},
+				parent:'tab'
 			})
 			.state('tab.draftsedit',{
 				url: '/draftsedit',
@@ -173,7 +204,8 @@ angular.module('core.medics')
 						templateUrl: 'dashboard/views/tab-stuff.html',
 						controller: 'stuffCtrl as vm'
 					}
-				}
+				},
+				parent:'tab'
 			})
 			.state('tab.stuffedit',{
 				url: '/stuffedit',
@@ -183,6 +215,7 @@ angular.module('core.medics')
 						controller: 'stuffEditCtrl as vm'
 					}
 				},
+				parent:'tab',
 				params:{
 					id: ''
 				}
