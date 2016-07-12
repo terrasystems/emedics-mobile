@@ -23,15 +23,17 @@
   "resolutions": {
     "angular": "1.4.7"
   },
-  "ion-autocomplete": {
-    "main": [
-      "../../core/ion-autocomplete.js"
-    ]
-  },
-  "ionic-platform-web-client": {
-    "main": [
-      "../../../core/ionic-platform-web-client/ionic.io.bundle.min.js"
-    ]
+  "overrides": {
+    "ion-autocomplete": {
+      "main": [
+        "../../core/ion-autocomplete.js"
+      ]
+    },
+    "ionic-platform-web-client": {
+      "main": [
+        "../../../core/ionic-platform-web-client/ionic.io.bundle.min.js"
+      ]
+    }
   },
   "appPath": "www/"
 }
