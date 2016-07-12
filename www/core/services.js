@@ -128,6 +128,9 @@ angular.module('core.medics')
 				});
 			}
 
+			if (!user)
+				return;
+
 			switch (url) {
 				case 'private/dashboard/tasks/all':
 				{
@@ -231,10 +234,15 @@ angular.module('core.medics')
 					});
 					break;
 				}
-				/*case '':
+				case (url.indexOf('private/dashboard/tasks/send') > -1):
 				 {
+					 offlineRepository.sendTask(params).then(function (resp) {
+						 successList(resp, deferred);
+					 }, function (error) {
+						 errorList(error, deferred);
+					 });
 				 break;
-				 }*/
+				 }
 				default:
 				{
 					deferred.reject(error);
@@ -304,28 +312,33 @@ angular.module('core.medics')
 		//Save or add draft document
 		function addDraft(id, info, model) {
 			var deferred = $q.defer();
-			if (id === 'add') {
-				var doc = {
-					_id: new Date().toISOString(),
-					type: 'draft',
-					name: info.name,
-					body: {sections: model, formInfo: info}
-				};
-				vm.db.put(doc, function (res) {
-					deferred.resolve(res);
-				});
-			} else {
+			if (id === 'add')
+			{
+				id = 'draft:' + info.rawData.template.id;
+
+			}// else {
 				vm.db.get(id).then(function (doc) {
 					doc.body = {sections: model, formInfo: info};
-					return doc;
-				}, function () {
-					deferred.reject(false);
-				}).then(function (doc) {
+
 					vm.db.put(doc, function (res) {
 						deferred.resolve(res);
 					});
+				}, function (error) {
+					if (404 === error.status)
+					{
+						var doc = {
+							_id: 'draft:' + info.rawData.template.id,
+							type: 'draft',
+							name: info.name,
+							body: {sections: model, formInfo: info}
+						};
+						vm.db.put(doc, function (res) {
+						 deferred.resolve(res);
+						 });
+					}
+					//deferred.reject(false);
 				});
-			}
+			//}
 			return deferred.promise;
 		}
 
@@ -383,8 +396,9 @@ angular.module('core.medics')
 		function getStaff() {
 
 		};
-		function sendTask() {
-
+		function sendTask(params) {
+			params.type = 'sent';
+      return vm.db.put(params);
 		};
 		function loadTask() {
 

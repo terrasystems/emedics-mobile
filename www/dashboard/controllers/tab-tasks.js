@@ -13,8 +13,8 @@ angular.module('core.dashboard')
 		vm.showFilter = true;
 		vm.showFilterH = true;
 
-		vm.filterModel = { period: 1, fromName: '', patientName: '', templateName: '' };
-		vm.filterModelH= { period: 1, fromName: '', patientName: '', templateName: '' };
+		vm.filterModel = { period: 4, fromName: '', patientName: '', templateName: '' };
+		vm.filterModelH= { period: 4, fromName: '', patientName: '', templateName: '' };
 
 		if (vm.user.type === 'patient') {
 			vm.filterModel.period = 4;

@@ -86,16 +86,13 @@ angular.module('core.dashboard')
 		vm.onSave = function () {
 			save().then(function (res) {
 				alertService.showAlert("Saved");
+				offlineRepository.addDraft('add', vm.data.formInfo, vm.data.model);
 				$state.go(vm.mainState);
 			});
 		};
 
 		vm.onSaveDraft = function() {
-			offlineRepository.addDraft('add', vm.data.formInfo, vm.data.model)
-				.then(function() {
-					alertService.showAlert('Saved as Draft');
-					$state.go(vm.mainState);
-				});
+
 		};
 
 		vm.onSend = function() {
