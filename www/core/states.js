@@ -69,7 +69,15 @@ angular.module('core.medics')
 					patId: null
 				}
 			})
-
+			.state('tab.taskssend', {
+				url: '/tasksSend',
+				views: {
+					'menuContent': {
+						templateUrl: 'dashboard/views/popups/SendTaskFromTasksEdit.html',
+						controller: 'SendTaskFromTasksEdit as vm'
+					}
+				}
+			})
 			.state('tab.references', {
 				url: '/references',
 				views: {
@@ -108,10 +116,10 @@ angular.module('core.medics')
 				}
 			})
 			.state('tab.sendtask',{
-				url:'/sendtask',
+				url:'/sendTaskCatalog',
 				views:{
 					'menuContent':{
-						templateUrl:'dashboard/views/popups/CreateTask.html',
+						templateUrl:'dashboard/views/popups/SendTaskFromCatalog.html',
 						controller:'modalSendTaskMultiCtrl as vm'
 					}
 				},
