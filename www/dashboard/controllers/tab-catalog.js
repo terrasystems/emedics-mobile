@@ -2,7 +2,7 @@
 /*jshint -W117, -W097*/
 
 angular.module('core.dashboard')
-	.controller('catalogCtrl', function ( $state,localStorageService,http, alertService,$scope) {
+	.controller('catalogCtrl', function ($state, localStorageService, http, alertService, $scope) {
 
 		var vm = this;
 		console.log('catalogCTRL');
@@ -45,59 +45,81 @@ angular.module('core.dashboard')
 		};
 
 		function getTemplates(type) {
-		if ('main' === type)
-		{
-			http.get('private/dashboard/template')
-				.then(function (res) {
-					if (res.state) {
-						vm.formTemplates = vm.convertFormTemplate(res.result);
-						vm.type = type;
-					}
-				});
-		}
-			else
-		{
-			http.get('private/dashboard/user/template')
-				.then(function (res) {
-					if (res.state) {
-						vm.formTemplates = res.result;
-						vm.type = type;
-					}
-				});
-		}
-
-		}
-		vm.onLoad = function (template) {
-			$state.go('tab.sendtask',{templates:template});
-
-			//	ModalService
-			//		.init('dashboard/views/popups/CreateTask.html', $scope)
-			//		.then(function(modal) {
-			//			modal.show();
-			//		});
-			//
-			//$scope.$on('modalOk', function (event, model) {
-			//	var v = model;
-			//});
-		};
-		vm.onAddTask = function (obj) {
-			if(obj){
-			var paramsPOST = {
-				template: {
-					id: obj.templateDto.id,
-					type: obj.templateDto.typeEnum,
-					description: null,
-					templateDto: null
-				},
-				patient: null,
-				data: "{}"
-			};
-         http.post('private/dashboard/tasks/create', paramsPOST)
-	         .then(function (res) {
-					alertService.showAlert(res.state.message);
-				});
+			if ('main' === type) {
+				http.get('private/dashboard/template')
+					.then(function (res) {
+						if (res.state) {
+							vm.formTemplates = vm.convertFormTemplate(res.result);
+							vm.type = type;
+						}
+					});
 			}
+			else {
+				http.get('private/dashboard/user/template')
+					.then(function (res) {
+						if (res.state) {
+							vm.formTemplates = res.result;
+							vm.type = type;
+						}
+					});
+			}
+
+		}
+
+		vm.addFromAllTasks = function (template) {
+			if (template.typeEnum === 'PATIENT' && vm.userType.type !== 'patient') {
+				$state.go('tab.sendtask', {templates: template});
+			} else {
+				vm.loadTask(template);
+			}
+
+
 		};
+
+		vm.loadTask = function (template) {
+			http.get('private/dashboard/template/load/' + template.id)
+				.then(function (rest) {
+					alertService.showAlert(rest.state.message);
+					});
+
+       var paramsPOST={};
+
+			if(template.templateDto === undefined){
+				paramsPOST = {
+					template: {
+						id: template.id,
+						type: template.typeEnum,
+						description: null,
+						templateDto: null
+					},
+					patient: null,
+					data: "{}"
+				};
+			}
+			if(template.templateDto){
+				paramsPOST = {
+					template: {
+						id: obj.templateDto.id,
+						type: obj.templateDto.typeEnum,
+						description: null,
+						templateDto: null
+					},
+					patient: null,
+					data: '{}'
+				};
+			}
+
+
+			vm.taskCreate(paramsPOST);
+		};
+
+vm.taskCreate=function(template){
+	http.post('private/dashboard/tasks/create', template)
+		.then(function (res) {
+			alertService.showAlert(res.state.message);
+		});
+};
+
 		vm.DeleteMyForm = function (id) {
 			http.get('private/dashboard/template/delete/' + id)
 				.then(function (res) {
@@ -109,14 +131,14 @@ angular.module('core.dashboard')
 		vm.Buy = function (id) {
 			http.get('private/dashboard/template/pay/' + id)
 				.then(function (res) {
-				//	blockUI.stop();
+					//	blockUI.stop();
 					alertService.showAlert(res.state.message);
 				});
 		};
 		vm.onView = function (id) {
 			http.get('private/dashboard/template/preview/' + id)
 				.then(function (res) {
-				//	blockUI.stop();
+					//	blockUI.stop();
 					alertService.showAlert(res.state.message);
 				});
 		};

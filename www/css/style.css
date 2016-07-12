@@ -55,3 +55,6 @@ input[disabled], input[readonly]:not(.cloned-text-input), select[disabled], sele
     padding-left: 15px;
     border-bottom: dotted 1px;
 }
+textarea{
+    resize: none
+}

@@ -3,10 +3,10 @@
     <div style="height: 64px;"></div>
     <!--my forms -->
     <ion-list ng-if="vm.type=='my'">
-        <ion-item class="catalog"  ng-repeat="formTemplate in vm.formTemplates">
-            {{formTemplate.templateDto.name}}
-            <button style="float: right" class="button ion-trash-b  button-small button-assertive" ng-click="vm.DeleteMyForm(formTemplate.id)" ng-if="!(formTemplate.type=='PAID')"></button>
-            <button style="float: right" class="button ion-plus-round  button-small button-balanced" ng-click="vm.onAddTask(formTemplate)">
+        <ion-item class="catalog"  ng-repeat="MyformTemplates in vm.formTemplates">
+            {{MyformTemplates.templateDto.name}}
+            <button style="float: right" class="button ion-trash-b  button-small button-assertive" ng-click="vm.DeleteMyForm(MyformTemplates.id)" ng-if="!(MyformTemplates.type=='PAID')"></button>
+            <button style="float: right" class="button ion-plus-round  button-small button-balanced" ng-click="vm.onAddTask(MyformTemplates)">
 
             </button>
         </ion-item>
@@ -19,7 +19,7 @@
             <button style="float: right" class="button ion-eye button-small button-calm" ng-click="vm.onView(formTemplate.id);">
 
             </button>
-            <button style="float: right" class="button ion-plus-round  button-small button-balanced" ng-click="vm.onLoad(formTemplate)" >
+            <button style="float: right" class="button ion-plus-round  button-small button-balanced" ng-click="vm.addFromAllTasks(formTemplate)" >
 
             </button>
             <button ng-click="vm.Buy(formTemplate.id);formTemplate.isPay=true;formTemplate.isLoad=true;" ng-disabled="formTemplate.isPay" ng-if="formTemplate.commercialEnum==='PAID'" ng-hide="formTemplate.existPaid === true" style="float: right" class="button ion-bag  button-small button-assertive">

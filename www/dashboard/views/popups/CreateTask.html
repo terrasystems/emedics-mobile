@@ -9,14 +9,17 @@
                items-method="vm.getTestItems(query)"
                items-method-value-key="patients"
                placeholder="tap to search ..."
-               items-clicked-method="itemsClicked(callback)"
-               items-removed-method="itemsRemoved(callback)"
+               items-clicked-method="vm.itemsClicked(callback)"
+               items-removed-method="vm.itemsRemoved(callback)"
                max-selected-items="10"/>
 
-    <ion-item style="margin-top: 20px;">
-        <ion-label stacked>Message</ion-label>
-        <ion-textarea [(ngModel)]="msg"></ion-textarea>
+    <ion-item>
+
+            <textarea placeholder="message..." ng-model="vm.message.message" style="width: 100%" rows="8"></textarea>
+
+
     </ion-item>
+
 <button class="button button-full button-balanced" ng-click="vm.onSend()" translate="SEND"></button>
     </ion-content>
-</div>
+

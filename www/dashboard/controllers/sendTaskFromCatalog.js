@@ -10,7 +10,8 @@ angular.module('core.dashboard')
 		//vm.user = localStorageService.get('userData');
 		//vm.message = { message: '', patients:[], assignAll: false};
 		vm.patients = [];
-
+		vm.clickedValueModel = '';
+		vm.removedValueModel = '';
 
 		vm.getTestItems = function (query) {
 			return http.post('private/dashboard/patients', {name: query})
@@ -30,54 +31,23 @@ angular.module('core.dashboard')
 		};
 
 
-		$scope.itemsClicked = function (callback) {
+		vm.itemsClicked = function (callback) {
 			if (callback.item.id === 'ALL') {
 				vm.message.patients = ['ALL'];
 				vm.message.assignAll = true;
 			}
-			$scope.clickedValueModel = callback;
+			vm.clickedValueModel = callback;
 
 		};
-		$scope.itemsRemoved = function (callback) {
+		vm.itemsRemoved = function (callback) {
 			if (callback.item.id === 'ALL') {
 				vm.message.assignAll = false;
 			}
-			$scope.removedValueModel = callback;
+			vm.removedValueModel = callback;
 
 
 		};
 
-		//vm.model = model;
-		//vm.user = localStorageService.get('userData');
-		//vm.message = {template: model.data.template_id, message: '', patients:[], assignAll: false};
-		//vm.patients = [];
-		//
-		//vm.getFindUsers = function (val) {
-		//	if  (val==='') { return []; }
-		//	return http.post('private/dashboard/patients', {name: val})
-		//		.then(function (res) {
-		//			//blockUI.stop();
-		//			if  (angular.isArray(res.result) && res.result.length>0) {
-		//				res.result.unshift( { name: '<< To ALL PATIENTS >>', email: '', id: 'ALL' } );
-		//			}
-		//			vm.patients = res.result;
-		//			return res.result;
-		//		});
-		//};
-		//
-		//vm.onSelectCallback = function (item, model) {
-		//	if (model === 'ALL') {
-		//		vm.message.patients = ['ALL'];
-		//		vm.message.assignAll = true;
-		//	}
-		//};
-		//
-		//vm.onRemoveCallback= function (item, model) {
-		//	if (model === 'ALL') {
-		//		vm.message.assignAll = false;
-		//	}
-		//};
-		//
 		vm.onSend = function () {
 			if (vm.message.assignAll === true) {
 				vm.message.patients = [];
@@ -88,11 +58,8 @@ angular.module('core.dashboard')
 					if (res.state) {
 						alertService.showAlert(res.state.message);
 					}
-					//$uibModalInstance.close(res);
 				}, function (error) {
 					alertService.showAlert(error);
-					//$uibModalInstance.close(error);
-					//deferred.reject(error);
 				});
 		};
 
