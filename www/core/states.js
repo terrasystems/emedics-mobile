@@ -123,7 +123,7 @@ angular.module('core.medics')
 				url:'/sendTaskCatalog',
 				views:{
 					'menuContent':{
-						templateUrl:'dashboard/views/popups/SendTaskFromCatalog.html',
+						templateUrl:'dashboard/views/popups/sendTaskFromCatalog.html',
 						controller:'modalSendTaskMultiCtrl as vm'
 					}
 				},

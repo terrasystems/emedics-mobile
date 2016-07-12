@@ -4,7 +4,7 @@
     <input class="search_field" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete"
            autocomplete="off"
            ng-model="vm.message.patient"
-           item-value-key="id" ,
+
            item-view-value-key="name"
            items-method="vm.find(query,'pat')"
            items-method-value-key="patients"
@@ -19,7 +19,7 @@
         <input class="search_field" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete"
                autocomplete="off"
                ng-model="vm.message.toUser"
-               item-value-key="id" ,
+
                item-view-value-key="name"
                items-method="vm.find(query,'all')"
                items-method-value-key="patients"

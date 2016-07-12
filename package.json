@@ -12,7 +12,8 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.0.4",
     "lodash": "^4.13.1",
-    "wiredep": "^4.0.0"
+    "wiredep": "^4.0.0",
+    "ionic": "^1.7.6"
   },
   "devDependencies": {
     "angular-translate": "^2.11.0",
@@ -28,16 +29,20 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-    "cordova-plugin-whitelist",
-    "cordova-plugin-console",
     "cordova-plugin-device",
-    "cordova-plugin-splashscreen",
-    "cordova-plugin-network-information",
     "com.ionic.keyboard",
-    "cordova-plugin-console"
+    "cordova-plugin-globalization",
+    "cordova-plugin-whitelist",
+    "cordova-plugin-inappbrowser",
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-network-information@1.0.1",
+    "cordova-plugin-app-version",
+    "cordova-plugin-console",
+    "cordova-plugin-statusbar",
+    "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [
-    "android",
+    "android@4.1.1",
     "ios"
   ]
 }

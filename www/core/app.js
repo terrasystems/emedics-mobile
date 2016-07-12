@@ -34,17 +34,21 @@ Emedics.config(function(  $stateProvider, $urlRouterProvider, formlyConfigProvid
   $ionicConfigProvider.scrolling.jsScrolling(false); // http://tombuyse.com/improving-the-performance-of-your-ionic-application/
   $ionicConfigProvider.views.maxCache(0);
 });
-Emedics.run(function($state,$rootScope,$log,$ionicPlatform,constants,$translate, formlyConfig, formlyValidationMessages, checkUserAuth, $cordovaNetwork, offlineRepository, localStorageService) {
+Emedics.run(function($state,$rootScope,$log,$ionicPlatform,constants,$translate, formlyConfig,
+                     formlyValidationMessages, checkUserAuth, $cordovaNetwork, offlineRepository,
+                     $cordovaKeyboard, localStorageService) {
 
   $translate.use('en');
 
   $ionicPlatform.ready(function() {
+    $cordovaKeyboard.hideAccessoryBar(true);
+    $cordovaKeyboard.disableScroll(true);
     $rootScope.$state = $state;
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+    /*if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
 
-    }
+    }*/
     if (window.StatusBar) {
       StatusBar.styleDefault();
     }
