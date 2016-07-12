@@ -174,7 +174,7 @@ angular.module('core.medics')
 			//all good
 			function successList(resp, deferred) {
 				var list = null;
-				if (resp.rows)
+				if (resp && resp.rows)
 					list = _.map(resp.rows, 'doc');
 				else
 					list = resp;
@@ -189,6 +189,15 @@ angular.module('core.medics')
 
 
 			switch (true) {
+				case (url.indexOf('private/dashboard/tasks/send') > -1):
+				{
+					offlineRepository.sendTask(params).then(function (resp) {
+						successList(resp, deferred);
+					}, function (error) {
+						errorList(error, deferred);
+					});
+					break;
+				}
 				case (url.indexOf('private/dashboard/tasks/all') > -1):
 				{
 					offlineRepository.getAllTasks().then(function (resp) {
@@ -234,15 +243,6 @@ angular.module('core.medics')
 					});
 					break;
 				}
-				case (url.indexOf('private/dashboard/tasks/send') > -1):
-				 {
-					 offlineRepository.sendTask(params).then(function (resp) {
-						 successList(resp, deferred);
-					 }, function (error) {
-						 errorList(error, deferred);
-					 });
-				 break;
-				 }
 				default:
 				{
 					deferred.reject(error);
@@ -397,8 +397,31 @@ angular.module('core.medics')
 
 		};
 		function sendTask(params) {
-			params.type = 'sent';
-      return vm.db.put(params);
+			var deferred = $q.defer();
+
+			vm.db.get(params.event).then(function (doc) {
+				//var ddoc = JSON.parse(JSON.stringify(doc));
+
+				params._id = doc._id;
+				params._rev = doc._rev;
+				params.type = 'sent';
+				vm.db.put(params, function (res) {
+					deferred.resolve(res);
+				});
+			}, function (error) {
+				if (404 === error.status)
+				{
+					params.type = 'sent';
+					params._id = params.event;
+					vm.db.put(params, function (res) {
+						deferred.resolve(res);
+					});
+				}
+				//deferred.reject(false);
+			});
+
+			//vm.db.put(params);
+      return deferred.promise;
 		};
 		function loadTask() {
 
