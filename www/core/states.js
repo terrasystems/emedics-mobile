@@ -74,8 +74,11 @@ angular.module('core.medics')
 				views: {
 					'menuContent': {
 						templateUrl: 'dashboard/views/popups/SendTaskFromTasksEdit.html',
-						controller: 'SendTaskFromTasksEdit as vm'
+						controller: 'SendTaskCTRL as vm'
 					}
+				},
+				params:{
+					templates:''
 				}
 			})
 			.state('tab.references', {

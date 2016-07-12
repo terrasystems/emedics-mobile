@@ -1,0 +1,39 @@
+<ion-content>
+    <div style="height: 67px;"></div>
+
+    <input class="search_field" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete"
+           autocomplete="off"
+           ng-model="vm.message.patient"
+           item-value-key="id" ,
+           item-view-value-key="name"
+           items-method="vm.find(query,'pat')"
+           items-method-value-key="patients"
+           placeholder="search Reference ..."
+           items-clicked-method="vm.itemsClicked(callback)"
+           items-removed-method="vm.itemsRemoved(callback)"
+           max-selected-items="10"/>
+
+    <div>
+
+
+        <input class="search_field" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete"
+               autocomplete="off"
+               ng-model="vm.message.toUser"
+               item-value-key="id" ,
+               item-view-value-key="name"
+               items-method="vm.find(query,'all')"
+               items-method-value-key="patients"
+               placeholder="search Patient ..."
+               items-clicked-method="vm.itemsClicked(callback)"
+               items-removed-method="vm.itemsRemoved(callback)"
+               max-selected-items="10"/>
+    </div>
+    <ion-item>
+
+        <textarea placeholder="message..." ng-model="vm.message.message" style="width: 100%" rows="8"></textarea>
+
+
+    </ion-item>
+
+    <button class="button button-full button-balanced" ng-click="vm.send()" translate="SEND"></button>
+</ion-content>

@@ -5,7 +5,7 @@
     <ion-list ng-if="vm.type=='my'">
         <ion-item class="catalog"  ng-repeat="MyformTemplates in vm.formTemplates">
             {{MyformTemplates.templateDto.name}}
-            <button style="float: right" class="button ion-trash-b  button-small button-assertive" ng-click="vm.DeleteMyForm(MyformTemplates.id)" ng-if="!(MyformTemplates.type=='PAID')"></button>
+            <button style="float: right" class="button ion-trash-b  button-small button-assertive" ng-click="vm.DeleteMyForm(MyformTemplates.id)" ng-disable="MyformTemplates.templateDto.commercialEnum !== 'PAID'"></button>
             <button style="float: right" class="button ion-plus-round  button-small button-balanced" ng-click="vm.onAddTask(MyformTemplates)">
 
             </button>

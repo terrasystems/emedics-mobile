@@ -96,25 +96,26 @@ angular.module('core.dashboard')
 		};
 
 		vm.onSend = function() {
-			var config = {
-				templateUrl: 'modules/dashboard/views/modal.addNotif.html',
-				controller: 'modalAddNotifCtrl',
-				controllerAs: 'vm',
-				resolve: {
-					model: function($q) {
-						var deferred = $q.defer();
-						deferred.resolve({data: {task_id: vm.id, obj: vm.data.formInfo}});
-						return deferred.promise;
-					}
-				}
-			};
-
-			save().then(function () {
-				var result = $uibModal.open(config);
-				result.result.then(function () {
-					$state.go(vm.mainState);
-				});
-			});
+			$state.go('tab.taskssend',{templates: $stateParams.id});
+			//var config = {
+			//	templateUrl: 'modules/dashboard/views/modal.addNotif.html',
+			//	controller: 'modalAddNotifCtrl',
+			//	controllerAs: 'vm',
+			//	resolve: {
+			//		model: function($q) {
+			//			var deferred = $q.defer();
+			//			deferred.resolve({data: {task_id: vm.id, obj: vm.data.formInfo}});
+			//			return deferred.promise;
+			//		}
+			//	}
+			//};
+			//
+			//save().then(function () {
+			//	var result = $uibModal.open(config);
+			//	result.result.then(function () {
+			//		$state.go(vm.mainState);
+			//	});
+			//});
 
 		};
 
