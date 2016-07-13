@@ -5,7 +5,7 @@
     <!-- The list directive is great, but be sure to also checkout the collection repeat directive when scrolling through large lists -->
 
     <ion-list  show-reorder="data.showReorder">
-<button class="button button-full button-positive" translate="CREATE_TAKS" ng-click="vm.CreateTask()"></button>
+<button ng-if="!vm.offlineState" class="button button-full button-positive" translate="CREATE_TAKS" ng-click="vm.CreateTask()"></button>
         <ion-item ng-click="vm.onClickNew(item.id)" ng-repeat="item in vm.tasks track by $index" item="item"  class="item-remove-animate">
             <span translate="NAME"></span>: {{ item.template.name }}
             <p><span translate="DATE"></span>: {{vm.convertDateTime(item.date)}}</p>

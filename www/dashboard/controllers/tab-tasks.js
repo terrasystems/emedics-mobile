@@ -4,6 +4,7 @@
 angular.module('core.dashboard')
 	.controller('subCtrl', function ($ionicTabsDelegate, $state, $rootScope, alertService, $translate) {
 		var vm = this;
+		vm.offlineState = $rootScope.offlineState;
 		vm.changeTab = function (index) {
 			if (0 === index) {
 				$state.go('^.tasks');

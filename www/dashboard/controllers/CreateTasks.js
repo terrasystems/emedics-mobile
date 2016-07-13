@@ -81,6 +81,7 @@ angular.module('core.dashboard')
 				http.post('private/dashboard/tasks/create', paramsPOST)
 					.then(function (res) {
 						alertService.showAlert(res.state.message);
+						$state.go('tab.sub.tasks');
 					});
 			}
 		};
