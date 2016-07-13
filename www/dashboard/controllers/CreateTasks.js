@@ -1,6 +1,6 @@
 "use strict";
 angular.module('core.dashboard')
-	.controller('createTasksCTRL', function (http, alertService, $state, localStorageService, $rootScope, $stateParams) {
+	.controller('createTasksCTRL', function (http, alertService, $state, localStorageService, $log, $stateParams) {
 
 		var vm = this;
 		console.log('createTasksCTRL');
@@ -70,6 +70,7 @@ angular.module('core.dashboard')
 					.then(function (res) {
 						if (res.state) {
 							alertService.showAlert(res.state.message);
+							$state.go('tab.sub.tasks');
 						}
 					});
 			} else {
@@ -81,6 +82,9 @@ angular.module('core.dashboard')
 				http.post('private/dashboard/tasks/create', paramsPOST)
 					.then(function (res) {
 						alertService.showAlert(res.state.message);
+						$state.go('tab.sub.tasks');
+					}, function (error) {
+						$log.error(error);
 						$state.go('tab.sub.tasks');
 					});
 			}
@@ -107,20 +111,6 @@ angular.module('core.dashboard')
 		};
 
 		vm.itemsRemoved = function (callback) {
-
-			if (callback.item.id === 'ALL') {
-				vm.message.assignAll = false;
-			}
-			if(vm.isMulti===true){
-				vm.isMulti = false;
-			}
-
-			vm.removedValueModel = callback;
-
-
-		};
-
-		vm.itemsRemoved1 = function (callback) {
 
 			if (callback.item.id === 'ALL') {
 				vm.message.assignAll = false;
