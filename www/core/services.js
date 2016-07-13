@@ -289,6 +289,9 @@ angular.module('core.medics')
 			}
 			else {
 				deferred.reject(false);
+				if (resp.data && resp.data.state && !resp.data.state.value)
+					alertService.warning($translate.instant(resp.data.state.message));
+				else
 				alertService.warning($translate.instant('MSG_NO_DATA'));
 			}
 		};
