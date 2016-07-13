@@ -77,6 +77,15 @@ angular.module('core.medics')
 				},
 				parent:'tab.sub'
 			})
+			.state('tab.taskcreate',{
+				url: '/taskcreate',
+				views: {
+					'menuContent': {
+						templateUrl: 'dashboard/views/popups/CreateTasks.html',
+						controller: 'createTasksCTRL as vm'
+					}
+				}
+			})
 			.state('tab.tasksedit', {
 				url: '/tasksedit',
 				views: {

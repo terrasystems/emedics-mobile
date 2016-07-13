@@ -9,15 +9,12 @@ angular.module('core.dashboard')
 				$state.go('^.tasks');
 				$ionicTabsDelegate.select(index);
 			}
-			else
-			if($rootScope.offlineState) {
+			else if ($rootScope.offlineState) {
 				$state.go('^.sent');
 				$ionicTabsDelegate.select(index);
 			}
 			else
 				alertService.warning($translate.instant('MSG_NOT_OFFLINE'));
-
-
 
 
 		};
@@ -33,7 +30,7 @@ angular.module('core.dashboard')
 		});
 
 	})
-	.controller('tasksCtrl', function (alertService,$translate,$state,$scope,localStorageService,http) {
+	.controller('tasksCtrl', function (alertService, $translate, $state, $scope, localStorageService, http) {
 
 		var vm = this;
 		console.log("TasksCTRL");
@@ -44,8 +41,8 @@ angular.module('core.dashboard')
 		vm.showFilter = true;
 		vm.showFilterH = true;
 
-		vm.filterModel = { period: 4, fromName: '', patientName: '', templateName: '' };
-		vm.filterModelH= { period: 4, fromName: '', patientName: '', templateName: '' };
+		vm.filterModel = {period: 4, fromName: '', patientName: '', templateName: ''};
+		vm.filterModelH = {period: 4, fromName: '', patientName: '', templateName: ''};
 
 		if (vm.user.type === 'patient') {
 			vm.filterModel.period = 4;
@@ -69,8 +66,8 @@ angular.module('core.dashboard')
 		//	vm.onRefreshNew();
 		//};
 
-		vm.GetAllTasks = function() {
-			http.post('private/dashboard/tasks/all',vm.filterModel)
+		vm.GetAllTasks = function () {
+			http.post('private/dashboard/tasks/all', vm.filterModel)
 				.then(function (res) {
 					//blockUI.stop();
 					if (res.result) {
@@ -80,31 +77,8 @@ angular.module('core.dashboard')
 		};
 		vm.GetAllTasks();
 
-
-
-		//vm.onRefreshNew = function() {
-		//	var params = {
-		//		period: null,
-		//		templateName: null,
-		//		patientName: null,
-		//		fromName: null
-		//	};
-		//	http.post('private/dashboard/tasks/all', params)
-		//		.then(function (res) {
-		//			//blockUI.stop();
-		//			if (res.result) {
-		//				vm.tasks = res.result;
-		//			}
-		//		});
-		//};
-		//vm.onRefreshNew();
-
-
-		vm.CreateTask=function(){
-			alertService.showPopap('','','dashboard/views/popups/CreateTask.html');
-			//$ionicModal.fromTemplateUrl('dashboard/views/popups/CreateTask.html', {
-			//	scope: $scope
-			//});
+		vm.CreateTask = function () {
+		$state.go('tab.taskcreate');
 		};
 
 		vm.convertDateTime = function (d) {

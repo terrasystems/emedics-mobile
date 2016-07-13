@@ -43,8 +43,8 @@
 .ion-autocomplete-cancel.button.button-clear.ng-binding{
     color: grey;
 }
-.item-icon-left.item-icon-right.item-text-wrap.item.ng-binding{
-    margin-top: 30px;
+.item-divider.item.ng-binding{
+    margin-top: 65px;
 }
 .search_field{
     width:100%;

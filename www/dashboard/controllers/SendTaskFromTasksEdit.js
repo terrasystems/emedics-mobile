@@ -6,7 +6,6 @@ angular.module('core.dashboard')
 		console.log('SendTasksTab');
 		var vm = this;
 		vm.user = localStorageService.get('userData');
-		//vm.message = {template: $stateParams.templates.id, message: '', patients: [], assignAll: false};
 		vm.patients = [];
 		vm.clickedValueModel = '';
 		vm.removedValueModel = '';
@@ -42,22 +41,6 @@ angular.module('core.dashboard')
 
 
 		};
-
-		//vm.onSend = function () {
-		//	console.log(vm.message.toUser.id);
-		//	if (vm.message.assignAll === true) {
-		//		vm.message.patients = [];
-		//	}
-		//	http.post('private/dashboard/tasks/multipleCreate', vm.message)
-		//		.then(function (res) {
-		//			//blockUI.stop();
-		//			if (res.state) {
-		//				alertService.showAlert(res.state.message);
-		//			}
-		//		}, function (error) {
-		//			alertService.showAlert(error);
-		//		});
-		//};
 		vm.send = function () {
 			console.log(vm.message);
 			vm.message.patient = vm.message.patient[0].id;
@@ -66,32 +49,15 @@ angular.module('core.dashboard')
 				vm.message.task = $stateParams.task;
 			}
 
-			//if (!vm.model.data.task_id) {
-			//	vm.save()
-			//		.then(function () {
-			//			vm.message.event = vm.model.data.task_id;
 			http.post('private/dashboard/tasks/send', vm.message)
 				.then(function (res) {
 					if (res.state) {
 						alertService.showAlert(res.state.message);
 						$state.go('tab.sub.tasks');
 					}
-					//	$uibModalInstance.close(res);
-					//}, function (error) {
-					//	$uibModalInstance.close(error);
-					//	deferred.reject(error);
+
 				});
-			//});
-			//} else {
-			//	http.post('private/dashboard/tasks/send', vm.message)
-			//		.then(function (res) {
-			//			blockUI.stop();
-			//			if (res.state) {
-			//				alertService.add(0, res.state.message);
-			//			}
-			//			$uibModalInstance.close(res);
-			//		});
-			//}
+
 		};
 
 	});
