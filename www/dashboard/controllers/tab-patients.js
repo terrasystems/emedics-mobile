@@ -2,13 +2,14 @@
 /*jshint -W117, -W097*/
 
 angular.module('core.dashboard')
-	.controller('patientsCtrl', function ($state,$scope,http,localStorageService,$translate,initParamsPOST,alertService) {
+	.controller('patientsCtrl', function ($state,$scope,http,localStorageService,$translate,initParamsPOST,alertService, $rootScope) {
 		var vm = this;
     console.log('patientsCTRL');
 		vm.user = localStorageService.get('userData');
 		vm.searchref = '';
 		vm.patients = [];
 		vm.templates = [];
+		vm.offlineState = $rootScope.offlineState;
 
 		vm.getMyPatients = function () {
 			http.post('private/dashboard/patients',{"name":''})

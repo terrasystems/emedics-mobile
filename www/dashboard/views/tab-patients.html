@@ -11,8 +11,8 @@
                 Name: {{patient.name}}
                 <p>Email:{{patient.email}}</p>
 
-                <button ng-click="vm.Remove(patient.id,$event)" style="float:right" class="button ion-trash-a button-small button-assertive"></button>
-                <button ng-if="patient.enabled == false" translate="INVITE" ng-click="vm.Invite(patient.id,$event)"  class="button  button-small button-calm"></button>
+                <button ng-if="!vm.offlineState" ng-click="vm.Remove(patient.id,$event)" style="float:right" class="button ion-trash-a button-small button-assertive"></button>
+                <button ng-if="!vm.offlineState && patient.enabled == false" translate="INVITE" ng-click="vm.Invite(patient.id,$event)"  class="button  button-small button-calm"></button>
 
             </ion-item>
 

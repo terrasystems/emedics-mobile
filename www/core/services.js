@@ -263,6 +263,15 @@ angular.module('core.medics')
 					});
 					break;
 				}
+				case (url.indexOf('private/dashboard/patients') > -1):
+				{
+					offlineRepository.getPatients().then(function (resp) {
+						successList(resp, deferred);
+					}, function (error) {
+						errorList(error, deferred);
+					});
+					break;
+				}
 
 				default:
 				{
@@ -391,6 +400,13 @@ angular.module('core.medics')
 								emit(doc.type);
 							}
 						}.toString()
+					},
+					docUserType: {
+						map: function (doc) {
+							if (('reference'=== doc.type) && doc.userType) {
+								emit(doc.userType);
+							}
+						}.toString()
 					}
 				}
 			};
@@ -429,7 +445,7 @@ angular.module('core.medics')
 			return vm.db.get(id);
 		};
 		function getPatients() {
-
+			return vm.db.query('index/docUserType', {key: 'PATIENT', include_docs: true});
 		};
 		function getStaff() {
 			return vm.db.query('index/docType', {key: 'staff', include_docs: true});
