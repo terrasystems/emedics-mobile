@@ -5,7 +5,6 @@
        ng-model="vm.message.template"
        item-view-value-key="name"
        items-method="vm.findForms(query)"
-       items-method-value-key="template"
        placeholder="search task ..."
        items-clicked-method="vm.itemsClicked1(callback)"
        items-removed-method="vm.itemsRemoved(callback)"
@@ -21,6 +20,7 @@
            items-clicked-method="vm.itemsClicked(callback)"
            items-removed-method="vm.itemsRemoved(callback)"
            max-selected-items="10"/>
+
 
     <button class="button button-full button-balanced" ng-click="vm.Create()">Ok</button>
 

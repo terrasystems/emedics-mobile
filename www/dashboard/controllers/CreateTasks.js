@@ -14,7 +14,7 @@ angular.module('core.dashboard')
 
 
 		vm.findForms = function (query) {
-			return http.get('private/dashboard/user/template',query)
+			return http.get('private/dashboard/user/template')
 				.then(function (res) {
 					if (res.state) {
 						if (angular.isArray(res.result) && res.result.length > 0) {
@@ -24,14 +24,22 @@ angular.module('core.dashboard')
 							});
 						}
 						if (res) {
-							vm.myForms = res.result;
-							return {template: vm.myForms};
+							if (query) {
+								 query = query.toLowerCase();
+								return _.filter(res.result, function(o) {
+									var name = o.name.toLowerCase();
+									return -1 !== name.indexOf(query);
+								});
+							} else {
 
+								return res.result;
+							}
 						}
 					}
 				});
 
 		};
+		vm.findForms();
 
 		vm.findPatients = function (query) {
 
@@ -115,8 +123,6 @@ angular.module('core.dashboard')
 			if (vm.isMulti === true) {
 				vm.isMulti = false;
 			}
-
-
 
 
 		};
