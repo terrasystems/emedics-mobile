@@ -20,7 +20,7 @@
                 <p><label><span translate="PHONE"></span>: </label>{{stuffInfo.phone || '(none)'}}</p>
                 <p><label><span translate="EMAIL"></span>: </label>{{stuffInfo.email || '(none)'}}</p>
                 <p><label><span translate="BIRTH_DATE"></span>:</label>{{vm.convertDate(stuffInfo.birth)}}
-                <button ng-click="vm.onEdit(stuff.id)" style="float: right" class="button button-small button-calm" ng-show="vm.canEdit;"> <span translate="EDIT"></span></button>
+                <button ng-if="!vm.offlineState" ng-click="vm.onEdit(stuff.id)" style="float: right" class="button button-small button-calm" ng-show="vm.canEdit;"> <span translate="EDIT"></span></button>
             </ion-item>
         </div>
     </ion-list>

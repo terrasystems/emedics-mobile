@@ -152,10 +152,12 @@ angular.module('core.medics')
 					saveDoc(list, 'userTemplate');
 					break;
 				}
-				/*				case '':
-				 {
-				 break;
-				 }
+				case 'private/dashboard/stuff':
+				{
+					saveDoc(list, 'staff');
+					break;
+				}
+				/*
 				 case '':
 				 {
 				 break;
@@ -252,6 +254,16 @@ angular.module('core.medics')
 					});
 					break;
 				}
+				case (url.indexOf('private/dashboard/stuff') > -1):
+				{
+					offlineRepository.getStaff().then(function (resp) {
+						successList(resp, deferred);
+					}, function (error) {
+						errorList(error, deferred);
+					});
+					break;
+				}
+
 				default:
 				{
 					deferred.reject(error);
@@ -315,7 +327,7 @@ angular.module('core.medics')
 		};
 	})
 //
-	.service('offlineRepository', function ($q, $log, localStorageService, pouchDB) {
+	.service('offlineRepository', function ($q, $log, localStorageService, pouchDB, $http, constants) {
 		var vm = this
 
 		function syncOnline() {
@@ -325,7 +337,13 @@ angular.module('core.medics')
 			$q.all(promises).then(function (results) {
 				_.each(results, function (res) {
 					tmp = tmp.concat(_.map(res.rows, 'doc'));
-				})
+				});
+				$http.post(constants.restUrl +'/private/dashboard/tasks/syncTasks', tmp).then(function (resp) {
+					$log.info(JSON.stringify(resp));
+				}, function (error) {
+					$log.error(error);
+				});
+				//
 			});
 		};
 
@@ -414,7 +432,7 @@ angular.module('core.medics')
 
 		};
 		function getStaff() {
-
+			return vm.db.query('index/docType', {key: 'staff', include_docs: true});
 		};
 		function sendTask(params) {
 			var deferred = $q.defer();

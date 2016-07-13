@@ -2,11 +2,12 @@
 /*jshint -W117, -W097*/
 
 angular.module('core.dashboard')
-	.controller('stuffCtrl', function (localStorageService,http,$scope,$state) {
+	.controller('stuffCtrl', function (localStorageService,http,$scope,$state, $rootScope) {
 
 		var vm = this;
 		vm.stafs = [];
 		vm.user = localStorageService.get('userData');
+		vm.offlineState = $rootScope.offlineState;
 
 		if (vm.user.type === 'doctor' && (vm.user.org === 'true' || vm.user.org === true)) {
 			vm.canEdit = true;
