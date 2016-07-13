@@ -348,7 +348,7 @@ angular.module('core.medics')
 					tmp = tmp.concat(_.map(res.rows, 'doc'));
 				});
 				$http.post(constants.restUrl +'/private/dashboard/tasks/syncTasks', tmp).then(function (resp) {
-					$log.info(JSON.stringify(resp));
+					//$log.info(JSON.stringify(resp));
 				}, function (error) {
 					$log.error(error);
 				});
