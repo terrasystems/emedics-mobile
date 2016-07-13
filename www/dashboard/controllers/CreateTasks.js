@@ -120,5 +120,19 @@ angular.module('core.dashboard')
 
 		};
 
+		vm.itemsRemoved1 = function (callback) {
+
+			if (callback.item.id === 'ALL') {
+				vm.message.assignAll = false;
+			}
+			if(vm.isMulti===true){
+				vm.isMulti = false;
+			}
+
+			vm.removedValueModel = callback;
+
+
+		};
+
 
 	});
