@@ -95,7 +95,7 @@ angular.module('core.medics')
 		error.statusText = $translate.instant('MSG_OFFLINE_MODE')
 
 		function syncDoc(url, list) {
-
+			var user = localStorageService.get('userData');
 			function saveDoc(list, type) {
 				var ids = _.map(list, 'id'),
 					pushDocs = [],
@@ -172,7 +172,8 @@ angular.module('core.medics')
 		//offline http
 		function getOfflineDoc(url, params) {
 
-			var deferred = $q.defer();
+			var deferred = $q.defer(),
+			  	user = localStorageService.get('userData');;
 			//all good
 			function successList(resp, deferred) {
 				var list = null;

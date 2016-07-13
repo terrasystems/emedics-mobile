@@ -4,7 +4,6 @@
 angular.module('core.dashboard')
 	.controller('subCtrl', function ($ionicTabsDelegate, $state, $rootScope, alertService, $translate) {
 		var vm = this;
-		vm.offlineState = $rootScope.offlineState;
 		vm.changeTab = function (index) {
 			if (0 === index) {
 				$state.go('^.tasks');
@@ -31,9 +30,10 @@ angular.module('core.dashboard')
 		});
 
 	})
-	.controller('tasksCtrl', function (alertService, $translate, $state, $scope, localStorageService, http) {
+	.controller('tasksCtrl', function (alertService, $translate, $state, $scope, localStorageService, http, $rootScope) {
 
 		var vm = this;
+		vm.offlineState = $rootScope.offlineState;
 		console.log("TasksCTRL");
 		vm.user = localStorageService.get('userData');
 		vm.page = {};

@@ -2,12 +2,12 @@
 /*jshint -W117, -W097*/
 
 angular.module('core.dashboard')
-	.controller('referencesCtrl', function (alertService,$scope,initParamsPOST,http, localStorageService) {
+	.controller('referencesCtrl', function (alertService,$scope,initParamsPOST,http, localStorageService, $rootScope) {
 
 		var vm = this;
 		console.log("referencesCTRL");
 
-
+		vm.offlineState = $rootScope.offlineState;
 
 		vm.user = localStorageService.get('userData');
 		//get my refs

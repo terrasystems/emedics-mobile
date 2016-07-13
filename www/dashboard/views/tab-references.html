@@ -1,7 +1,7 @@
 <ion-content>
 
     <div style="height: 67px;"></div>
-    <button class="button button-block button-calm" ui-sref="tab.addreferences">
+    <button ng-if="!vm.offlineState" class="button button-block button-calm" ui-sref="tab.addreferences">
         Add References
     </button>
     <ion-list>
