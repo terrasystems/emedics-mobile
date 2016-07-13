@@ -38,7 +38,7 @@ angular.module('core.dashboard')
 				});
 		};
 
-		//$rootScope.$broadcast('calc.notif');
+		$rootScope.$broadcast('calc.notif');
 
 		vm.onDecline = function (id) {
 			http.get('private/dashboard/events/notifications/decline/'+id)
@@ -46,7 +46,7 @@ angular.module('core.dashboard')
 					//blockUI.stop();
 					if (res.state) {
 
-						//$rootScope.$broadcast('calc.notif');
+						$rootScope.$broadcast('calc.notif');
 					}
 					vm.onRefreshNotif();
 				});

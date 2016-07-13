@@ -58,3 +58,8 @@ input[disabled], input[readonly]:not(.cloned-text-input), select[disabled], sele
 textarea{
     resize: none
 }
+.count{
+    background: rgba(255, 0, 0, 0.63);
+    border-radius: 5px;
+    padding: 3px;
+}

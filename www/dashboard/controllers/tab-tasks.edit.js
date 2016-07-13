@@ -104,7 +104,7 @@ angular.module('core.dashboard')
 				paramsPOST.fromUser = vm.data.editModel.fromUser;
 				paramsPOST.toUser = vm.data.editModel.toUser;
 			}
-			$state.go('tab.taskssend',{templates: $stateParams.id, task:paramsPOST});
+			$state.go('tab.taskssend',{templates: $stateParams.id, task:paramsPOST, FromTo:vm.data.editModel.patient});
 			//var config = {
 			//	templateUrl: 'modules/dashboard/views/modal.addNotif.html',
 			//	controller: 'modalAddNotifCtrl',

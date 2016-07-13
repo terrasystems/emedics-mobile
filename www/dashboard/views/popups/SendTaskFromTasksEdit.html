@@ -16,7 +16,7 @@
     <div>
 
 
-        <input class="search_field" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete"
+        <input ng-if="vm.user.type === 'doctor'" class="search_field" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete"
                autocomplete="off"
                ng-model="vm.message.toUser"
 

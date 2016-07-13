@@ -111,7 +111,8 @@ angular.module('core.medics')
 				},
 				params:{
 					templates:'',
-					task:null
+					task:null,
+					FromTo:''
 				},
 				parent:'tab'
 			})

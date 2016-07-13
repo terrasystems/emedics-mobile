@@ -10,7 +10,15 @@ angular.module('core.dashboard')
 		vm.clickedValueModel = '';
 		vm.removedValueModel = '';
 		vm.message = {toUser: null, event: $stateParams.templates, message: '', patient: null};
-
+		//vm.patient2 = {};
+		//vm.toUser = {};
+		//if (vm.user.type === 'patient') {
+		//	vm.toUser.id = $stateParams.FromTo.id;
+		//	vm.patient2.id = $stateParams.FromTo.id;
+		//} else {
+		//	vm.patient2 = '';
+		//	vm.toUser = '';
+		//}
 
 		vm.find = function (query, type) {
 			return http.post('private/dashboard/' + vm.user.type + '/references/refs', {search: query, type: type})
@@ -34,6 +42,9 @@ angular.module('core.dashboard')
 
 		vm.itemsClicked = function (callback) {
 			vm.clickedValueModel = callback;
+			if(vm.user.type === 'patient'){
+				vm.typeToSend=callback.item.id;
+			}
 
 		};
 		vm.itemsRemoved = function (callback) {
@@ -43,8 +54,16 @@ angular.module('core.dashboard')
 		};
 		vm.send = function () {
 			console.log(vm.message);
-			vm.message.patient = vm.message.patient[0].id;
-			vm.message.toUser = vm.message.toUser[0].id;
+
+			if(vm.user.type === 'patient'){
+				vm.message.patient = vm.user.id;
+				vm.message.toUser = vm.typeToSend;
+			}else{
+				vm.message.patient = vm.message.patient[0].id;
+				vm.message.toUser = vm.message.toUser[0].id;
+			}
+
+
 			if ($rootScope.offlineState) {
 				vm.message.task = $stateParams.task;
 			}

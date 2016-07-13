@@ -42,7 +42,10 @@
                 </ion-item>
                 <ion-item nav-clear menu-close href="#/tab/notifications">
                     <span translate="NOTIFICATIONS"></span>
-                <i style="float: right" class="ion-email"></i>
+                <i style="float: right" class="ion-email">
+
+                </i>
+                    <span class="count" ng-if="vm.count > 0"> {{vm.count}}</span>
                 </ion-item>
                 <ion-item nav-clear menu-close href="#/tab/catalog">
                    <span translate="MYFORMS"></span>
