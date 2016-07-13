@@ -13,8 +13,8 @@ angular.module('core.dashboard')
 		vm.removedValueModel = '';
 
 
-		vm.findForms = function () {
-			return http.get('private/dashboard/user/template')
+		vm.findForms = function (query) {
+			return http.get('private/dashboard/user/template',query)
 				.then(function (res) {
 					if (res.state) {
 						if (angular.isArray(res.result) && res.result.length > 0) {
@@ -50,9 +50,6 @@ angular.module('core.dashboard')
 					});
 			}
 
-			//vm.Selected = function(item) {
-			//	vm.isMulti = vm.user.type==='doctor' &&  item.templateDto.typeEnum==='PATIENT';
-			//};
 
 		};
 
@@ -111,15 +108,15 @@ angular.module('core.dashboard')
 		};
 
 		vm.itemsRemoved = function (callback) {
-
+			vm.removedValueModel = callback;
 			if (callback.item.id === 'ALL') {
 				vm.message.assignAll = false;
 			}
-			if(vm.isMulti===true){
+			if (vm.isMulti === true) {
 				vm.isMulti = false;
 			}
 
-			vm.removedValueModel = callback;
+
 
 
 		};
