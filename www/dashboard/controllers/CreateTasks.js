@@ -60,7 +60,7 @@ angular.module('core.dashboard')
 		vm.Create = function () {
 			if (vm.isMulti) {
 
-				vm.message.template = vm.message.template[0].id;
+				vm.message.template = vm.message.template[0].templateDto.id;
 				vm.message.patients = _.map(vm.message.patients, 'id');
 
 				if (vm.message.assignAll === true) {
@@ -74,7 +74,7 @@ angular.module('core.dashboard')
 					});
 			} else {
 				var paramsPOST = {
-					template: {id: vm.message.template, type: null, description: null, templateDto: null},
+					template: {id: vm.message.template[0].templateDto.id, type: null, description: null, templateDto: null},
 					patient: vm.user.id,
 					data: "{}"
 				};
