@@ -68,7 +68,7 @@ angular.module('core.dashboard')
 
 		vm.addFromAllTasks = function (template) {
 			if (template.typeEnum === 'PATIENT' && vm.userType.type !== 'patient') {
-				$state.go('tab.sendtask', {templates: template});
+				$state.go('tab.sendTask', {templates: template});
 			} else {
 				vm.loadTask(template);
 			}

@@ -157,11 +157,11 @@ angular.module('core.medics')
 				},
 				parent:'tab'
 			})
-			.state('tab.sendtask',{
-				url:'/sendTaskCatalog',
+			.state('tab.sendTask',{
+				url:'/loadtask',
 				views:{
 					'menuContent':{
-						templateUrl:'dashboard/views/popups/sendTaskFromCatalog.html',
+						templateUrl:'dashboard/views/popups/SendTasksFromCatalog.html',
 						controller:'modalSendTaskMultiCtrl as vm'
 					}
 				},

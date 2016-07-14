@@ -3,7 +3,7 @@
 
 angular.module('core.dashboard')
 
-	.controller('modalSendTaskMultiCtrl', function ($translate, $stateParams, $log, $scope, alertService, http) {
+	.controller('modalSendTaskMultiCtrl', function ($state,$translate, $stateParams, $log, $scope, alertService, http) {
 		var vm = this;
 		vm.message = {template: $stateParams.templates.id, message: '', patients: [], assignAll: false};
 
@@ -57,10 +57,11 @@ angular.module('core.dashboard')
 					//blockUI.stop();
 					if (res.state) {
 						alertService.showAlert(res.state.message);
+						$state.go('tab.catalog');
 					}
 				}, function (error) {
 					alertService.showAlert(error);
+					$state.go('tab.catalog');
 				});
 		};
-
 	});
