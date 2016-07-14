@@ -153,7 +153,7 @@ angular.module('core.dashboard', [])
 
 		formlyConfig.setType({
 			name: 'datepicker',
-			template: '<input class="datePicker" type="date" ng-model="model[options.key]" />'
+			template: '<input  type="date" ng-model="model[options.key]" />'
 		});
 
 

@@ -157,7 +157,7 @@ angular.module('core.medics')
 				},
 				parent:'tab'
 			})
-			.state('tab.sendTask',{
+			.state('tab.sendTask', {
 				url:'/loadtask',
 				views:{
 					'menuContent':{

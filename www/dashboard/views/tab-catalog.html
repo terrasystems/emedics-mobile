@@ -5,8 +5,8 @@
     <ion-list ng-if="vm.type=='my'">
         <ion-item class="catalog"  ng-repeat="MyformTemplates in vm.formTemplates">
             {{MyformTemplates.templateDto.name}}
-            <button style="float: right" class="button ion-trash-b  button-small button-assertive" ng-click="vm.DeleteMyForm(MyformTemplates.id)" ng-disable="MyformTemplates.templateDto.commercialEnum !== 'PAID'"></button>
-            <button style="float: right" class="button ion-plus-round  button-small button-balanced" ng-click="vm.onAddTask(MyformTemplates)">
+            <button style="float: right" class="button ion-trash-b  button-assertive" ng-click="vm.DeleteMyForm(MyformTemplates.id)" ng-disable="MyformTemplates.templateDto.commercialEnum !== 'PAID'"></button>
+            <button style="float: right" class="button ion-plus-round button-balanced" ng-click="vm.onAddTask(MyformTemplates)">
 
             </button>
         </ion-item>
@@ -16,13 +16,13 @@
         <ion-item class="catalog" ng-repeat="formTemplate in vm.formTemplates">
 
             {{formTemplate.name}}
-            <button style="float: right" class="button ion-eye button-small button-calm" ng-click="vm.onView(formTemplate.id);">
+            <button style="float: right" class="button ion-eye  button-small   button-calm" ng-click="vm.onView(formTemplate.id);">
 
             </button>
-            <button style="float: right" class="button ion-plus-round  button-small button-balanced" ng-click="vm.addFromAllTasks(formTemplate)" >
+            <button style="float: right" class="button ion-plus-round  button-small    button-balanced" ng-click="vm.addFromAllTasks(formTemplate)" >
 
             </button>
-            <button ng-click="vm.Buy(formTemplate.id);formTemplate.isPay=true;formTemplate.isLoad=true;" ng-disabled="formTemplate.isPay" ng-if="formTemplate.commercialEnum==='PAID'" ng-hide="formTemplate.existPaid === true" style="float: right" class="button ion-bag  button-small button-assertive">
+            <button ng-click="vm.Buy(formTemplate.id);formTemplate.isPay=true;formTemplate.isLoad=true;" ng-disabled="formTemplate.isPay" ng-if="formTemplate.commercialEnum==='PAID'" ng-hide="formTemplate.existPaid === true" style="float: right" class="button ion-bag  button-small   button-assertive">
                 Buy
             </button>
 
