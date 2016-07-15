@@ -78,9 +78,8 @@ angular.module('core.dashboard')
 		};
 
 
-		vm.SendForm = function (obj,hist) {
-			var model = { templ_id: obj.id, obj: obj };
-
+		vm.Send = function (template,patient,event) {
+      $state.go('tab.sendtaskpatient', {patient:patient, template:template, event:event});
 			//blockUI.start();
 			//alertService.showPopap('','','dashboard/views/popups/SendTaskFromPatientTab.html');
 			//	.then(function (res) {
@@ -88,21 +87,22 @@ angular.module('core.dashboard')
 			//});
 
 			//
-			var result = alertService.showPopap({
-				templateUrl: 'dashboard/views/popups/SendTaskFromPatientTab.html',
-				resolve: {
-					model: function ($q) {
-						var deferred = $q.defer();
-						deferred.resolve({data: model,patient:{
-							'name':hist.patient.username,
-							'email':hist.patient.email,
-							'id':hist.patient.id
-						}});
-						return deferred.promise;
-					}
-				}
-			}).result;
+			//var result = alertService.showPopap({
+			//	templateUrl: 'dashboard/views/popups/SendTaskFromPatientTab.html',
+			//	resolve: {
+			//		model: function ($q) {
+			//			var deferred = $q.defer();
+			//			deferred.resolve({data: model,patient:{
+			//				'name':hist.patient.username,
+			//				'email':hist.patient.email,
+			//				'id':hist.patient.id
+			//			}});
+			//			return deferred.promise;
+			//		}
+			//	}
+			//}).result;
 		};
+
 		vm.onView = function (histId, patientId) {
 			$state.go('tab.tasksedit', {id: histId, type: 'patients+', patId: patientId});
 		};

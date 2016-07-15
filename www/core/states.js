@@ -188,7 +188,23 @@ angular.module('core.medics')
 					}
 				},
 				parent:'tab'
-			}).state('tab.addpatient',{
+			})
+
+			.state('tab.sendtaskpatient', {
+				url: '/patientsSendMessage',
+				views: {
+					'menuContent': {
+						templateUrl: 'dashboard/views/popups/SendTaskFromPatientTab.html',
+						controller: 'SendTaskFromPatientTab as vm'
+					}
+				},
+				params:{
+					patient:'',
+					template:'',
+					event:''
+				}
+			})
+			.state('tab.addpatient',{
 				url: '/addpatients',
 				views: {
 					'menuContent': {

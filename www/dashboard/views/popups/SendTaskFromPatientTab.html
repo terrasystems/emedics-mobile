@@ -1,34 +1,15 @@
-<div class="row " ng-controller="modalAddNotifCtrl as vm">
+<ion-content>
+    <div style="height: 67px;"></div>
 
-    <div class="content_modal">
-        <h3 style="text-align: center"><span translate="FORM"></span>{{vm.name}}</h3>
+    <p><span translate="NAME"></span>: {{vm.patient.name}}</p>
+    <p><span translate="EMAIL"></span>: {{vm.patient.email}}</p>
 
-        <section ng-if="!(vm.user.type === 'patient')">
-            <input ng-if="!vm.model.patient" style="height: 35px" class="col-md-11 col-lg-11 col-sm-10 col-xs-9" type="text"
-                   ng-model="vm.patient2"
-                   placeholder="{{'Search patient ...' | translate}}"
-                   uib-typeahead="item as item.all for item in vm.getFind($viewValue,'pat')"
-                   typeahead-loading="loadingLocations"
-                   typeahead-editable="true"
-                   class="form-control">
-        </section>
-        <p ng-if="vm.model.patient"> {{vm.model.patient.email}}</p>
-        <p ng-if="vm.model.patient">{{vm.model.patient.name}}</p>
-        <form ng-if="!vm.model.patient" name="myRefs">
-            <input  class="" type="text"
-                   ng-model="vm.toUser"
-                   placeholder="{{'Search references ...' | translate}}"
-                   uib-typeahead="item as item.all for item in vm.getFind($viewValue,'all')"
-                   typeahead-loading="loadingLocations"
-                   typeahead-editable="true"
-                   class="form-control">
-        </form>
+    <ion-item>
 
-        <form name="myform" class="notif" action="">
-            <textarea rows="6" cols="6" ng-model="vm.message.message" placeholder="{{'MESSAGE_TEXT' | translate}}" rows="5"></textarea>
-        </form>
+        <textarea placeholder="message..." ng-model="vm.message.message" style="width: 100%" rows="8"></textarea>
 
-        <button style="margin-right:10px;margin-bottom: 10px;" class="pull-right btn btn-warning" ng-disabled="!(vm.toUser && vm.patient2 )" ng-click="vm.send()">Send</button>
-    </div>
-</div>
 
+    </ion-item>
+
+    <button class="button button-full button-balanced" ng-click="vm.send()" translate="SEND"></button>
+</ion-content>
