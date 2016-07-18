@@ -3,7 +3,7 @@
 
 angular.module('core.dashboard')
 
-	.controller('draftsCtrl', function ($scope, $rootScope, $state, db2,
+	.controller('draftsCtrl', function ($scope, $rootScope, $state,
                                       http,localStorageService, offlineRepository) {
 		var vm = this;
 		vm.user = localStorageService.get('userData');
