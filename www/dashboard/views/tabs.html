@@ -33,7 +33,7 @@
                 <ion-item nav-clear menu-close href="#/tab/tasks">
 
                     <span translate="TASKS"></span>
-                    <i style="float: right" class="ion-settings"></i>
+                    <i style="float: right" class="ion-ios-compose"></i>
 
                 </ion-item>
                 <ion-item nav-clear menu-close href="#/tab/references">
@@ -53,14 +53,14 @@
                 </ion-item>
                 <ion-item ng-click="" nav-clear menu-close href="#/tab/drafts">
                     <span translate="DRAFTS"></span>
-                <i style="float: right" class="ion-compose"></i>
+                <i style="float: right" class="ion-document"></i>
                 </ion-item>
                 <ion-item ng-if="'patient'!==vm.user.type" nav-clear menu-close href="#/tab/patients">
                     <span translate="PATIENTS"></span>
                 <i style="float: right" class="ion-ios-person"></i>
                 </ion-item>
                 <ion-item ng-if="vm.user.org == 'true' || vm.user.org == true || vm.user.type == 'stuff'" nav-clear menu-close href="#/tab/stuff">
-                    <span translate="STUFF"></span>
+                    <span translate="STAFF"></span>
                <i style="float: right" class="ion-ios-people"></i>
                 </ion-item>
             </ion-list>

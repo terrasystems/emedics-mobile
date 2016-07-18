@@ -2,6 +2,11 @@
     <div style="height: 64px;"></div>
     <ion-list>
         <button ng-click="vm.onEdit('add')" class="button button-full button-positive">Add Stuff</button>
+        <div ng-if="vm.stuffs.length === 0" class="card">
+            <div class="item item-text-wrap">
+                <span translate="DONT_HAVE_ANY_DATA"></span>
+            </div>
+        </div>
         <div ng-repeat="stuff in vm.stuffs">
             <ion-item class="item-stable"
                       ng-click="toggleGroup(stuff)"

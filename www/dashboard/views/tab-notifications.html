@@ -1,6 +1,12 @@
 <ion-pane>
     <ion-content>
         <div style="height: 64px;" ></div>
+
+        <div ng-if="vm.UnreadNotifications.length === 0" class="card">
+            <div class="item item-text-wrap">
+                <span translate="DONT_HAVE_ANY_DATA"></span>
+            </div>
+        </div>
         <ion-list>
             <ion-item class="catalog" ng-repeat=" notification in vm.UnreadNotifications">
                 <div style="float: left">

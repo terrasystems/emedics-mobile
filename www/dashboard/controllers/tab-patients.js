@@ -122,8 +122,8 @@ angular.module('core.dashboard')
 					//blockUI.stop();
 					if (res.state && res.state.value && !!res.state.value) {
 						var newTaskID = res.result.id;
-						paramsPOST = {event:
-						{	id: newTaskID,
+						paramsPOST = {event: {
+							id: newTaskID,
 							patient: taskObj.patient,
 							template: taskObj.template,
 							data: taskObj.data,

@@ -1,6 +1,11 @@
 <!--<ion-tabs class="tabs-positive">-->
 <ion-content>
     <div style="height: 64px;"></div>
+    <div ng-if="vm.formTemplates.length === 0" class="card">
+        <div class="item item-text-wrap">
+            <span translate="DONT_HAVE_ANY_DATA"></span>
+        </div>
+    </div>
     <!--my forms -->
     <ion-list ng-if="vm.type=='my'">
         <ion-item class="catalog"  ng-repeat="MyformTemplates in vm.formTemplates">

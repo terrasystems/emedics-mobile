@@ -1,7 +1,11 @@
 <ion-content >
   <div style="height: 64px;" ></div>
   <!-- The list directive is great, but be sure to also checkout the collection repeat directive when scrolling through large lists -->
-
+  <div ng-if="vm.list.length === 0" class="card">
+    <div class="item item-text-wrap">
+      <span translate="DONT_HAVE_ANY_DATA"></span>
+    </div>
+  </div>
   <ion-list  show-reorder="data.showReorder">
     <ion-item  ng-repeat="draft in vm.list track by $index" item="item"  class="catalog item-remove-animate">
 

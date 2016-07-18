@@ -2,8 +2,13 @@
 
     <div style="height: 67px;"></div>
     <button ng-if="!vm.offlineState" class="button button-block button-calm" ui-sref="tab.addreferences">
-        Add References
+        <span translate="ADDREF"></span>
     </button>
+    <div ng-if="vm.references.length === 0" class="card">
+        <div class="item item-text-wrap">
+            <span translate="DONT_HAVE_ANY_DATA"></span>
+        </div>
+    </div>
     <ion-list>
         <div ng-repeat="group in vm.references">
             <ion-item class="item-stable"

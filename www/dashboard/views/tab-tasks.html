@@ -6,6 +6,13 @@
 
     <ion-list  show-reorder="data.showReorder">
 <button ng-if="!vm.offlineState" class="button button-full button-positive" translate="CREATE_TAKS" ng-click="vm.CreateTask()"></button>
+
+        <div ng-if="vm.tasks.length === 0" class="card">
+            <div class="item item-text-wrap">
+                <span translate="DONT_HAVE_ANY_DATA"></span>
+            </div>
+        </div>
+
         <ion-item ng-click="vm.onClickNew(item.id)" ng-repeat="item in vm.tasks track by $index" item="item"  class="item-remove-animate">
             <span translate="NAME"></span>: {{ item.template.name }}
             <p><span translate="DATE"></span>: {{vm.convertDateTime(item.date)}}</p>

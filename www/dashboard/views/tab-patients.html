@@ -2,6 +2,11 @@
     <div style="height: 64px;"></div>
     <ion-list>
 <button ng-if="!vm.offlineState" class="button button-full button-positive" ui-sref="tab.addpatient" translate="ADDPATIENT"></button>
+        <div ng-if="vm.patients.length === 0" class="card">
+            <div class="item item-text-wrap">
+                <span translate="DONT_HAVE_ANY_DATA"></span>
+            </div>
+        </div>
         <div ng-repeat=" patient in vm.patients">
             <ion-item class=" item-stable"
                       ng-click="toggleGroup(patient);vm.onOpenPatient(patient.id)"
